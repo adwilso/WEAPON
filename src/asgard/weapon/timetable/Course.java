@@ -8,25 +8,23 @@ import java.util.List;
  *
  */
 public class Course implements Serializable {
-	/**
-	 * 
-	 */
+	
+	private List<Session> mSessions;
+	
 	private static final long serialVersionUID = 6834088449384071509L;
 	private String mCourseCode;
 	
-	public String getmCourseCode() {
+	public String getCourseCode() {
 		return mCourseCode;
 	}
-	public void setmCourseCode(String mCourseCode) {
+	public void setCourseCode(String mCourseCode) {
 		this.mCourseCode = mCourseCode;
 	}
-	public List<Session> getmSessions() {
+	public List<Session> getSessions() {
 		return mSessions;
 	}
-	public void setmSessions(List<Session> mSessions) {
+	public void setSessions(List<Session> mSessions) {
 		this.mSessions = mSessions;
 	}
-	private List<Session> mSessions;
-	
 	
 }

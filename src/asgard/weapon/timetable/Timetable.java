@@ -16,7 +16,15 @@ public class Timetable implements Serializable {
 		return mName;
 	}
 	
-	public void setName() {
-		
+	public void setName(String name) {
+		mName = name;
+	}
+	
+	public void addSession(Session session) {
+		mSessions.add(session);
+	}
+	
+	public Session getSession(int index) {
+		return mSessions.get(index);
 	}
 }

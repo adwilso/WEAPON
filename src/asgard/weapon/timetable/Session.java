@@ -8,30 +8,28 @@ import java.io.Serializable;
  *
  */
 public class Session implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1101524987457494622L;
 	private int mTime;
 	private int mDate;
 	private String mDescription;
 	
-	public int getmTime() {
+	public int getTime() {
 		return mTime;
 	}
-	public void setmTime(int mTime) {
+	public void setTime(int mTime) {
 		this.mTime = mTime;
 	}
-	public int getmDate() {
+	public int getDate() {
 		return mDate;
 	}
-	public void setmDate(int mDate) {
+	public void setDate(int mDate) {
 		this.mDate = mDate;
 	}
-	public String getmDescription() {
+	public String getDescription() {
 		return mDescription;
 	}
-	public void setmDescription(String mDescription) {
+	public void setDescription(String mDescription) {
 		this.mDescription = mDescription;
 	}
 }
