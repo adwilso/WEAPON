@@ -31,7 +31,7 @@ public class TimetableMainView extends Activity implements OnClickListener,
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
 
-		// Do initial UI preperation
+		// Do initial UI preparation
 		mSaveButton = (Button) findViewById(R.id.save_button);
 		mLoadButton = (Button) findViewById(R.id.load_button);
 		mStatusTextView = (TextView) findViewById(R.id.status_text_view);
@@ -54,17 +54,16 @@ public class TimetableMainView extends Activity implements OnClickListener,
 		Message message;
 
 		switch (v.getId()) {
+		
 		case R.id.load_button:
-
 			message = mTimetableController.getHandler().obtainMessage(
 					ConditionCodes.V_LOAD_TIMETABLE, this);
 			mTimetableController.getHandler().sendMessage(message);
 			break;
-		case R.id.save_button:
 			
+		case R.id.save_button:
 			message = mTimetableController.getHandler().obtainMessage(
 					ConditionCodes.V_SAVE_TIMETABLE, this);
-
 			mTimetableController.getHandler().sendMessage(message);
 			break;
 		}

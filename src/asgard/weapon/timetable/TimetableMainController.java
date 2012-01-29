@@ -33,7 +33,7 @@ public class TimetableMainController {
 		mHandlerThread.start();
 
 		mTimetable = new Timetable("duh");
-		
+
 		mHandler = new Handler(mHandlerThread.getLooper()) {
 			public void handleMessage(android.os.Message msg) {
 				TimetableMainController.this.handleMessage(msg);
@@ -41,33 +41,23 @@ public class TimetableMainController {
 		};
 	}
 
+	public Handler getHandler() {
+		return mHandler;
+	}
+
 	private void handleMessage(Message msg) {
-		// Do message modifications
+		// Deal with message by calling appropriate functions
 		switch (msg.what) {
 		case ConditionCodes.V_SAVE_TIMETABLE:
 			saveTimetable(msg);
 			break;
 		case ConditionCodes.V_LOAD_TIMETABLE:
-			loadTimetable(msg);		
+			loadTimetable(msg);
 			break;
 		}
 
 		// Post the outcome message to all attached handlers
 		notifyHandlers(msg.what, msg.arg1, msg.arg2, msg.obj);
-	}
-
-	private void loadTimetable(Message msg) {
-		mTimetable.load((Context)msg.obj);
-		msg.what = ConditionCodes.C_TIMETABLE_LOADED;
-	}
-
-	private void saveTimetable(Message msg) {
-		mTimetable.save((Context)msg.obj);
-		msg.what = ConditionCodes.C_TIMETABLE_SAVED;
-	}
-
-	public Handler getHandler() {
-		return mHandler;
 	}
 
 	public void notifyHandlers(int what, int arg1, int arg2, Object obj) {
@@ -79,6 +69,28 @@ public class TimetableMainController {
 				message.sendToTarget();
 			}
 		}
+	}
+
+	private void loadTimetable(Message msg) {
+		final Context context = (Context) msg.obj;
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				Timetable.load(context);
+			}
+		});
+		msg.what = ConditionCodes.C_TIMETABLE_LOADED;
+	}
+
+	private void saveTimetable(Message msg) {
+		final Context context = (Context) msg.obj;
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				mTimetable.save(context);
+			}
+		});
+		msg.what = ConditionCodes.C_TIMETABLE_SAVED;
 	}
 
 	public void submitCourseForm() {
