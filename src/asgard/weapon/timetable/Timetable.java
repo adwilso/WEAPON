@@ -7,7 +7,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
 
-import android.app.Activity;
 import android.content.Context;
 /**
  * 
@@ -16,9 +15,9 @@ import android.content.Context;
  */
 public class Timetable implements Serializable {
 	
-	private final String FILENAME = "timetable.data";
-	
 	private static final long serialVersionUID = -8496468328964194932L;
+	private static final String FILENAME = "timetable.data";
+	
 	protected String mName;
 	protected List<Session> mSessions;
 	
@@ -42,8 +41,12 @@ public class Timetable implements Serializable {
 		return mSessions.get(index);
 	}
 	
-	public Timetable load(String timetableName, FileInputStream fIn) {
+	/*
+	 * Attempts to load the timetable from memory
+	 */
+	public Timetable load(Context context) {
 		try {
+			FileInputStream fIn = context.openFileInput(FILENAME);
 			// Read object with ObjectInputStream
 			ObjectInputStream objIn = new ObjectInputStream(fIn);
 			// Read object in from disk
@@ -60,10 +63,11 @@ public class Timetable implements Serializable {
 		return null;
 	}
 	
-	public void save(FileOutputStream fOut) {
+	public void save(Context context) {
 		
 		//mStatusTextView.setText("Saving timetable");
 		try {
+			FileOutputStream fOut = context.openFileOutput(FILENAME, Context.MODE_PRIVATE);
 			// Write object with ObjectInputStream
 			ObjectOutputStream objOut = new ObjectOutputStream(fOut);
 			// Write object out to disk

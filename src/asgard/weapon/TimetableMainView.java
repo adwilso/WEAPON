@@ -17,12 +17,15 @@ public class TimetableMainView extends Activity implements OnClickListener,
 	private Button mSaveButton;
 	private Button mLoadButton;
 	private TextView mStatusTextView;
-	private TextView mTimetableName;
+	public TextView mTimetableName;
 
 	private Handler mHandler;
 
 	private TimetableMainController mTimetableController;
 
+	/*
+	 * Called when the Timetable Activity is created
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,41 +46,45 @@ public class TimetableMainView extends Activity implements OnClickListener,
 		mTimetableController = new TimetableMainController(mHandler);
 	}
 
+	/*
+	 * Defines what to do when certain widgets are pressed
+	 */
 	@Override
 	public void onClick(View v) {
-		if (v.getId() == R.id.load_button) {
-			/*
-			 * try { // Read to disk with FileInputStream FileInputStream fIn =
-			 * openFileInput(FILENAME); // Read object with ObjectInputStream
-			 * ObjectInputStream objIn = new ObjectInputStream(fIn); // Read
-			 * object in from disk Object time = objIn.readObject();
-			 * 
-			 * if (time instanceof Timetable) { Timetable timetable =
-			 * (Timetable) time;
-			 * 
-			 * mStatusTextView.setText("Loaded successfully");
-			 * mTimetableName.setText(timetable.getName()); }
-			 * 
-			 * } catch (Exception e) { e.printStackTrace(); }
-			 */
-		} else if (v.getId() == R.id.save_button) {
-			/*
-			 * try { // Write to disk with FileOutputStream FileOutputStream
-			 * fOut = openFileOutput(FILENAME, Context.MODE_PRIVATE); // Write
-			 * object with ObjectInputStream ObjectOutputStream objOut = new
-			 * ObjectOutputStream(fOut); // Write object out to disk
-			 * objOut.writeObject(mTimetable);
-			 * 
-			 * mStatusTextView.setText("Saved succesfully!");
-			 * mTimetableName.setText("none"); } catch (Exception e) {
-			 * e.printStackTrace(); }
-			 */
+		Message message;
+
+		switch (v.getId()) {
+		case R.id.load_button:
+
+			message = mTimetableController.getHandler().obtainMessage(
+					ConditionCodes.V_LOAD_TIMETABLE, this);
+			mTimetableController.getHandler().sendMessage(message);
+			break;
+		case R.id.save_button:
+			
+			message = mTimetableController.getHandler().obtainMessage(
+					ConditionCodes.V_SAVE_TIMETABLE, this);
+
+			mTimetableController.getHandler().sendMessage(message);
+			break;
 		}
+
 	}
 
+	/*
+	 * Updates the UI based on messages received
+	 */
 	@Override
 	public boolean handleMessage(Message msg) {
-		// TODO Auto-generated method stub
+		switch (msg.what) {
+		case ConditionCodes.C_TIMETABLE_LOADED:
+			mStatusTextView.setText("Timetable loaded!");
+			return true;
+		case ConditionCodes.C_TIMETABLE_SAVED:
+			mStatusTextView.setText("Timetable saved!");
+			return true;
+		}
+		mStatusTextView.setText("Unknown message received");
 		return false;
 	}
 }
