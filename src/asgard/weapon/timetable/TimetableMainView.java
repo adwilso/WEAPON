@@ -1,4 +1,4 @@
-package asgard.weapon;
+package asgard.weapon.timetable;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,22 +6,19 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.TextView;
-
-import asgard.weapon.timetable.TimetableMainController;
+import asgard.weapon.ConditionCodes;
+import asgard.weapon.R;
 
 public class TimetableMainView extends Activity implements OnClickListener,
 		Handler.Callback {
 
-	private Button mSaveButton;
-	private Button mLoadButton;
 	private TextView mStatusTextView;
 	public TextView mTimetableName;
 
 	private Handler mHandler;
 
-	private TimetableMainController mTimetableController;
+	private TimetableController mController;
 
 	/*
 	 * Called when the Timetable Activity is created
@@ -32,18 +29,15 @@ public class TimetableMainView extends Activity implements OnClickListener,
 		setContentView(R.layout.main);
 
 		// Do initial UI preparation
-		mSaveButton = (Button) findViewById(R.id.save_button);
-		mLoadButton = (Button) findViewById(R.id.load_button);
 		mStatusTextView = (TextView) findViewById(R.id.status_text_view);
 		mTimetableName = (TextView) findViewById(R.id.timetable_name);
 
-		mSaveButton.setOnClickListener(this);
-		mLoadButton.setOnClickListener(this);
-
-		// Make handler and pass it to a new controller
+		// Make handler to pass to the controller
 		mHandler = new Handler(this);
 
-		mTimetableController = new TimetableMainController(mHandler);
+		// Get a reference to controller and register this view to its handlers
+		mController = TimetableController.getController();
+		mController.addHandler(mHandler);
 	}
 
 	/*
@@ -51,23 +45,33 @@ public class TimetableMainView extends Activity implements OnClickListener,
 	 */
 	@Override
 	public void onClick(View v) {
-		Message message;
+		// Retreive handler and message with default message
+		Handler handler = mController.getHandler();
+		Message message = handler.obtainMessage(ConditionCodes.V_DO_NOTHING,
+				this);
 
+		// Set the message depending on what UI element was interacted with
 		switch (v.getId()) {
-		
-		case R.id.load_button:
-			message = mTimetableController.getHandler().obtainMessage(
-					ConditionCodes.V_LOAD_TIMETABLE, this);
-			mTimetableController.getHandler().sendMessage(message);
-			break;
-			
-		case R.id.save_button:
-			message = mTimetableController.getHandler().obtainMessage(
-					ConditionCodes.V_SAVE_TIMETABLE, this);
-			mTimetableController.getHandler().sendMessage(message);
-			break;
-		}
 
+		case R.id.load_button:
+			message.what = ConditionCodes.V_LOAD_TIMETABLE;
+			handler.sendMessage(message);
+			break;
+
+		case R.id.save_button:
+			message.what = ConditionCodes.V_SAVE_TIMETABLE;
+			handler.sendMessage(message);
+			break;
+
+		case R.id.new_timetable:
+			message.what = ConditionCodes.V_NEW_TIMETABLE;
+			handler.sendMessage(message);
+			break;
+		
+		default:
+			// Finally, send the message to the controller
+			handler.sendMessage(message);
+		}	
 	}
 
 	/*
@@ -81,6 +85,9 @@ public class TimetableMainView extends Activity implements OnClickListener,
 			return true;
 		case ConditionCodes.C_TIMETABLE_SAVED:
 			mStatusTextView.setText("Timetable saved!");
+			return true;
+		case ConditionCodes.C_CREATE_TIMETABLE_CLOSED:
+			mStatusTextView.setText("Creation form just closed");
 			return true;
 		}
 		mStatusTextView.setText("Unknown message received");
