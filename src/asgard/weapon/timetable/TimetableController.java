@@ -17,13 +17,14 @@ import asgard.weapon.ConditionCodes;
  * 
  *         Controller for all timetable interactions. Creates new threads to
  *         update Models and creates the bridge between the Views and Models.
- *         
- *         Singleton patter is used to ensure only one controller exists at a time
+ * 
+ *         Singleton patter is used to ensure only one controller exists at a
+ *         time
  */
 public class TimetableController {
 
 	private static TimetableController mController;
-	
+
 	private HandlerThread mHandlerThread; // Thread for Controller handler
 	private List<Handler> mOutgoingHandlers; // List of all handlers listening
 												// to the Controller
@@ -37,7 +38,7 @@ public class TimetableController {
 		}
 		return mController;
 	}
-	
+
 	private TimetableController() {
 		mOutgoingHandlers = new ArrayList<Handler>();
 
@@ -60,11 +61,11 @@ public class TimetableController {
 	public void addHandler(Handler handler) {
 		mOutgoingHandlers.add(handler);
 	}
-	
-	public void removeHandler (Handler handler) {
+
+	public void removeHandler(Handler handler) {
 		mOutgoingHandlers.remove(handler);
 	}
-	
+
 	private void handleMessage(Message msg) {
 		// Deal with message by calling appropriate functions
 		switch (msg.what) {
@@ -75,19 +76,20 @@ public class TimetableController {
 			loadTimetable(msg);
 			break;
 		case ConditionCodes.V_NEW_TIMETABLE:
-			createTimetable(msg);			
+			createTimetable(msg);
 		}
 
-		// Post the outcome message to all attached handlers 
+		// Post the outcome message to all attached handlers
 		notifyHandlers(msg.what, msg.arg1, msg.arg2, msg.obj);
 	}
 
 	// Makes a TimetableCreationForm object (started in a new activity)
 	private void createTimetable(Message msg) {
-		
+
 		if (msg.obj instanceof TimetableMainView) {
-			Intent intent = new Intent((Activity)msg.obj,TimetableCreationForm.class);
-			((Activity)msg.obj).startActivity(intent);
+			Intent intent = new Intent((Activity) msg.obj,
+					TimetableCreationForm.class);
+			((Activity) msg.obj).startActivity(intent);
 		}
 	}
 
@@ -103,13 +105,13 @@ public class TimetableController {
 	}
 
 	private void loadTimetable(Message msg) {
-		final Context context = (Context) msg.obj;
+		final Message message = msg;
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				Timetable.load(context);
+				Timetable.load((Context) message.obj);
 			}
-		});
+		}).start();
 		msg.what = ConditionCodes.C_TIMETABLE_LOADED;
 	}
 
@@ -120,7 +122,7 @@ public class TimetableController {
 			public void run() {
 				mTimetable.save(context);
 			}
-		});
+		}).start();
 		msg.what = ConditionCodes.C_TIMETABLE_SAVED;
 	}
 

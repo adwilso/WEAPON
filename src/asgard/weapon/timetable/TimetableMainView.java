@@ -90,6 +90,7 @@ public class TimetableMainView extends Activity implements OnClickListener,
 			mStatusTextView.setText("Creation form just closed");
 			return true;
 		}
+		
 		mStatusTextView.setText("Unknown message received");
 		return false;
 	}

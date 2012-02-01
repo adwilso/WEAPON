@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 
 /**
  * 
@@ -43,7 +44,7 @@ public class Timetable implements Serializable {
 	}
 
 	/*
-	 * Attempts to load the first timetable from memory
+	 * Attempts to load all the timetables from memory
 	 */
 	public static Timetable load(Context context) {
 		try {
@@ -72,17 +73,13 @@ public class Timetable implements Serializable {
 	}
 
 	/*
-	 * Attempts to save the timetable to a file
+	 * Attempts to save the timetable to a file. Note that nothing else can be
+	 * done to the timetable when this is happening!
 	 */
 	public void save(Context context) {
 		synchronized (this) {
-			try {
-				Thread.sleep(10000);
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			// mStatusTextView.setText("Saving timetable");
+
+			Log.d("Timetable", "Done saving timetable");
 			try {
 				FileOutputStream fOut = context.openFileOutput(FILENAME,
 						Context.MODE_PRIVATE);
