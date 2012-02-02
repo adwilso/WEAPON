@@ -67,7 +67,12 @@ public class TimetableMainView extends Activity implements OnClickListener,
 			message.what = ConditionCodes.V_NEW_TIMETABLE;
 			handler.sendMessage(message);
 			break;
-		
+			
+		case R.id.main_null_test_button:
+			message.what = ConditionCodes.V_TEST_NULL;
+			handler.sendMessage(message);
+			break;
+			
 		default:
 			// Finally, send the message to the controller
 			handler.sendMessage(message);
@@ -80,6 +85,11 @@ public class TimetableMainView extends Activity implements OnClickListener,
 	@Override
 	public boolean handleMessage(Message msg) {
 		switch (msg.what) {
+		case ConditionCodes.C_GET_ACTIVITY:
+			msg.what = ConditionCodes.V_LOAD_TIMETABLE;
+			msg.obj = this;
+			mController.getHandler().sendMessage(msg);
+			return true;
 		case ConditionCodes.C_TIMETABLE_LOADED:
 			mStatusTextView.setText("Timetable loaded!");
 			return true;
@@ -89,6 +99,11 @@ public class TimetableMainView extends Activity implements OnClickListener,
 		case ConditionCodes.C_CREATE_TIMETABLE_CLOSED:
 			mStatusTextView.setText("Creation form just closed");
 			return true;
+		case ConditionCodes.C_TEST_NULL:
+			mStatusTextView.setText((String)msg.obj);
+			return true;
+		case ConditionCodes.V_CREATE_TIMETABLE_SUBMIT:
+			mStatusTextView.setText("Jarod");
 		}
 		
 		mStatusTextView.setText("Unknown message received");

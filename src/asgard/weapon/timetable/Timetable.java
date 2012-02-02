@@ -46,7 +46,7 @@ public class Timetable implements Serializable {
 	/*
 	 * Attempts to load all the timetables from memory
 	 */
-	public static Timetable load(Context context) {
+	public static synchronized List<Timetable> load(Context context) {
 		try {
 			FileInputStream fIn = context.openFileInput(FILENAME);
 			// Read object with ObjectInputStream
@@ -54,8 +54,9 @@ public class Timetable implements Serializable {
 			// Read object in from disk
 			Object time = objIn.readObject();
 
-			if (time instanceof Timetable) {
-				Timetable timetable = (Timetable) time;
+			if (time instanceof List<?>) {
+				@SuppressWarnings("unchecked")
+				List<Timetable> timetable = (List<Timetable>) time;
 				return timetable;
 			}
 
@@ -66,18 +67,10 @@ public class Timetable implements Serializable {
 	}
 
 	/*
-	 * Attempts to return the timetable with the specified name from memory
-	 */
-	public static Timetable load(Context context, String timetableName) {
-		return null;
-	}
-
-	/*
 	 * Attempts to save the timetable to a file. Note that nothing else can be
 	 * done to the timetable when this is happening!
 	 */
-	public void save(Context context) {
-		synchronized (this) {
+	public static synchronized void save(Context context, List<Timetable> list) {
 
 			Log.d("Timetable", "Done saving timetable");
 			try {
@@ -86,11 +79,10 @@ public class Timetable implements Serializable {
 				// Write object with ObjectInputStream
 				ObjectOutputStream objOut = new ObjectOutputStream(fOut);
 				// Write object out to disk
-				objOut.writeObject(this);
+				objOut.writeObject(list);
 
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-	}
 }

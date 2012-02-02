@@ -64,4 +64,14 @@
         <requestFocus />
     </EditText>
 
+    <Button
+        android:id="@+id/main_null_test_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/new_timetable"
+        android:layout_below="@+id/new_timetable"
+        android:layout_marginTop="23dp"
+        android:onClick="onClick"
+        android:text="Null TestROFLZORS" />
+
 </RelativeLayout>

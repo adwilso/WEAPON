@@ -30,7 +30,7 @@ public class TimetableController {
 												// to the Controller
 	private Handler mHandler; // Controller's Handler
 
-	private Timetable mTimetable; // Reference to the current timetable
+	private List<Timetable> mTimetable; // Reference to the current timetable
 
 	public static synchronized TimetableController getController() {
 		if (mController == null) {
@@ -45,13 +45,13 @@ public class TimetableController {
 		mHandlerThread = new HandlerThread("Controller Handler");
 		mHandlerThread.start();
 
-		mTimetable = new Timetable("duh");
-
 		mHandler = new Handler(mHandlerThread.getLooper()) {
 			public void handleMessage(android.os.Message msg) {
 				TimetableController.this.handleMessage(msg);
 			}
 		};
+
+		mTimetable = new ArrayList<Timetable>();
 	}
 
 	public Handler getHandler() {
@@ -77,6 +77,16 @@ public class TimetableController {
 			break;
 		case ConditionCodes.V_NEW_TIMETABLE:
 			createTimetable(msg);
+			break;
+		case ConditionCodes.V_TEST_NULL:
+			if (mTimetable == null) {
+				msg.obj = "Timetable list is null :(";
+			} else
+				msg.obj = "Timetable list is not null :)";
+			msg.what = ConditionCodes.C_TEST_NULL;
+			break;
+		case ConditionCodes.V_CREATE_TIMETABLE_SUBMIT:
+			mTimetable.add((Timetable)msg.obj);
 		}
 
 		// Post the outcome message to all attached handlers
@@ -105,22 +115,22 @@ public class TimetableController {
 	}
 
 	private void loadTimetable(Message msg) {
-		final Message message = msg;
+		final Context CONTEXT = (Context) msg.obj;
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				Timetable.load((Context) message.obj);
+				mTimetable = Timetable.load(CONTEXT);
 			}
 		}).start();
 		msg.what = ConditionCodes.C_TIMETABLE_LOADED;
 	}
 
 	private void saveTimetable(Message msg) {
-		final Context context = (Context) msg.obj;
+		final Context CONTEXT = (Context) msg.obj;
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				mTimetable.save(context);
+				Timetable.save(CONTEXT, mTimetable);
 			}
 		}).start();
 		msg.what = ConditionCodes.C_TIMETABLE_SAVED;
