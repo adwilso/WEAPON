@@ -51,8 +51,47 @@ public class Path {
 	}
 	private boolean isReady(){
 		//go through the path to make sure that it is okay.
-		return false;
+		Node first = this.start;
+		Node second = null;
+		Edge edge = null;
+		if ( route == null  || route.isEmpty()) {
+			return false;
+		}
+		if (!route.get(0).isAdjacent(this.start)) {
+			return false;
+		}
+		for (int i = 0; i < route.size(); i++) {
+			edge = route.get(i);
+			second = edge.getOtherNode(first);
+			if (!route.get(i).isAdjacent(second)) {
+				return false;
+			}
+			if (!route.get(i + 1).isAdjacent(second)) {
+				return false;
+			}
+			first = second;
+			second = route.get(i+1).getOtherNode(second);
+			edge = route.get(i+1);
+		}
+		return true;
 	}
+	public Edge getNextEdge() {
+		if (this.start == null  || this.end == null) {
+			return null;
+		}
+		if (this.currentIndex == -2) {
+			if (!this.isReady()) {
+				return null;
+			}
+			this.currentIndex = 0;
+		}
+		if (route.size() <= currentIndex) return null;
+		return route.get(currentIndex++);
 	
+	}
+	public Edge lookAheadEdge() {
+		if (this.currentIndex < 0) return null;
+		return route.get(currentIndex  + 1);
+	}
 	
 }

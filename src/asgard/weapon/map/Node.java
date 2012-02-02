@@ -1,4 +1,5 @@
 package asgard.weapon.map;
+import android.graphics.Bitmap;
 
 import java.util.ArrayList;
 public class Node {
@@ -6,9 +7,9 @@ public class Node {
 	private int yPos;
 	private String name;
 	private ArrayList<Edge> edges;
-	private Image image;
+	private Bitmap image;
 	
-	public Node ( Image imageRef , int x , int y , String n) {
+	public Node (Bitmap imageRef , int x , int y , String n) {
 		name = n;
 		image = imageRef;
 		xPos = x;
@@ -30,7 +31,7 @@ public class Node {
 		x = new Integer(xPos);
 		y = new Integer(yPos);		
 	}
-	public Image getImage() {
+	public Bitmap getImage() {
 		return image;
 	}
 	
