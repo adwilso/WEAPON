@@ -1,5 +1,7 @@
 package asgard.weapon.timetable;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -45,7 +47,7 @@ public class TimetableMainView extends Activity implements OnClickListener,
 	 */
 	@Override
 	public void onClick(View v) {
-		// Retreive handler and message with default message
+		// Retrieve handler and message with default values
 		Handler handler = mController.getHandler();
 		Message message = handler.obtainMessage(ConditionCodes.V_DO_NOTHING,
 				this);
@@ -64,7 +66,7 @@ public class TimetableMainView extends Activity implements OnClickListener,
 			break;
 
 		case R.id.new_timetable:
-			message.what = ConditionCodes.V_NEW_TIMETABLE;
+			message.what = ConditionCodes.V_LAUNCH_CREATION_ACTIVITY;
 			handler.sendMessage(message);
 			break;
 			
@@ -73,8 +75,13 @@ public class TimetableMainView extends Activity implements OnClickListener,
 			handler.sendMessage(message);
 			break;
 			
-		default:
+		case R.id.main_delete_button:
+			message.what = ConditionCodes.V_DELETE_TIMETABLE;
+			handler.sendMessage(message);
+			break;
+			
 			// Finally, send the message to the controller
+		default:
 			handler.sendMessage(message);
 		}	
 	}
@@ -90,20 +97,37 @@ public class TimetableMainView extends Activity implements OnClickListener,
 			msg.obj = this;
 			mController.getHandler().sendMessage(msg);
 			return true;
+		
+		case ConditionCodes.C_TIMETABLE_LOADING:
+			mStatusTextView.setText("Loading timetable");
+			return true;
+			
 		case ConditionCodes.C_TIMETABLE_LOADED:
-			mStatusTextView.setText("Timetable loaded!");
+			mStatusTextView.setText(msg.obj.toString());
 			return true;
+			
+		case ConditionCodes.C_TIMETABLE_SAVING:
+			mStatusTextView.setText("Saving timetable");
+			
 		case ConditionCodes.C_TIMETABLE_SAVED:
-			mStatusTextView.setText("Timetable saved!");
+			mStatusTextView.setText("Timetable saved");
 			return true;
-		case ConditionCodes.C_CREATE_TIMETABLE_CLOSED:
-			mStatusTextView.setText("Creation form just closed");
+		
+		case ConditionCodes.C_TIMETABLE_CLOSED:
+			mStatusTextView.setText("Creation form closed");
 			return true;
+		
 		case ConditionCodes.C_TEST_NULL:
 			mStatusTextView.setText((String)msg.obj);
 			return true;
-		case ConditionCodes.V_CREATE_TIMETABLE_SUBMIT:
-			mStatusTextView.setText("Jarod");
+		
+		case ConditionCodes.C_TIMETABLE_DELETED:
+			mStatusTextView.setText("Timetable deleted");
+			return true;
+			
+		case ConditionCodes.C_TIMETABLE_CREATED:
+			mStatusTextView.setText("Timetable created");
+			return true;
 		}
 		
 		mStatusTextView.setText("Unknown message received");

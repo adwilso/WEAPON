@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
+
     <TextView
         android:id="@+id/status_text_view"
         android:layout_width="fill_parent"
@@ -60,8 +60,7 @@
         android:layout_marginLeft="19dp"
         android:inputType="text"
         android:text="Example text" >
-
-        <requestFocus />
+        
     </EditText>
 
     <Button
@@ -73,5 +72,15 @@
         android:layout_marginTop="23dp"
         android:onClick="onClick"
         android:text="Null TestROFLZORS" />
+
+    <Button
+        android:id="@+id/main_delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/load_button"
+        android:layout_alignBottom="@+id/load_button"
+        android:layout_alignRight="@+id/main_text_box"
+        android:onClick="onClick"
+        android:text="Delete" />
 
 </RelativeLayout>

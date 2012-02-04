@@ -27,19 +27,19 @@ public class Timetable implements Serializable {
 		mName = name;
 	}
 
-	public String getName() {
+	public synchronized String getName() {
 		return mName;
 	}
 
-	public void setName(String name) {
+	public synchronized void setName(String name) {
 		mName = name;
 	}
 
-	public void addSession(Session session) {
+	public synchronized void addSession(Session session) {
 		mSessions.add(session);
 	}
 
-	public Session getSession(int index) {
+	public synchronized Session getSession(int index) {
 		return mSessions.get(index);
 	}
 
@@ -72,17 +72,21 @@ public class Timetable implements Serializable {
 	 */
 	public static synchronized void save(Context context, List<Timetable> list) {
 
-			Log.d("Timetable", "Done saving timetable");
-			try {
-				FileOutputStream fOut = context.openFileOutput(FILENAME,
-						Context.MODE_PRIVATE);
-				// Write object with ObjectInputStream
-				ObjectOutputStream objOut = new ObjectOutputStream(fOut);
-				// Write object out to disk
-				objOut.writeObject(list);
+		Log.d("Timetable", "Done saving timetable");
+		try {
+			FileOutputStream fOut = context.openFileOutput(FILENAME,
+					Context.MODE_PRIVATE);
+			// Write object with ObjectInputStream
+			ObjectOutputStream objOut = new ObjectOutputStream(fOut);
+			// Write object out to disk
+			objOut.writeObject(list);
 
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	}
+
+	public static synchronized void delete(Context context) {
+		context.deleteFile(FILENAME);
+	}
 }
