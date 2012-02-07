@@ -9,4 +9,5 @@
     android:layout_height="wrap_content" 
     android:text="@string/hello"
     />
+<ImageView android:src="@drawable/map" android:id="@+id/imageView1" android:layout_height="wrap_content" android:layout_width="wrap_content"></ImageView>
 </LinearLayout>

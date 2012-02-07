@@ -7,13 +7,14 @@ public class Node {
 	private int yPos;
 	private String name;
 	private ArrayList<Edge> edges;
-	private Bitmap image;
+	private FloorPlan image;
 	
-	public Node (Bitmap imageRef , int x , int y , String n) {
+	public Node (FloorPlan imageRef , int x , int y , String n) {
 		name = n;
 		image = imageRef;
 		xPos = x;
 		yPos = y;
+		edges = new ArrayList<Edge>();
 	}
 	@SuppressWarnings("unused")
 	private Node(){}
@@ -31,7 +32,7 @@ public class Node {
 		x = new Integer(xPos);
 		y = new Integer(yPos);		
 	}
-	public Bitmap getImage() {
+	public FloorPlan getImage() {
 		return image;
 	}
 	
