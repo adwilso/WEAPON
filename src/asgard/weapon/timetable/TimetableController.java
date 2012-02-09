@@ -2,8 +2,6 @@ package asgard.weapon.timetable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.locks.Condition;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -134,16 +132,7 @@ public class TimetableController {
 		notifyHandlers(msg.what, msg.arg1, msg.arg2, msg.obj);
 	}
 
-	// Makes a TimetableCreationForm object (started in a new activity)
-	private void launchCreateTimetableActivity(Message msg) {
-
-		if (msg.obj instanceof TimetableMainView) {
-			Intent intent = new Intent((Activity) msg.obj,
-					TimetableCreationForm.class);
-			((Activity) msg.obj).startActivity(intent);
-		}
-	}
-
+	
 	public void notifyHandlers(int what, int arg1, int arg2, Object obj) {
 		// Ensure the handler list isn't empty
 		if (!mOutgoingHandlers.isEmpty()) {
@@ -165,7 +154,7 @@ public class TimetableController {
 				// Load the timetable and send a message when done
 				mTimetables = Timetable.load(CONTEXT);
 				
-				//If it isnt null, pass to the view
+				//If it isn't null, pass to the view
 				if (mTimetables != null) {
 					for (int i = 0; i < mTimetables.size(); i++) {
 						Message message = mHandler.obtainMessage();
@@ -199,9 +188,22 @@ public class TimetableController {
 			@Override
 			public void run() {
 				Timetable.save(CONTEXT, mTimetables);
+				Message message = mHandler.obtainMessage();
+				message.what = ConditionCodes.C_TIMETABLE_SAVED;
 			}
 		}).start();
 	}
+	
+	// Makes a TimetableCreationForm object (started in a new activity)
+		private void launchCreateTimetableActivity(Message msg) {
+
+			if (msg.obj instanceof TimetableMainView) {
+				Intent intent = new Intent((Activity) msg.obj,
+						TimetableCreationForm.class);
+				((Activity) msg.obj).startActivity(intent);
+			}
+		}
+
 
 	public void submitCourseForm() {
 
@@ -232,10 +234,6 @@ public class TimetableController {
 	}
 
 	public void editTimetable() {
-
-	}
-
-	public void deleteTimetable() {
 
 	}
 
