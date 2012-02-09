@@ -16,6 +16,8 @@ public class WEAPONActivity extends Activity {
         i.setImageResource(f.getImage());
         setContentView(i);
         Graph  g = new Graph();
+        
+       
        
     }
 }

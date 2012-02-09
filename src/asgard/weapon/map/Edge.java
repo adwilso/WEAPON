@@ -20,9 +20,9 @@ public class Edge {
 	}
 	public Node getOtherNode(Node current) {
 		if (current == nodes[0] || current.equals(nodes[0]))
-			return nodes[0];
-		if (current == nodes[1] || current.equals(nodes[1]))
 			return nodes[1];
+		if (current == nodes[1] || current.equals(nodes[1]))
+			return nodes[0];
 		return null;
 			            
 	}
