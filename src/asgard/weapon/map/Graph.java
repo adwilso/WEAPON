@@ -5,12 +5,14 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.PriorityQueue;
 
+
 import asgard.weapon.R;
 
 public class Graph {
 	private ArrayList <FloorPlan> maps;
 	private NodeList <Node> nodes;
 	private ArrayList <Edge> edges;
+
 	public Graph() {
 		//Load place holder maps
 		maps = new ArrayList <FloorPlan>();
@@ -24,6 +26,33 @@ public class Graph {
 		this.getPathBetween(nodes.get(1), nodes.get(2));
 		
 	}
+	public Node findNodeWithName(String name) {
+		if (name == null) return null;
+		Iterator <Node> i = nodes.iterator();
+		while(i.hasNext()) {
+			Node n = i.next();
+			if(n.getName().equals(name)) {
+				return n;
+			}
+				
+		}
+		return null;
+	}
+	public ArrayList <Node> getPathBetween(String start, String goal) {
+		return this.getPathBetween(this.findNodeWithName(start), this.findNodeWithName(goal));
+	}
+	
+	public Node reconstructPath(Node currentNode, ArrayList <Node> list) {
+		if (currentNode.getCameFrom() != null) {
+			list.add(this.reconstructPath(currentNode.getCameFrom(), list));
+			return currentNode;
+		}
+		else 
+		{
+			return currentNode;
+		}
+
+	}
 	
 	public ArrayList <Node> getPathBetween(Node start, Node goal) {
 		if (start == null || goal == null) {
@@ -36,7 +65,10 @@ public class Graph {
 		while (!openSet.isEmpty()) {
 			Node x = openSet.poll();
 			if (x.equals(goal)) {
-				//Yipiee Kiy Aye Motherfuckers
+				ArrayList<Node> result = new ArrayList<Node>();
+				result.add(this.reconstructPath(x, result));
+				return result;
+				//Yipiee Kiy Aye Motherf*ckers -John McClane
 			}
 			closedSet.put(x.getName(), x);
 			ArrayList<Node> neighbours = x.getNeighbours();
