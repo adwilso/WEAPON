@@ -23,6 +23,7 @@ public interface ConditionCodes {
 	public final int V_TEST_NULL = 13;
 	
 	public final int V_LAUNCH_CREATION_ACTIVITY = 20;
+	public final int V_LAUNCH_COURSE_CREATION_FORM = 21;
 	
 	public final int C_TIMETABLE_SAVING = 100;
 	public final int C_TIMETABLE_SAVED = 101;

@@ -13,7 +13,7 @@
         android:layout_marginTop="39dp"
         android:text="Timetable Name"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <EditText
         android:id="@+id/timetable_creation_form_edit_text"
         android:layout_width="150dp"
@@ -22,17 +22,16 @@
         android:layout_below="@+id/timetable_creation_form_text_view"
         android:layout_marginTop="16dp"
         android:inputType="text" >
-
-        <requestFocus />
     </EditText>
 
     <Button
-        android:id="@+id/new_course_button"
+        android:id="@+id/timetable_creation_form_new_course_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/timetable_creation_form_edit_text"
         android:layout_below="@+id/timetable_creation_form_edit_text"
         android:layout_marginTop="60dp"
+        android:onClick="onClick"
         android:text="New Course" />
 
     <Button

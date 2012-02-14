@@ -126,6 +126,10 @@ public class TimetableController {
 			mTimetables.add((Timetable) msg.obj);
 			msg.what = ConditionCodes.C_TIMETABLE_CREATED;
 			break;
+			
+		case ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM:
+			launchCreationForm(msg);
+			break;
 		}
 
 		// Post the outcome message to all attached handlers
@@ -195,14 +199,22 @@ public class TimetableController {
 	}
 	
 	// Makes a TimetableCreationForm object (started in a new activity)
-		private void launchCreateTimetableActivity(Message msg) {
+	private void launchCreateTimetableActivity(Message msg) {
 
-			if (msg.obj instanceof TimetableMainView) {
-				Intent intent = new Intent((Activity) msg.obj,
-						TimetableCreationForm.class);
-				((Activity) msg.obj).startActivity(intent);
-			}
+		if (msg.obj instanceof TimetableMainView) {
+			Intent intent = new Intent((Activity) msg.obj,
+					TimetableCreationForm.class);
+			((Activity) msg.obj).startActivity(intent);
 		}
+	}
+	
+	public void launchCreationForm(Message msg) {
+		if (msg.obj instanceof TimetableMainView) {
+			Intent intent = new Intent((Activity) msg.obj,
+					CourseCreationForm.class);
+			((Activity) msg.obj).startActivity(intent);
+		}
+	}
 
 
 	public void submitCourseForm() {

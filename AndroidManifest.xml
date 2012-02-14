@@ -19,6 +19,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".timetable.TimetableCreationForm" >
+            
+        </activity>
+        <activity android:name=".timetable.CourseCreationForm">
+            
         </activity>
     </application>
 
