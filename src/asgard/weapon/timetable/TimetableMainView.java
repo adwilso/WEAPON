@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.TextView;
 import asgard.weapon.ConditionCodes;
 import asgard.weapon.R;
@@ -15,6 +16,7 @@ public class TimetableMainView extends Activity implements OnClickListener,
 
 	private TextView mStatusTextView;
 	public TextView mTimetableName;
+	public EditText mEditTextView;
 
 	private Handler mHandler;
 
@@ -26,7 +28,7 @@ public class TimetableMainView extends Activity implements OnClickListener,
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main);
+		setContentView(R.layout.timetable_main_view);
 
 		// Do initial UI preparation
 		mStatusTextView = (TextView) findViewById(R.id.status_text_view);

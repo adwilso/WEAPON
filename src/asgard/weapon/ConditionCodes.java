@@ -17,6 +17,7 @@ public interface ConditionCodes {
 	public final int V_DELETE_TIMETABLE = 2;
 	public final int V_CREATE_TIMETABLE = 3;
 	public final int V_MODIFY_TIMETABLE = 4;
+	public final int V_DISPLAY_TIMETABLE = 5;
 	
 	public final int V_CLOSE_NEW_TIMETABLE = 12;
 	public final int V_TEST_NULL = 13;
@@ -30,6 +31,8 @@ public interface ConditionCodes {
 	public final int C_TIMETABLE_LOADING = 103;
 	public final int C_TIMETABLE_LOADED = 104;
 	public final int C_TIMETABLE_NOT_LOADED = 105;
+	
+	public final int C_TIMETABLE_DISPLAYED = 111;
 	
 	public final int C_TIMETABLE_CREATED = 106;
 	
