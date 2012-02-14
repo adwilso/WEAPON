@@ -1,7 +1,12 @@
 package asgard.weapon.map;
 
 import java.util.Arrays;
-
+/**
+ * 
+ * @author Adam
+ * 
+ * 
+ */
 public class Edge {
 	private int weight;
 	private Node[] nodes; 

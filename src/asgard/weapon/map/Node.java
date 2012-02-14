@@ -2,7 +2,12 @@ package asgard.weapon.map;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-
+/**
+ * 
+ * @author Adam
+ * 
+ * 
+ */
 public class Node implements Comparable <Node>{
 	private int xPos;
 	private int yPos;

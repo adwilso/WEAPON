@@ -1,7 +1,12 @@
 package asgard.weapon.map;
 
 import java.util.ArrayList;
-
+/**
+ * 
+ * @author Adam
+ * 
+ * 
+ */
 public class Path {
 	private Node start;
 	private Node end;

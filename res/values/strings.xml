@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World, WEAPONActivity!</string>
     <string name="app_name">WEAPON</string>
+    <string name="map">Map</string>
 </resources>

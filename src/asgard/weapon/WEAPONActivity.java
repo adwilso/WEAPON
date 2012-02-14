@@ -1,23 +1,42 @@
 package asgard.weapon;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import asgard.weapon.map.*;
-public class WEAPONActivity extends Activity {
+import asgard.weapon.mapDisplay.MapControl;
+import asgard.weapon.mapDisplay.MapDisplay;
+public class WEAPONActivity extends Activity implements View.OnClickListener{
     /** Called when the activity is first created. */
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        FloorPlan f = new FloorPlan("TEB2");
-        ImageView i = new ImageView(this);
-        i.setImageResource(f.getImage());
-        setContentView(i);
-   //     Graph  g = new Graph();
         
+        final Button startMap = (Button)findViewById(R.id.button1);
+        startMap.setOnClickListener(this);
+        
+        FloorPlan f = new FloorPlan("TEB2",R.drawable.map);
+        final ImageView i = (ImageView)findViewById(R.id.imageView1);
+        i.setImageResource(f.getImage());
+
+   
+        Graph  g = new Graph();
+
        
        
     }
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		MapControl m = new MapControl(this,v);
+		Intent i = new Intent(this,MapDisplay.class);
+		startActivity(i);
+	}
 }

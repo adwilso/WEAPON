@@ -7,7 +7,12 @@ import java.util.PriorityQueue;
 
 
 import asgard.weapon.R;
-
+/**
+ * 
+ * @author Adam
+ * 
+ * 
+ */
 public class Graph {
 	private ArrayList <FloorPlan> maps;
 	private NodeList <Node> nodes;
@@ -23,9 +28,16 @@ public class Graph {
 		//Make edge array
 		this.fillEdges();
 		
-		this.getPathBetween(nodes.get(1), nodes.get(2));
+		//this.getPathBetween(nodes.get(1), nodes.get(2));
 		
 	}
+	////////////////////
+	//TODO These are for debugging only, drop them in the final version. 
+	public ArrayList <Node> getNodes() {
+		return nodes;
+	}
+	
+	///////////////////////////
 	public Node findNodeWithName(String name) {
 		if (name == null) return null;
 		Iterator <Node> i = nodes.iterator();

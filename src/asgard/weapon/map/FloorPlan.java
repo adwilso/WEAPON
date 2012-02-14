@@ -1,6 +1,11 @@
 package asgard.weapon.map;
 
-
+/**
+ * 
+ * @author Adam
+ * 
+ * 
+ */
 public class FloorPlan  {
 	private String name;
 	private int image;
