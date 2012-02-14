@@ -21,14 +21,6 @@
         android:onClick="onClick"
         android:text="Save" />
 
-    <TextView
-        android:id="@+id/timetable_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="18dp"
-        android:text="" />
-
     <Button
         android:id="@+id/new_timetable"
         android:layout_width="wrap_content"
@@ -68,5 +60,15 @@
         android:layout_marginTop="70dp"
         android:onClick="onClick"
         android:text="Null Test" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp" >
+    </RelativeLayout>
 
 </RelativeLayout>

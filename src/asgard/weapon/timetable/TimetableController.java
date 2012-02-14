@@ -209,7 +209,8 @@ public class TimetableController {
 	}
 	
 	public void launchCreationForm(Message msg) {
-		if (msg.obj instanceof TimetableMainView) {
+		
+		if (msg.obj instanceof TimetableCreationForm) {
 			Intent intent = new Intent((Activity) msg.obj,
 					CourseCreationForm.class);
 			((Activity) msg.obj).startActivity(intent);

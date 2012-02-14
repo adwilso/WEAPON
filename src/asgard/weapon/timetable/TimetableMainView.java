@@ -15,7 +15,6 @@ public class TimetableMainView extends Activity implements OnClickListener,
 		Handler.Callback {
 
 	private TextView mStatusTextView;
-	public TextView mTimetableName;
 	public EditText mEditTextView;
 
 	private Handler mHandler;
@@ -32,7 +31,6 @@ public class TimetableMainView extends Activity implements OnClickListener,
 
 		// Do initial UI preparation
 		mStatusTextView = (TextView) findViewById(R.id.status_text_view);
-		mTimetableName = (TextView) findViewById(R.id.timetable_name);
 
 		// Make handler to pass to the controller
 		mHandler = new Handler(this);
