@@ -14,6 +14,16 @@ public class Session implements Serializable{
 	private int mDate;
 	private String mDescription;
 	
+	public Session(){
+	
+	}
+	
+	public Session(int time, int date, String description){
+		setTime(time);
+		setDate(date);
+		setDescription(description);
+	}
+	
 	public int getTime() {
 		return mTime;
 	}

@@ -12,6 +12,7 @@ package asgard.weapon;
 public interface ConditionCodes {
 	public final int V_DO_NOTHING = -1;
 	
+	// Basic operations
 	public final int V_SAVE_TIMETABLE = 0;	
 	public final int V_LOAD_TIMETABLE = 1;
 	public final int V_DELETE_TIMETABLE = 2;
@@ -19,11 +20,12 @@ public interface ConditionCodes {
 	public final int V_MODIFY_TIMETABLE = 4;
 	public final int V_DISPLAY_TIMETABLE = 5;
 	
+		
 	public final int V_CLOSE_NEW_TIMETABLE = 12;
-	public final int V_TEST_NULL = 13;
 	
-	public final int V_LAUNCH_CREATION_ACTIVITY = 20;
+	public final int V_LAUNCH_TIMETABLE_CREATION_FORM = 20;
 	public final int V_LAUNCH_COURSE_CREATION_FORM = 21;
+	public final int V_CREATE_EVENT = 22;
 	
 	public final int C_TIMETABLE_SAVING = 100;
 	public final int C_TIMETABLE_SAVED = 101;

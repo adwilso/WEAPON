@@ -57,8 +57,7 @@ public class TimetableCreationForm extends Activity implements OnClickListener,
 			break;
 			
 		case R.id.timetable_creation_form_new_course_button:
-			message.what = ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM;
-			
+			message.what = ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM;	
 			handler.dispatchMessage(message);
 			break;
 		}

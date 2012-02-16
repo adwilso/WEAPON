@@ -3,17 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <Button
+        android:id="@+id/course_creation_form_add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Add" />
+
     <TextView
         android:id="@+id/course_creation_form_name_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="24dp"
         android:text="Course Name"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <EditText
         android:id="@+id/course_creation_form_name_box"
         android:layout_width="150dp"
@@ -23,12 +31,21 @@
         android:layout_alignParentRight="true" />
 
     <TextView
+        android:id="@+id/course_creation_form_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/course_creation_form_name_box"
+        android:layout_marginTop="48dp"
+        android:text="Course Information"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
         android:id="@+id/course_creation_form_time_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/course_creation_form_name_title"
-        android:layout_below="@+id/course_creation_form_name_box"
-        android:layout_marginTop="42dp"
+        android:layout_alignRight="@+id/course_creation_form_name_title"
+        android:layout_below="@+id/course_creation_form_title"
+        android:layout_marginTop="39dp"
         android:text="Time"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -36,8 +53,19 @@
         android:id="@+id/course_creation_form_time_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/course_creation_form_time_title"
+        android:layout_alignBottom="@+id/course_creation_form_time_title"
         android:layout_alignLeft="@+id/course_creation_form_name_box"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/course_creation_form_time_title" />
+        android:layout_alignParentRight="true" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/course_creation_form_time_title"
+        android:layout_below="@+id/course_creation_form_time_box"
+        android:layout_marginTop="25dp"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

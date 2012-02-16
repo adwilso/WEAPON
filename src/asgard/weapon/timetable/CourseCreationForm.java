@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract.CommonDataKinds.Event;
 import android.view.View;
 import android.view.View.OnClickListener;
 import asgard.weapon.ConditionCodes;
@@ -13,7 +14,7 @@ public class CourseCreationForm extends Activity implements OnClickListener,
 		Handler.Callback {
 
 	private TimetableController mController;
-
+	
 	private Handler mHandler;
 
 	@Override
@@ -35,10 +36,12 @@ public class CourseCreationForm extends Activity implements OnClickListener,
 				this);
 
 		switch (v.getId()) {
-		case R.id.timetable_creation_form_new_course_button:
-			message.what = ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM;
-
-			handler.dispatchMessage(message);
+		case R.id.course_creation_form_add_button:
+			message.what = ConditionCodes.V_CREATE_EVENT;
+			if (checkText()){
+				Session s = new Session();
+				handler.dispatchMessage(message);
+			}	
 		}
 
 	}
@@ -53,6 +56,10 @@ public class CourseCreationForm extends Activity implements OnClickListener,
 	@Override
 	public boolean handleMessage(Message msg) {
 		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	protected boolean checkText() {
 		return false;
 	}
 }

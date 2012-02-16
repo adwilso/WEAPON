@@ -64,12 +64,7 @@ public class TimetableMainView extends Activity implements OnClickListener,
 			break;
 
 		case R.id.new_timetable:
-			message.what = ConditionCodes.V_LAUNCH_CREATION_ACTIVITY;
-			handler.sendMessage(message);
-			break;
-			
-		case R.id.main_null_test_button:
-			message.what = ConditionCodes.V_TEST_NULL;
+			message.what = ConditionCodes.V_LAUNCH_TIMETABLE_CREATION_FORM;
 			handler.sendMessage(message);
 			break;
 			

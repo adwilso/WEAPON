@@ -14,6 +14,10 @@ public class Course implements Serializable {
 	private static final long serialVersionUID = 6834088449384071509L;
 	private String mCourseCode;
 	
+	public Course (String code) {
+		mCourseCode = code;
+	}
+	
 	public String getCourseCode() {
 		return mCourseCode;
 	}

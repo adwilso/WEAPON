@@ -105,21 +105,13 @@ public class TimetableController {
 			msg.what = ConditionCodes.C_TIMETABLE_LOADING;
 			break;
 
-		case ConditionCodes.V_LAUNCH_CREATION_ACTIVITY:
+		case ConditionCodes.V_LAUNCH_TIMETABLE_CREATION_FORM:
 			launchCreateTimetableActivity(msg);
 			break;
 
 		case ConditionCodes.V_DELETE_TIMETABLE:
 			deleteTimetable(msg);
 			msg.what = ConditionCodes.C_TIMETABLE_DELETED;
-			break;
-
-		case ConditionCodes.V_TEST_NULL:
-			if (mTimetables == null) {
-				msg.obj = "Timetable list is null :(";
-			} else
-				msg.obj = "Timetable list is not null :)";
-			msg.what = ConditionCodes.C_TEST_NULL;
 			break;
 
 		case ConditionCodes.V_CREATE_TIMETABLE:
@@ -130,6 +122,9 @@ public class TimetableController {
 		case ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM:
 			launchCreationForm(msg);
 			break;
+			
+		case ConditionCodes.V_CREATE_EVENT:
+			
 		}
 
 		// Post the outcome message to all attached handlers
