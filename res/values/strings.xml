@@ -2,4 +2,41 @@
 <resources>
     <string name="hello">Hello World, WEAPONActivity!</string>
     <string name="app_name">WEAPON</string>
+    <string-array name="course_times" >
+        <item>8:00 AM</item>
+        <item>8:30 AM </item>
+        <item>9:00 AM</item>
+        <item>9:30 AM</item>
+        <item>10:00 AM</item>
+        <item>10:30 AM</item>
+        <item>11:00 AM</item>
+        <item>11:30 AM</item>
+        <item>12:00 PM</item>
+        <item>12:30 PM</item>
+        <item>1:00 PM</item>
+        <item>1:30 PM</item>
+        <item>2:00 PM</item>
+        <item>2:30 AM</item>
+        <item>3:00 PM</item>
+        <item>3:30 PM</item>
+        <item>4:00 PM</item>
+        <item>4:30 PM</item>
+        <item>5:00 PM</item>
+        <item>5:30 PM</item>
+        <item>6:00 PM</item>
+        <item>6:30 PM</item>
+        <item>7:00 PM</item>
+        <item>7:30 PM</item>
+        <item>8:00 PM</item>
+        <item>8:30 PM</item>   
+    </string-array>
+    <string-array name="course_dates">
+        <item>Mon</item>
+        <item>Tue</item>
+        <item>Wed</item>
+        <item>Thur</item>
+        <item>Fri</item>
+        <item>Sat</item>
+        <item>Sun</item>
+    </string-array>
 </resources>

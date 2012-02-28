@@ -21,14 +21,21 @@ public class Course implements Serializable {
 	public String getCourseCode() {
 		return mCourseCode;
 	}
+	
 	public void setCourseCode(String mCourseCode) {
 		this.mCourseCode = mCourseCode;
 	}
-	public List<Session> getSessions() {
+	
+	public List<Session> getSessions () {
 		return mSessions;
 	}
-	public void setSessions(List<Session> mSessions) {
-		this.mSessions = mSessions;
+	
+	public Session getSession(int location) {
+		return mSessions.get(location);
+	}
+	
+	public void addSession(Session session) {
+		mSessions.add(session);
 	}
 	
 }

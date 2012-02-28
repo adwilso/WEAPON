@@ -102,7 +102,6 @@ public class TimetableController {
 
 		case ConditionCodes.V_LOAD_TIMETABLE:
 			loadTimetable(msg);
-			msg.what = ConditionCodes.C_TIMETABLE_LOADING;
 			break;
 
 		case ConditionCodes.V_LAUNCH_TIMETABLE_CREATION_FORM:
@@ -123,8 +122,13 @@ public class TimetableController {
 			launchCreationForm(msg);
 			break;
 			
-		case ConditionCodes.V_CREATE_EVENT:
-			
+		case ConditionCodes.V_GET_TIMETABLE:
+			if (mTimetables == null)
+				loadTimetable(msg);
+			msg.obj = mTimetables.get(0);
+			msg.what = ConditionCodes.C_TIMETABLE_RETRIEVED;
+			break;
+
 		}
 
 		// Post the outcome message to all attached handlers
@@ -160,11 +164,6 @@ public class TimetableController {
 						message.what = ConditionCodes.C_TIMETABLE_LOADED;
 						message.obj = mTimetables.get(i).getName();
 						mHandler.sendMessage(message);
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
 					}
 				}
 				// If it is null, make a new one

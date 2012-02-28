@@ -126,4 +126,12 @@ public class TimetableMainView extends Activity implements OnClickListener,
 		mStatusTextView.setText("Unknown message received");
 		return false;
 	}
+	
+	@Override
+	protected void onDestroy()
+	{
+		super.onDestroy();
+		
+		mController.removeHandler(mHandler);
+	}
 }

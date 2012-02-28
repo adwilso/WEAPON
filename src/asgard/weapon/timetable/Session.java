@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class Session implements Serializable{
 
 	private static final long serialVersionUID = 1101524987457494622L;
-	private int mTime;
+	private String mTime;
 	private int mDate;
 	private String mDescription;
 	
@@ -18,16 +18,16 @@ public class Session implements Serializable{
 	
 	}
 	
-	public Session(int time, int date, String description){
+	public Session(String time, int date, String description){
 		setTime(time);
 		setDate(date);
 		setDescription(description);
 	}
 	
-	public int getTime() {
+	public String getTime() {
 		return mTime;
 	}
-	public void setTime(int mTime) {
+	public void setTime(String mTime) {
 		this.mTime = mTime;
 	}
 	public int getDate() {

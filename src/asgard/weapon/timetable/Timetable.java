@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -21,7 +22,7 @@ public class Timetable implements Serializable {
 	private static final String FILENAME = "timetable.data";
 
 	protected String mName;
-	protected List<Session> mSessions;
+	protected List<Course> mCourses;
 
 	public Timetable(String name) {
 		mName = name;
@@ -35,12 +36,36 @@ public class Timetable implements Serializable {
 		mName = name;
 	}
 
-	public synchronized void addSession(Session session) {
-		mSessions.add(session);
+	public synchronized void addSession(int course, Session session) {
+		mCourses.get(course).addSession(session);
 	}
 
-	public synchronized Session getSession(int index) {
-		return mSessions.get(index);
+	// Return all the sessions at a given date
+	public synchronized List<Session> getSessionsAtDate(int date)
+	{
+		List<Session> sessionsAtDate = new ArrayList<Session>();
+		for(Course course : mCourses){
+			for (Session session : course.getSessions()) {
+				if (session.getDate() == date){
+					sessionsAtDate.add(session);
+				}
+			}
+		}
+		return sessionsAtDate;
+	}
+	
+	// Return all sessions in a given course
+	public synchronized List<Session> getSessionsInCourse(Course c)
+	{
+		for (Course course : mCourses) {
+			if (course == c)
+				return course.getSessions();
+		}
+		return null;
+	}
+	
+	public synchronized Course getCourse(int index) {
+		return mCourses.get(index);
 	}
 
 	/*

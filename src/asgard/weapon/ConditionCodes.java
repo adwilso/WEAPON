@@ -25,7 +25,9 @@ public interface ConditionCodes {
 	
 	public final int V_LAUNCH_TIMETABLE_CREATION_FORM = 20;
 	public final int V_LAUNCH_COURSE_CREATION_FORM = 21;
-	public final int V_CREATE_EVENT = 22;
+	public final int V_ADD_SESSION = 22;
+	
+	public final int V_GET_TIMETABLE = 30;
 	
 	public final int C_TIMETABLE_SAVING = 100;
 	public final int C_TIMETABLE_SAVED = 101;
@@ -44,6 +46,7 @@ public interface ConditionCodes {
 	public final int C_GET_ACTIVITY = 108;
 
 	public final int C_TEST_NULL = 109;
+	public final int C_TIMETABLE_RETRIEVED = 115;
 	
 	public final int C_TIMETABLE_DELETED = 110;
 }
