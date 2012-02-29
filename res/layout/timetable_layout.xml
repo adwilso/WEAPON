@@ -10,7 +10,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:numColumns="auto_fit"
-        android:columnWidth="30dp" >
+        android:columnWidth="40dp" >
     </GridView>
 
     <GridView
