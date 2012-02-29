@@ -1,6 +1,5 @@
 package asgard.weapon.timetable;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,6 +48,7 @@ public class TimetableDayView extends ListActivity implements OnClickListener,
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
+
 	}
 	
 	private void displayListItems()
