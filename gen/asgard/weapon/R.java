@@ -10,6 +10,7 @@ package asgard.weapon;
 public final class R {
     public static final class array {
         public static final int course_dates=0x7f050001;
+        public static final int course_durations=0x7f050002;
         public static final int course_times=0x7f050000;
     }
     public static final class attr {
@@ -18,28 +19,33 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int course_creation_form_add_button=0x7f060009;
-        public static final int course_creation_form_date_spinner=0x7f060006;
-        public static final int course_creation_form_date_title=0x7f060005;
-        public static final int course_creation_form_description_box=0x7f060008;
-        public static final int course_creation_form_description_title=0x7f060007;
-        public static final int course_creation_form_name_box=0x7f060001;
-        public static final int course_creation_form_name_title=0x7f060000;
-        public static final int course_creation_form_time_spinner=0x7f060004;
-        public static final int course_creation_form_time_title=0x7f060003;
-        public static final int course_creation_form_title=0x7f060002;
-        public static final int load_button=0x7f060013;
-        public static final int main_delete_button=0x7f060014;
-        public static final int new_timetable=0x7f060012;
-        public static final int relativeLayout1=0x7f060015;
-        public static final int save_button=0x7f060011;
-        public static final int status_text_view=0x7f060010;
-        public static final int timetable_creation_form_edit_text=0x7f06000b;
-        public static final int timetable_creation_form_new_course_button=0x7f06000c;
-        public static final int timetable_creation_form_submit_button=0x7f06000d;
-        public static final int timetable_creation_form_text_view=0x7f06000a;
-        public static final int timetable_main_view=0x7f06000f;
-        public static final int timetable_title_layout=0x7f06000e;
+        public static final int course_creation_form_add_button=0x7f060000;
+        public static final int course_creation_form_day_spinner=0x7f06000a;
+        public static final int course_creation_form_day_title=0x7f06000c;
+        public static final int course_creation_form_description_box=0x7f060001;
+        public static final int course_creation_form_description_title=0x7f060003;
+        public static final int course_creation_form_duration_spinner=0x7f060009;
+        public static final int course_creation_form_location_box=0x7f060002;
+        public static final int course_creation_form_location_title=0x7f060006;
+        public static final int course_creation_form_name_box=0x7f060005;
+        public static final int course_creation_form_name_title=0x7f060004;
+        public static final int course_creation_form_time_picker=0x7f060007;
+        public static final int course_creation_form_time_title=0x7f060008;
+        public static final int course_form_duration_title=0x7f06000b;
+        public static final int listView1=0x7f06001a;
+        public static final int load_button=0x7f060016;
+        public static final int main_delete_button=0x7f060017;
+        public static final int main_select_timetable_button=0x7f060019;
+        public static final int new_timetable=0x7f060015;
+        public static final int relativeLayout1=0x7f060018;
+        public static final int save_button=0x7f060014;
+        public static final int status_text_view=0x7f060013;
+        public static final int timetable_creation_form_edit_text=0x7f06000e;
+        public static final int timetable_creation_form_new_course_button=0x7f06000f;
+        public static final int timetable_creation_form_submit_button=0x7f060010;
+        public static final int timetable_creation_form_text_view=0x7f06000d;
+        public static final int timetable_main_view=0x7f060012;
+        public static final int timetable_title_layout=0x7f060011;
     }
     public static final class layout {
         public static final int course_creation_form=0x7f030000;
@@ -48,6 +54,7 @@ public final class R {
         public static final int timetable_day_view=0x7f030003;
         public static final int timetable_layout=0x7f030004;
         public static final int timetable_main_view=0x7f030005;
+        public static final int timetable_selection_form=0x7f030006;
     }
     public static final class string {
         public static final int app_name=0x7f040001;

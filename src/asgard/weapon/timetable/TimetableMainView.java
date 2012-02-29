@@ -73,6 +73,11 @@ public class TimetableMainView extends Activity implements OnClickListener,
 			handler.sendMessage(message);
 			break;
 			
+		case R.id.main_select_timetable_button:
+			message.what = ConditionCodes.V_SELECT_TIMETABLE;
+			handler.sendMessage(message);
+			break;
+			
 			// Finally, send the message to the controller
 		default:
 			handler.sendMessage(message);

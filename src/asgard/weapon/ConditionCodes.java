@@ -19,6 +19,7 @@ public interface ConditionCodes {
 	public final int V_CREATE_TIMETABLE = 3;
 	public final int V_MODIFY_TIMETABLE = 4;
 	public final int V_DISPLAY_TIMETABLE = 5;
+	public final int V_SELECT_TIMETABLE = 6;
 	
 		
 	public final int V_CLOSE_NEW_TIMETABLE = 12;

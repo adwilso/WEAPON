@@ -56,6 +56,7 @@ public class TimetableController {
 	private Handler mHandler; // Controller's Handler
 
 	private List<Timetable> mTimetables; // Reference to the current timetable
+	private Timetable mCurrentTimetable;
 
 	public static synchronized TimetableController getController() {
 		if (mController == null) {
@@ -77,6 +78,7 @@ public class TimetableController {
 		};
 
 		mTimetables = new ArrayList<Timetable>();
+		
 	}
 
 	public Handler getHandler() {
@@ -115,6 +117,7 @@ public class TimetableController {
 
 		case ConditionCodes.V_CREATE_TIMETABLE:
 			mTimetables.add((Timetable) msg.obj);
+			mCurrentTimetable = (Timetable)msg.obj;
 			msg.what = ConditionCodes.C_TIMETABLE_CREATED;
 			break;
 			
@@ -125,8 +128,17 @@ public class TimetableController {
 		case ConditionCodes.V_GET_TIMETABLE:
 			if (mTimetables == null)
 				loadTimetable(msg);
+			mCurrentTimetable = mTimetables.get(0);
 			msg.obj = mTimetables.get(0);
 			msg.what = ConditionCodes.C_TIMETABLE_RETRIEVED;
+			break;
+			
+		case ConditionCodes.V_ADD_SESSION:
+			mCurrentTimetable.addSession(0, (Session)msg.obj);
+			break;
+			
+		case ConditionCodes.V_SELECT_TIMETABLE:
+			//listTimetables();
 			break;
 
 		}
@@ -173,6 +185,15 @@ public class TimetableController {
 			}
 		}).start();
 		msg.what = ConditionCodes.C_TIMETABLE_LOADING;
+	}
+	
+	private void listTimetables(Message msg) {
+
+		if (msg.obj instanceof TimetableMainView) {
+			Intent intent = new Intent((Activity) msg.obj,
+					TimetableCreationForm.class);
+			((Activity) msg.obj).startActivity(intent);
+		}
 	}
 
 	private void deleteTimetable(Message msg) {

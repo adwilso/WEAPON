@@ -9,8 +9,10 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import asgard.weapon.ConditionCodes;
 import asgard.weapon.R;
+import java.lang.Number;
 
 public class CourseCreationForm extends Activity implements OnClickListener,
 		Handler.Callback {
@@ -19,9 +21,12 @@ public class CourseCreationForm extends Activity implements OnClickListener,
 
 	private Handler mHandler;
 
-	private Spinner mDateSpinner;
-	private Spinner mTimeSpinner;
+	private Spinner mDaySpinner;
+	private Spinner mDurationSpinner;
+	private TimePicker mTimePicker;
 	private EditText mDescriptionText;
+	private EditText mLocationText;
+	private EditText mNameText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,23 +39,28 @@ public class CourseCreationForm extends Activity implements OnClickListener,
 		mController = TimetableController.getController();
 		mController.addHandler(mHandler);
 
-		mDateSpinner = (Spinner) findViewById(R.id.course_creation_form_date_spinner);
-		mTimeSpinner = (Spinner) findViewById(R.id.course_creation_form_time_spinner);
+		mDaySpinner = (Spinner) findViewById(R.id.course_creation_form_day_spinner);
+		mDurationSpinner = (Spinner) findViewById(R.id.course_creation_form_duration_spinner);
+		mTimePicker = (TimePicker) findViewById(R.id.course_creation_form_time_picker);
 		mDescriptionText = (EditText) findViewById(R.id.course_creation_form_description_box);
+		mLocationText = (EditText) findViewById(R.id.course_creation_form_location_box);
+		mNameText = (EditText) findViewById(R.id.course_creation_form_name_box);
 
 		ArrayAdapter<CharSequence> dateAdapter = ArrayAdapter
 				.createFromResource(this, R.array.course_dates,
 						android.R.layout.simple_spinner_item);
 		dateAdapter
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		mDateSpinner.setAdapter(dateAdapter);
+		mDaySpinner.setAdapter(dateAdapter);
 
-		ArrayAdapter<CharSequence> timeAdapter = ArrayAdapter
-				.createFromResource(this, R.array.course_times,
+		
+		ArrayAdapter<CharSequence> durationAdapter = ArrayAdapter
+				.createFromResource(this, R.array.course_durations,
 						android.R.layout.simple_spinner_item);
-		timeAdapter
+		durationAdapter
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		mTimeSpinner.setAdapter(timeAdapter);
+		mDurationSpinner.setAdapter(durationAdapter);
+
 	}
 
 	@Override
@@ -62,9 +72,15 @@ public class CourseCreationForm extends Activity implements OnClickListener,
 		switch (v.getId()) {
 		case R.id.course_creation_form_add_button:
 			message.what = ConditionCodes.V_ADD_SESSION;
-			Session s = new Session(mTimeSpinner.getSelectedItem().toString(),
-					Integer.parseInt(mDateSpinner.getSelectedItem().toString()), 
-					mDescriptionText.getText().toString());
+			//Session s = new Session(mTimePicker.getSelectedItem().toString(),
+					//Integer.parseInt(mDateSpinner.getSelectedItem().toString()), 
+					//mDescriptionText.getText().toString());
+			
+			//int startHour, int startMin, float duration, int day, String description, String location
+			
+			Session s = new Session(mTimePicker.getCurrentHour().intValue(), mTimePicker.getCurrentMinute().intValue(), 
+					 Float.parseFloat(mDurationSpinner.getSelectedItem().toString()), mDaySpinner.getSelectedItemPosition()+1,
+					mDescriptionText.getText().toString(), mLocationText.getText().toString());
 			message.obj = s;
 			handler.dispatchMessage(message);
 
