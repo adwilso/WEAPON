@@ -26,6 +26,7 @@ public class TimetableDayView extends ListActivity implements OnClickListener,
 	private int mDayOfWeek;
 	private SessionAdapter mSessionAdapter;
 
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.timetable_day_view);

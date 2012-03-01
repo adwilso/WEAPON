@@ -12,7 +12,6 @@ import android.widget.Spinner;
 import android.widget.TimePicker;
 import asgard.weapon.ConditionCodes;
 import asgard.weapon.R;
-import java.lang.Number;
 
 public class CourseCreationForm extends Activity implements OnClickListener,
 		Handler.Callback {

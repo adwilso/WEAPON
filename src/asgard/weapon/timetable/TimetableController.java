@@ -73,6 +73,7 @@ public class TimetableController {
 		mHandlerThread.start();
 
 		mHandler = new Handler(mHandlerThread.getLooper()) {
+			@Override
 			public void handleMessage(android.os.Message msg) {
 				TimetableController.this.handleMessage(msg);
 			}
