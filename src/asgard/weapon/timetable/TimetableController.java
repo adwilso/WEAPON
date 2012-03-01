@@ -79,14 +79,15 @@ public class TimetableController {
 			}
 		};
 
-		mTimetables = new ArrayList<Timetable>();
+		mTimetables = new ArrayList<Timetable>(10);
 
 		// Load the timetable, set head of list to current timetable
 		loadTimetable(context);
-		mCurrentTimetable = mTimetables.get(0);
 		
 		// If nothing was returned by load, make a new empty timetable 
-		if (mCurrentTimetable == null)
+		if (mTimetables.size() > 0)
+			mCurrentTimetable = mTimetables.get(0);
+		else
 			mCurrentTimetable = new Timetable("Default");
 	}
 
