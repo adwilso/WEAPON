@@ -10,14 +10,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.EditText;
 import android.widget.TabHost;
-import android.widget.TextView;
 import asgard.weapon.ConditionCodes;
 import asgard.weapon.R;
 
 public class TimetableMainView extends TabActivity implements Handler.Callback {
 
+	private final String LOG = "MAIN_VIEW";
+	
 	private Handler mHandler;
 
 	private TimetableController mController;
@@ -49,31 +49,31 @@ public class TimetableMainView extends TabActivity implements Handler.Callback {
 		switch (msg.what) {
 
 		case ConditionCodes.C_TIMETABLE_LOADED:
-			Log.d("MAIN_VIEW", "Loaded");
+			Log.d(LOG, "Loaded");
 			return true;
 
 		case ConditionCodes.C_TIMETABLE_SAVING:
-			Log.d("MAIN_VIEW", "Saving");
+			Log.d(LOG, "Saving");
 			return true;
 
 		case ConditionCodes.C_TIMETABLE_SAVED:
-			Log.d("MAIN_VIEW", "Saved");
+			Log.d(LOG, "Saved");
 			return true;
 
 		case ConditionCodes.C_TIMETABLE_CLOSED:
-			Log.d("MAIN_VIEW", "Closed");
+			Log.d(LOG, "Closed");
 			return true;
 
 		case ConditionCodes.C_TIMETABLE_DELETED:
-			Log.d("MAIN_VIEW", "Deleted");
+			Log.d(LOG, "Deleted");
 			return true;
 
 		case ConditionCodes.C_TIMETABLE_CREATED:
-			Log.d("MAIN_VIEW", "Created");
+			Log.d(LOG, "Created");
 			return true;
 		}
 
-		Log.d("MAIN_VIEW", "Unkown message");
+		Log.d(LOG, "Unknown message");
 		return false;
 	}
 

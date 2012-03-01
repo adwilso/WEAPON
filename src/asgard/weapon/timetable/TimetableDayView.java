@@ -50,7 +50,6 @@ public class TimetableDayView extends ListActivity implements OnClickListener,
 
 	@Override
 	public boolean handleMessage(Message msg) {
-		// TODO Auto-generated method stub
 		switch (msg.what) {
 		case ConditionCodes.C_TIMETABLE_RETRIEVED:
 			mTimetable = (Timetable) msg.obj;
@@ -68,7 +67,11 @@ public class TimetableDayView extends ListActivity implements OnClickListener,
 	// Displays all of the sessions in the day
 	private void displayListItems()
 	{
-		ArrayList<Session> dates = (ArrayList<Session>) mTimetable.getSessionsAtDate(mDayOfWeek);
+		ArrayList<Session> dates = new ArrayList<Session>();//(ArrayList<Session>) mTimetable.getSessionsAtDate(mDayOfWeek);
+		Session sess1 = new Session(8, 30, 2, 5, "Worst lab", "TEB 244");
+		Session sess2 = new Session(11, 30, 1, 5, "Best class", "SEB 1054");
+		dates.add(sess1);
+		dates.add(sess2);
 		
 		mSessionAdapter = new SessionAdapter(this, R.layout.timetable_day_view_item, dates);
 		this.setListAdapter(mSessionAdapter);

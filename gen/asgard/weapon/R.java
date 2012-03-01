@@ -19,7 +19,7 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int bottom_item=0x7f070012;
+        public static final int bottom_item=0x7f070013;
         public static final int course_creation_form_add_button=0x7f070000;
         public static final int course_creation_form_day_spinner=0x7f07000a;
         public static final int course_creation_form_day_title=0x7f07000c;
@@ -33,19 +33,20 @@ public final class R {
         public static final int course_creation_form_time_picker=0x7f070007;
         public static final int course_creation_form_time_title=0x7f070008;
         public static final int course_form_duration_title=0x7f07000b;
-        public static final int listView1=0x7f070014;
-        public static final int tab_host_layout=0x7f070013;
+        public static final int listView1=0x7f070015;
+        public static final int tab_host_layout=0x7f070014;
         public static final int timetable_creation_form_edit_text=0x7f07000e;
         public static final int timetable_creation_form_new_course_button=0x7f07000f;
         public static final int timetable_creation_form_submit_button=0x7f070010;
         public static final int timetable_creation_form_text_view=0x7f07000d;
-        public static final int timetable_menu_delete=0x7f070018;
-        public static final int timetable_menu_edit=0x7f070017;
-        public static final int timetable_menu_load=0x7f07001a;
-        public static final int timetable_menu_new=0x7f070015;
-        public static final int timetable_menu_save=0x7f070016;
-        public static final int timetable_menu_select=0x7f070019;
-        public static final int top_item=0x7f070011;
+        public static final int timetable_day_view_title_bar=0x7f070011;
+        public static final int timetable_menu_delete=0x7f070019;
+        public static final int timetable_menu_edit=0x7f070018;
+        public static final int timetable_menu_load=0x7f07001b;
+        public static final int timetable_menu_new=0x7f070016;
+        public static final int timetable_menu_save=0x7f070017;
+        public static final int timetable_menu_select=0x7f07001a;
+        public static final int top_item=0x7f070012;
     }
     public static final class layout {
         public static final int course_creation_form=0x7f030000;
