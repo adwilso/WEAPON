@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/timetable_menu_new"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="New"/>
+    <item
+        android:id="@+id/timetable_menu_save"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="Save"/>
+    <item
+        android:id="@+id/timetable_menu_edit"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Edit"/>
+    <item
+        android:id="@+id/timetable_menu_delete"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="Delete"/>
+    <item
+        android:id="@+id/timetable_menu_select"
+        android:icon="@android:drawable/ic_menu_set_as"
+        android:title="Select"/>
+    <item
+        android:id="@+id/timetable_menu_load"
+        android:icon="@android:drawable/ic_menu_recent_history"
+        android:title="Load"/>
+
+</menu>

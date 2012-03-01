@@ -23,12 +23,11 @@ public class Timetable implements Serializable {
 
 	protected String mName;
 	protected List<Course> mCourses;
-	protected Course mMisc;
 
 	public Timetable(String name) {
 		mName = name;
-		mMisc = new Course ("Blank");
-		mCourses.add(mMisc);
+		mCourses = new ArrayList<Course>();
+		mCourses.add(new Course("Default"));
 	}
 
 	public synchronized String getName() {

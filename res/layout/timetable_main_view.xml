@@ -1,73 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/status_text_view"
+    <LinearLayout
+        android:id="@+id/tab_host_layout"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello" />
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/status_text_view"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="57dp"
-        android:onClick="onClick"
-        android:text="Save" />
+        <TextView
+            android:id="@+id/status_text_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/hello" />
 
-    <Button
-        android:id="@+id/new_timetable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/save_button"
-        android:layout_below="@+id/save_button"
-        android:layout_marginTop="60dp"
-        android:onClick="onClick"
-        android:text="Create" />
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/load_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/new_timetable"
-        android:layout_centerHorizontal="true"
-        android:onClick="onClick"
-        android:text="Load" />
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/main_delete_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/load_button"
-        android:layout_alignBottom="@+id/load_button"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="29dp"
-        android:onClick="onClick"
-        android:text="Delete" />
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="16dp" >
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/main_select_timetable_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/new_timetable"
-        android:layout_alignBottom="@+id/new_timetable"
-        android:layout_alignRight="@+id/main_delete_button"
-        android:text="Select Timetable" />
-
-</RelativeLayout>
+</TabHost>

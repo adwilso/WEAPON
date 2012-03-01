@@ -2,8 +2,6 @@ package asgard.weapon.timetable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-
 import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;

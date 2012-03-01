@@ -9,8 +9,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:onClick="onClick"
         android:text="Add" />
-
+
     <EditText
         android:id="@+id/course_creation_form_description_box"
         android:layout_width="wrap_content"
@@ -77,7 +78,7 @@
         android:layout_marginBottom="48dp"
         android:text="Time"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
     <EditText
         android:id="@+id/course_creation_form_location_box"
         android:layout_width="wrap_content"
@@ -86,7 +87,7 @@
         android:layout_alignBottom="@+id/course_creation_form_location_title"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/course_creation_form_name_title" />
-
+
     <Spinner
         android:id="@+id/course_creation_form_duration_spinner"
         android:layout_width="wrap_content"
@@ -95,7 +96,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/course_creation_form_time_picker"
         android:layout_marginTop="14dp" />
-
+
     <Spinner
         android:id="@+id/course_creation_form_day_spinner"
         android:layout_width="wrap_content"

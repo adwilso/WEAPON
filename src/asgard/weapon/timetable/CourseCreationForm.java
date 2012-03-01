@@ -53,7 +53,6 @@ public class CourseCreationForm extends Activity implements OnClickListener,
 				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		mDaySpinner.setAdapter(dateAdapter);
 
-		
 		ArrayAdapter<CharSequence> durationAdapter = ArrayAdapter
 				.createFromResource(this, R.array.course_durations,
 						android.R.layout.simple_spinner_item);
@@ -72,15 +71,14 @@ public class CourseCreationForm extends Activity implements OnClickListener,
 		switch (v.getId()) {
 		case R.id.course_creation_form_add_button:
 			message.what = ConditionCodes.V_ADD_SESSION;
-			//Session s = new Session(mTimePicker.getSelectedItem().toString(),
-					//Integer.parseInt(mDateSpinner.getSelectedItem().toString()), 
-					//mDescriptionText.getText().toString());
-			
-			//int startHour, int startMin, float duration, int day, String description, String location
-			
-			Session s = new Session(mTimePicker.getCurrentHour().intValue(), mTimePicker.getCurrentMinute().intValue(), 
-					 Float.parseFloat(mDurationSpinner.getSelectedItem().toString()), mDaySpinner.getSelectedItemPosition()+1,
-					mDescriptionText.getText().toString(), mLocationText.getText().toString());
+
+			Session s = new Session(mTimePicker.getCurrentHour().intValue(),
+					mTimePicker.getCurrentMinute().intValue(),
+					Float.parseFloat(mDurationSpinner.getSelectedItem()
+							.toString()),
+					mDaySpinner.getSelectedItemPosition() + 1, mDescriptionText
+							.getText().toString(), mLocationText.getText()
+							.toString());
 			message.obj = s;
 			handler.dispatchMessage(message);
 

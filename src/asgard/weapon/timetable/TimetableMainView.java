@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -11,8 +14,7 @@ import android.widget.TextView;
 import asgard.weapon.ConditionCodes;
 import asgard.weapon.R;
 
-public class TimetableMainView extends Activity implements OnClickListener,
-		Handler.Callback {
+public class TimetableMainView extends Activity implements Handler.Callback {
 
 	private TextView mStatusTextView;
 	public EditText mEditTextView;
@@ -41,50 +43,6 @@ public class TimetableMainView extends Activity implements OnClickListener,
 	}
 
 	/*
-	 * Defines what to do when certain widgets are pressed
-	 */
-	@Override
-	public void onClick(View v) {
-		// Retrieve handler and message with default values
-		Handler handler = mController.getHandler();
-		Message message = handler.obtainMessage(ConditionCodes.V_DO_NOTHING,
-				this);
-
-		// Set the message depending on what UI element was interacted with
-		switch (v.getId()) {
-
-		case R.id.load_button:
-			message.what = ConditionCodes.V_LOAD_TIMETABLE;
-			handler.sendMessage(message);
-			break;
-
-		case R.id.save_button:
-			message.what = ConditionCodes.V_SAVE_TIMETABLE;
-			handler.sendMessage(message);
-			break;
-
-		case R.id.new_timetable:
-			message.what = ConditionCodes.V_LAUNCH_TIMETABLE_CREATION_FORM;
-			handler.sendMessage(message);
-			break;
-			
-		case R.id.main_delete_button:
-			message.what = ConditionCodes.V_DELETE_TIMETABLE;
-			handler.sendMessage(message);
-			break;
-			
-		case R.id.main_select_timetable_button:
-			message.what = ConditionCodes.V_SELECT_TIMETABLE;
-			handler.sendMessage(message);
-			break;
-			
-			// Finally, send the message to the controller
-		default:
-			handler.sendMessage(message);
-		}	
-	}
-
-	/*
 	 * Updates the UI based on messages received
 	 */
 	@Override
@@ -95,48 +53,98 @@ public class TimetableMainView extends Activity implements OnClickListener,
 			msg.obj = this;
 			mController.getHandler().sendMessage(msg);
 			return true;
-		
+
 		case ConditionCodes.C_TIMETABLE_LOADING:
 			mStatusTextView.setText("Loading timetable");
 			return true;
-			
+
 		case ConditionCodes.C_TIMETABLE_LOADED:
 			mStatusTextView.setText(msg.obj.toString());
 			return true;
-			
+
 		case ConditionCodes.C_TIMETABLE_SAVING:
 			mStatusTextView.setText("Saving timetable");
-			
+
 		case ConditionCodes.C_TIMETABLE_SAVED:
 			mStatusTextView.setText("Timetable saved");
 			return true;
-		
+
 		case ConditionCodes.C_TIMETABLE_CLOSED:
 			mStatusTextView.setText("Creation form closed");
 			return true;
-		
+
 		case ConditionCodes.C_TEST_NULL:
-			mStatusTextView.setText((String)msg.obj);
+			mStatusTextView.setText((String) msg.obj);
 			return true;
-		
+
 		case ConditionCodes.C_TIMETABLE_DELETED:
 			mStatusTextView.setText("Timetable deleted");
 			return true;
-			
+
 		case ConditionCodes.C_TIMETABLE_CREATED:
 			mStatusTextView.setText("Timetable created");
 			return true;
 		}
-		
+
 		mStatusTextView.setText("Unknown message received");
 		return false;
 	}
-	
+
 	@Override
-	protected void onDestroy()
-	{
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater menuInflater = getMenuInflater();
+		menuInflater.inflate(R.menu.timetable_menu, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		// Retrieve handler and message with default values
+		Handler handler = mController.getHandler();
+		Message message = handler.obtainMessage(ConditionCodes.V_DO_NOTHING,
+				this);
+
+		switch (item.getItemId()) {
+		case R.id.timetable_menu_load:
+			message.what = ConditionCodes.V_LOAD_TIMETABLE;
+			handler.sendMessage(message);
+			return true;
+
+		case R.id.timetable_menu_new:
+			message.what = ConditionCodes.V_LAUNCH_TIMETABLE_CREATION_FORM;
+			handler.sendMessage(message);
+			return true;
+
+		case R.id.timetable_menu_save:
+			message.what = ConditionCodes.V_SAVE_TIMETABLE;
+			handler.sendMessage(message);
+			return true;
+
+		case R.id.timetable_menu_delete:
+			message.what = ConditionCodes.V_DELETE_TIMETABLE;
+			handler.sendMessage(message);
+			return true;
+
+		case R.id.timetable_menu_edit:
+			return true;
+
+		case R.id.timetable_menu_select:
+			message.what = ConditionCodes.V_SELECT_TIMETABLE;
+			handler.sendMessage(message);
+			return true;
+
+		default:
+			handler.sendMessage(message);
+			return super.onOptionsItemSelected(item);
+
+		}
+	}
+
+	@Override
+	protected void onDestroy() {
 		super.onDestroy();
-		
+
 		mController.removeHandler(mHandler);
 	}
 }
