@@ -7,8 +7,6 @@ import android.os.Message;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import asgard.weapon.ConditionCodes;
@@ -38,7 +36,7 @@ public class TimetableMainView extends Activity implements Handler.Callback {
 		mHandler = new Handler(this);
 
 		// Get a reference to controller and register this view to its handlers
-		mController = TimetableController.getController();
+		mController = TimetableController.getController(this);
 		mController.addHandler(mHandler);
 	}
 
@@ -48,15 +46,6 @@ public class TimetableMainView extends Activity implements Handler.Callback {
 	@Override
 	public boolean handleMessage(Message msg) {
 		switch (msg.what) {
-		case ConditionCodes.C_GET_ACTIVITY:
-			msg.what = ConditionCodes.V_LOAD_TIMETABLE;
-			msg.obj = this;
-			mController.getHandler().sendMessage(msg);
-			return true;
-
-		case ConditionCodes.C_TIMETABLE_LOADING:
-			mStatusTextView.setText("Loading timetable");
-			return true;
 
 		case ConditionCodes.C_TIMETABLE_LOADED:
 			mStatusTextView.setText(msg.obj.toString());

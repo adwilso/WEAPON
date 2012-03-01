@@ -33,8 +33,7 @@ public interface ConditionCodes {
 	public final int C_TIMETABLE_SAVING = 100;
 	public final int C_TIMETABLE_SAVED = 101;
 	public final int C_TIMETABLE_NOT_SAVED = 102;
-	
-	public final int C_TIMETABLE_LOADING = 103;
+
 	public final int C_TIMETABLE_LOADED = 104;
 	public final int C_TIMETABLE_NOT_LOADED = 105;
 	

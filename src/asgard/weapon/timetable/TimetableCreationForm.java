@@ -36,7 +36,7 @@ public class TimetableCreationForm extends Activity implements OnClickListener,
 
 		mName = (EditText) findViewById(R.id.timetable_creation_form_edit_text);
 
-		mController = TimetableController.getController();
+		mController = TimetableController.getController(this);
 		mController.addHandler(mHandler);
 	}
 

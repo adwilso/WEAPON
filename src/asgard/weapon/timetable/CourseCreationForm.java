@@ -36,7 +36,7 @@ public class CourseCreationForm extends Activity implements OnClickListener,
 
 		mHandler = new Handler(this);
 
-		mController = TimetableController.getController();
+		mController = TimetableController.getController(this);
 		mController.addHandler(mHandler);
 
 		mDaySpinner = (Spinner) findViewById(R.id.course_creation_form_day_spinner);

@@ -6,8 +6,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
 import asgard.weapon.ConditionCodes;
 import asgard.weapon.R;
 
@@ -25,8 +23,6 @@ public class TimetableSelectionForm extends Activity implements OnClickListener,
 
 	private Handler mHandler;
 
-	private Button [] timetables;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -37,7 +33,7 @@ public class TimetableSelectionForm extends Activity implements OnClickListener,
 
 		//mName = (EditText) findViewById(R.id.timetable_creation_form_edit_text);
 
-		mController = TimetableController.getController();
+		mController = TimetableController.getController(this);
 		mController.addHandler(mHandler);
 	}
 

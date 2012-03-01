@@ -58,14 +58,15 @@ public class TimetableController {
 	private List<Timetable> mTimetables; // Reference to the current timetable
 	private Timetable mCurrentTimetable;
 
-	public static synchronized TimetableController getController() {
+	public static synchronized TimetableController getController(Context context) {
 		if (mController == null) {
-			mController = new TimetableController();
+			mController = new TimetableController(context);
 		}
 		return mController;
 	}
 
-	private TimetableController() {
+	// Loads a TimetableController, loading any Timetables into memory
+	private TimetableController(Context context) {
 		mOutgoingHandlers = new ArrayList<Handler>();
 
 		mHandlerThread = new HandlerThread("Controller Handler");
@@ -78,7 +79,14 @@ public class TimetableController {
 		};
 
 		mTimetables = new ArrayList<Timetable>();
+
+		// Load the timetable, set head of list to current timetable
+		loadTimetable(context);
+		mCurrentTimetable = mTimetables.get(0);
 		
+		// If nothing was returned by load, make a new empty timetable 
+		if (mCurrentTimetable == null)
+			mCurrentTimetable = new Timetable("Default");
 	}
 
 	public Handler getHandler() {
@@ -101,9 +109,9 @@ public class TimetableController {
 			saveTimetable(msg);
 			msg.what = ConditionCodes.C_TIMETABLE_SAVING;
 			break;
-
+			
 		case ConditionCodes.V_LOAD_TIMETABLE:
-			loadTimetable(msg);
+			loadTimetable((Context)msg.obj);
 			break;
 
 		case ConditionCodes.V_LAUNCH_TIMETABLE_CREATION_FORM:
@@ -126,10 +134,7 @@ public class TimetableController {
 			break;
 			
 		case ConditionCodes.V_GET_TIMETABLE:
-			if (mTimetables == null)
-				loadTimetable(msg);
-			mCurrentTimetable = mTimetables.get(0);
-			msg.obj = mTimetables.get(0);
+			msg.obj = mCurrentTimetable;
 			msg.what = ConditionCodes.C_TIMETABLE_RETRIEVED;
 			break;
 			
@@ -140,7 +145,6 @@ public class TimetableController {
 		case ConditionCodes.V_SELECT_TIMETABLE:
 			//listTimetables();
 			break;
-
 		}
 
 		// Post the outcome message to all attached handlers
@@ -160,8 +164,8 @@ public class TimetableController {
 		}
 	}
 
-	private void loadTimetable(Message msg) {
-		final Context CONTEXT = (Context) msg.obj;
+	private void loadTimetable(Context context) {
+		final Context CONTEXT = context;
 
 		new Thread(new Runnable() {
 			@Override
@@ -184,7 +188,6 @@ public class TimetableController {
 				}
 			}
 		}).start();
-		msg.what = ConditionCodes.C_TIMETABLE_LOADING;
 	}
 	
 	private void listTimetables(Message msg) {

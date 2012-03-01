@@ -21,6 +21,7 @@ public class TimetableDayView extends ListActivity implements OnClickListener,
 
 	private Handler mHandler;
 	private TimetableController mController;
+	
 	private Timetable mTimetable;
 	private int mDayOfWeek;
 	private SessionAdapter mSessionAdapter;
@@ -33,7 +34,7 @@ public class TimetableDayView extends ListActivity implements OnClickListener,
 		mHandler = new Handler(this);
 
 		// Get a reference to controller and register this view to its handlers
-		mController = TimetableController.getController();
+		mController = TimetableController.getController(this);
 		mController.addHandler(mHandler);
 
 		// Retrieve the current day of the week
