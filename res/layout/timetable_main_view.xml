@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/tabhost"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:layout_height="fill_parent" >
 
     <LinearLayout
         android:id="@+id/tab_host_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/status_text_view"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/hello" />
 
         <TabWidget
             android:id="@android:id/tabs"

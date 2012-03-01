@@ -24,6 +24,12 @@
         <activity android:name=".timetable.CourseCreationForm">
             
         </activity>
+        <activity android:name=".timetable.TimetableDayView">
+            
+        </activity> 
+        <activity android:name=".timetable.TimetableWeekView">
+            
+        </activity>    
     </application>
 
 </manifest>

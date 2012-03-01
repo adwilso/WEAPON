@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 import asgard.weapon.ConditionCodes;
 import asgard.weapon.R;
@@ -80,7 +81,7 @@ public class TimetableDayView extends ListActivity implements OnClickListener,
 		mController.removeHandler(mHandler);
 	}
 
-	private class SessionAdapter extends ArrayAdapter<Session> {
+	private class SessionAdapter extends ArrayAdapter<Session> implements ListAdapter {
 		ArrayList<Session> mItems;
 
 		SessionAdapter(Context context, int textViewResourceId,

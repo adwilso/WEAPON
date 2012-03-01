@@ -1,6 +1,7 @@
 package asgard.weapon.timetable;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 /**
  * 
@@ -16,6 +17,7 @@ public class Course implements Serializable {
 	
 	public Course (String code) {
 		mCourseCode = code;
+		mSessions = new ArrayList<Session>();
 	}
 	
 	public String getCourseCode() {

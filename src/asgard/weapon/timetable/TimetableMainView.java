@@ -1,21 +1,22 @@
 package asgard.weapon.timetable;
 
-import android.app.Activity;
+import android.app.TabActivity;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TabHost;
 import android.widget.TextView;
 import asgard.weapon.ConditionCodes;
 import asgard.weapon.R;
 
-public class TimetableMainView extends Activity implements Handler.Callback {
-
-	private TextView mStatusTextView;
-	public EditText mEditTextView;
+public class TimetableMainView extends TabActivity implements Handler.Callback {
 
 	private Handler mHandler;
 
@@ -29,15 +30,15 @@ public class TimetableMainView extends Activity implements Handler.Callback {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.timetable_main_view);
 
-		// Do initial UI preparation
-		mStatusTextView = (TextView) findViewById(R.id.status_text_view);
-
 		// Make handler to pass to the controller
 		mHandler = new Handler(this);
 
 		// Get a reference to controller and register this view to its handlers
 		mController = TimetableController.getController(this);
 		mController.addHandler(mHandler);
+
+		initializeTabs();
+
 	}
 
 	/*
@@ -48,34 +49,31 @@ public class TimetableMainView extends Activity implements Handler.Callback {
 		switch (msg.what) {
 
 		case ConditionCodes.C_TIMETABLE_LOADED:
-			mStatusTextView.setText(msg.obj.toString());
+			Log.d("MAIN_VIEW", "Loaded");
 			return true;
 
 		case ConditionCodes.C_TIMETABLE_SAVING:
-			mStatusTextView.setText("Saving timetable");
+			Log.d("MAIN_VIEW", "Saving");
+			return true;
 
 		case ConditionCodes.C_TIMETABLE_SAVED:
-			mStatusTextView.setText("Timetable saved");
+			Log.d("MAIN_VIEW", "Saved");
 			return true;
 
 		case ConditionCodes.C_TIMETABLE_CLOSED:
-			mStatusTextView.setText("Creation form closed");
-			return true;
-
-		case ConditionCodes.C_TEST_NULL:
-			mStatusTextView.setText((String) msg.obj);
+			Log.d("MAIN_VIEW", "Closed");
 			return true;
 
 		case ConditionCodes.C_TIMETABLE_DELETED:
-			mStatusTextView.setText("Timetable deleted");
+			Log.d("MAIN_VIEW", "Deleted");
 			return true;
 
 		case ConditionCodes.C_TIMETABLE_CREATED:
-			mStatusTextView.setText("Timetable created");
+			Log.d("MAIN_VIEW", "Created");
 			return true;
 		}
 
-		mStatusTextView.setText("Unknown message received");
+		Log.d("MAIN_VIEW", "Unkown message");
 		return false;
 	}
 
@@ -128,6 +126,33 @@ public class TimetableMainView extends Activity implements Handler.Callback {
 			return super.onOptionsItemSelected(item);
 
 		}
+	}
+
+	private void initializeTabs() {
+
+		Resources res = getResources();
+		TabHost tabHost = getTabHost();
+		TabHost.TabSpec spec;
+		Intent intent;
+
+		// Create an Intent to launch an Activity for the tab
+		intent = new Intent().setClass(this, TimetableDayView.class);
+		// Initialize a TabSpec for each tab and add it to the TabHost
+		spec = tabHost
+				.newTabSpec("day")
+				.setIndicator("Day",
+						res.getDrawable(android.R.drawable.ic_menu_day))
+				.setContent(intent);
+		tabHost.addTab(spec);
+
+		intent = new Intent().setClass(this, TimetableWeekView.class);
+		spec = tabHost
+				.newTabSpec("week")
+				.setIndicator("Week",
+						res.getDrawable(android.R.drawable.ic_menu_week))
+				.setContent(intent);
+		tabHost.addTab(spec);
+
 	}
 
 	@Override
