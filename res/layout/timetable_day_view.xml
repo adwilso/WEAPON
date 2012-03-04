@@ -4,26 +4,61 @@
     android:layout_height="fill_parent"
     android:numColumns="auto_fit" >
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/timetable_day_view_title_bar"
         android:layout_width="fill_parent"
         android:layout_height="30dp"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true" >
 
-        <TextView
-            android:layout_width="fill_parent"
+        <ImageView
+            android:id="@+id/timetable_day_view_left_button"
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="previous arrow"
+            android:src="@android:drawable/ic_media_rew" />
+
+        <TextView
+            android:id="@+id/timetable_day_view_day_text"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/background_dark"
             android:text="Current Day"
-            android:textColor="@android:color/primary_text_dark_nodisable"
-            android:background="@android:color/background_dark" />
-    </LinearLayout>
-
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="fill_parent"
+            android:textColor="@android:color/primary_text_dark_nodisable" />
+
+        <ImageView
+            android:id="@+id/timetable_day_view_right_button"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:contentDescription="next day"
+            android:src="@android:drawable/ic_media_ff" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/calFrameLayout"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/timetable_day_view_title_bar"
-        android:numColumns="auto_fit" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" >
+    </FrameLayout>
+
+    <ListView
+        android:id="@+id/hourBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/calFrameLayout" >
+    </ListView>
+
+    <ListView
+        android:id="@+id/eventBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/calFrameLayout"
+        android:layout_alignParentBottom="true" >
+    </ListView>
 
 </RelativeLayout>

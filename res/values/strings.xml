@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="hello">Hello World, WEAPONActivity!</string>
     <string name="app_name">WEAPON</string>
-    <string-array name="course_times" >
+
+    <string-array name="course_times">
         <item>8:00 AM</item>
         <item>8:30 AM </item>
         <item>9:00 AM</item>
@@ -28,7 +30,7 @@
         <item>7:00 PM</item>
         <item>7:30 PM</item>
         <item>8:00 PM</item>
-        <item>8:30 PM</item>   
+        <item>8:30 PM</item>
     </string-array>
     <string-array name="course_dates">
         <item>Mon</item>
@@ -40,22 +42,36 @@
         <item>Sun</item>
     </string-array>
     <string-array name="course_durations">
-        <item >0.5</item>
-        <item >1</item>
-        <item >1.5</item>
-        <item >2</item>
-        <item >2.5</item>
-        <item >3</item>
-        <item >3.5</item>
-        <item >4</item>
-        <item >4.5</item>
-        <item >5</item>
-        <item >5.5</item>
-        <item >6</item>
-        <item >6.5</item>
-        <item >7</item>
-        <item >7.5</item>
-        <item >8</item>
-        <item >24</item>
+        <item>0.5</item>
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+        <item>2.5</item>
+        <item>3</item>
+        <item>3.5</item>
+        <item>4</item>
+        <item>4.5</item>
+        <item>5</item>
+        <item>5.5</item>
+        <item>6</item>
+        <item>6.5</item>
+        <item>7</item>
+        <item>7.5</item>
+        <item>8</item>
+        <item>24</item>
     </string-array>
+    
+    <string name="session_time_title">Time</string>
+    <string name="session_day_title">Day</string>
+    <string name="session_duration_title">Duration</string>
+    <string name="session_location_title">Location</string>
+    <string name="session_description_title">Description</string>
+    <string name="session_creation_title">Create session</string>
+    <string name="session_creation_add_button">Add</string>
+    <string name="session_creation_cancel_button">Cancel</string>
+    <string name="session_course_title">Course</string>
+    <string name="session_course_dialog_title">Name</string>
+    <string name="session_course_dialog_create_button">Create</string>
+    <string name="session_course_dialog_cancel_button">Cancel</string>
+
 </resources>
