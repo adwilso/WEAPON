@@ -19,7 +19,7 @@ public final class R {
         public static final int icon=0x7f020000;
     }
     public static final class id {
-        public static final int bottom_item=0x7f070036;
+        public static final int bottom_item=0x7f070034;
         public static final int calFrameLayout=0x7f070032;
         public static final int course_creation_form_add_button=0x7f070000;
         public static final int course_creation_form_day_spinner=0x7f07000a;
@@ -34,9 +34,7 @@ public final class R {
         public static final int course_creation_form_time_picker=0x7f070007;
         public static final int course_creation_form_time_title=0x7f070008;
         public static final int course_form_duration_title=0x7f07000b;
-        public static final int eventBar=0x7f070034;
-        public static final int hourBar=0x7f070033;
-        public static final int listView1=0x7f070038;
+        public static final int listView1=0x7f070036;
         public static final int session_course_course=0x7f070015;
         public static final int session_course_creation_dialog=0x7f07000d;
         public static final int session_course_dialog_button_row=0x7f070010;
@@ -66,7 +64,7 @@ public final class R {
         public static final int session_location_location=0x7f070026;
         public static final int session_time_time_picker=0x7f070029;
         public static final int session_time_title=0x7f070028;
-        public static final int tab_host_layout=0x7f070037;
+        public static final int tab_host_layout=0x7f070035;
         public static final int timetable_creation_form_edit_text=0x7f07002b;
         public static final int timetable_creation_form_new_course_button=0x7f07002c;
         public static final int timetable_creation_form_submit_button=0x7f07002d;
@@ -75,13 +73,13 @@ public final class R {
         public static final int timetable_day_view_left_button=0x7f07002f;
         public static final int timetable_day_view_right_button=0x7f070031;
         public static final int timetable_day_view_title_bar=0x7f07002e;
-        public static final int timetable_menu_delete=0x7f07003c;
-        public static final int timetable_menu_edit=0x7f07003b;
-        public static final int timetable_menu_load=0x7f07003e;
-        public static final int timetable_menu_new=0x7f070039;
-        public static final int timetable_menu_save=0x7f07003a;
-        public static final int timetable_menu_select=0x7f07003d;
-        public static final int top_item=0x7f070035;
+        public static final int timetable_menu_delete=0x7f07003a;
+        public static final int timetable_menu_edit=0x7f070039;
+        public static final int timetable_menu_load=0x7f07003c;
+        public static final int timetable_menu_new=0x7f070037;
+        public static final int timetable_menu_save=0x7f070038;
+        public static final int timetable_menu_select=0x7f07003b;
+        public static final int top_item=0x7f070033;
     }
     public static final class layout {
         public static final int course_creation_form=0x7f030000;

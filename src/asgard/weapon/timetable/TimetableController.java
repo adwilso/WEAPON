@@ -140,6 +140,12 @@ public class TimetableController {
 			msg.what = ConditionCodes.C_TIMETABLE_RETRIEVED;
 			break;
 			
+		case ConditionCodes.V_GET_COURSES:
+			msg.obj = mCurrentTimetable.getCourses();
+			msg.what = ConditionCodes.C_COURSES_RETRIEVED;
+			break;
+			
+			
 		case ConditionCodes.V_ADD_SESSION:
 			mCurrentTimetable.addSession(0, (Session)msg.obj);
 			break;

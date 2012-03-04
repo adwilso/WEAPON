@@ -20,7 +20,6 @@ public interface ConditionCodes {
 	public final int V_MODIFY_TIMETABLE = 4;
 	public final int V_DISPLAY_TIMETABLE = 5;
 	public final int V_SELECT_TIMETABLE = 6;
-	
 		
 	public final int V_CLOSE_NEW_TIMETABLE = 12;
 	
@@ -29,6 +28,7 @@ public interface ConditionCodes {
 	public final int V_ADD_SESSION = 22;
 	
 	public final int V_GET_TIMETABLE = 30;
+	public final int V_GET_COURSES = 31;
 	
 	public final int C_TIMETABLE_SAVING = 100;
 	public final int C_TIMETABLE_SAVED = 101;
@@ -46,7 +46,9 @@ public interface ConditionCodes {
 	public final int C_GET_ACTIVITY = 108;
 
 	public final int C_TEST_NULL = 109;
-	public final int C_TIMETABLE_RETRIEVED = 115;
-	
 	public final int C_TIMETABLE_DELETED = 110;
+
+	public final int C_TIMETABLE_RETRIEVED = 115;
+
+	public final int C_COURSES_RETRIEVED = 116;;
 }

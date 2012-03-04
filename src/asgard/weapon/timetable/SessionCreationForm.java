@@ -6,6 +6,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,60 +22,97 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import asgard.weapon.ConditionCodes;
 import asgard.weapon.R;
 
 public class SessionCreationForm extends Activity implements OnClickListener,
-		OnItemSelectedListener {
+		OnItemSelectedListener, Handler.Callback {
 
 	private static String NEW_COURSE = "New";
 
+	// Dealing with the options list
 	private ArrayList<View> mItems;
 	private EventAdapter mAdapter;
 	private ListView mOptionsList;
-	
+
+	// Time Picker and its listener
 	private TimePicker mTimePicker;
 	private TimePicker.OnTimeChangedListener mTimeChangeListner;
-	
+
+	// Dialog for creating new courses
 	private EditText mCourseName;
-	
 	private AlertDialog mCreateCourseDialog;
+
+	// List of courses
+	private ArrayList<Course> mCourses;
 	
-	private ArrayList<String> mCourses;
-	private ArrayAdapter<String> mCourseAdapter;
+	// Dealing with the spinners
+	private Spinner mCourseSpinner;
+	private ArrayAdapter<Course> mCourseAdapter;
 	
-	private LinearLayout mCourseLayout;
+	private Spinner mWeekSpinner;
+	private ArrayAdapter<String> mWeekAdapter;
+
+
+	// handler and controller reference
+	private Handler mHandler;
+	private TimetableController mController;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) { 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.session_creation_form);
 
-		setCourses();
+		mHandler = new Handler(this);
 
-		// Set the onTimeChangeListner to accept only minutes and hours
-		mTimeChangeListner = new TimePicker.OnTimeChangedListener() {
-			@Override
-			public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
-				updateDisplay(view, hourOfDay, minute);
-			}
-		};
+		mController = TimetableController.getController(this);
+		mController.addHandler(mHandler);
 
-		setViewItems();
+		// Request courses from the controller
+		Message message = mController.getHandler().obtainMessage(
+				ConditionCodes.V_GET_COURSES);
+		message.sendToTarget();
 
-		// Make a new adapter
-		mAdapter = new EventAdapter(this, mItems);
-
-		mOptionsList = (ListView) findViewById(R.id.session_creation_options);
-		mOptionsList.setAdapter(mAdapter);
 	}
 
-	private void setCourses() {
-		// Set course names
-		mCourses = new ArrayList<String>();
-		mCourses.add("a");
-		mCourses.add("b");
-		mCourses.add(NEW_COURSE);
+	@Override
+	public boolean handleMessage(Message msg) {
+		switch (msg.what) {
+		case ConditionCodes.C_COURSES_RETRIEVED:
+			inflateLayout(msg.obj);
+			return true;
+		}
+		return false;
+	}
 
+	@SuppressWarnings("unchecked")
+	private void inflateLayout(Object courses) {
+
+		try {
+			mCourses = (ArrayList<Course>) courses;
+			if (mCourses == null) {
+				mCourses = new ArrayList<Course>();
+			}
+			mCourses.add(new Course(NEW_COURSE));
+
+			// Set the onTimeChangeListner to accept only 30 minute intervals
+			mTimeChangeListner = new TimePicker.OnTimeChangedListener() {
+				@Override
+				public void onTimeChanged(TimePicker view, int hourOfDay,
+						int minute) {
+					updateDisplay(view, hourOfDay, minute);
+				}
+			};
+
+			setViewItems();
+
+			// Make a new adapter and inflate into mOptionsList
+			mAdapter = new EventAdapter(this, mItems);
+			mOptionsList = (ListView) findViewById(R.id.session_creation_options);
+			mOptionsList.setAdapter(mAdapter);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void updateDisplay(TimePicker timePicker, int hourOfDay, int minute) {
@@ -132,19 +171,23 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 			// Retrieve the name
 			String name = mCourseName.getText().toString();
 
-			// Update the list
-			mCourseAdapter.remove(NEW_COURSE);
-			mCourseAdapter.add(name);
-			mCourseAdapter.add(NEW_COURSE);
+			mCourses.add(mCourses.size() - 1, new Course(name));
 			
-			mCourseLayout.refreshDrawableState();
-
+			// Refresh the list
+			mOptionsList.setAdapter(mAdapter);
+			
 			mCreateCourseDialog.dismiss();
-
+	
 			break;
-
+			
 		case R.id.session_course_dialog_cancel_button:
 			mCreateCourseDialog.dismiss();
+			break;
+		case R.id.session_creation_add_button:
+			
+			break;
+
+		case R.id.session_creation_cancel_button:
 			break;
 		}
 	}
@@ -176,7 +219,7 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
-		// DO NOTHING
+		return;
 	}
 
 	/**
@@ -192,7 +235,7 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 
 		// These items dictate the order in which items appear
 		private static final int COURSE = 0;
-		private static final int DAY = 1;
+		private static final int DAY_OF_WEEK = 1;
 		private static final int TIME = 2;
 		private static final int DURATION = 3;
 		private static final int LOCATION = 4;
@@ -248,28 +291,37 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 			if (convertView == null) {
 				LinearLayout ll = new LinearLayout(mParent);
 
-				// After setting on click listener to this activity, load
-				// appropriate item layout
+				// Load appropriate layout and set on click listener
 				switch (type) {
 				case COURSE:
 					ll = (LinearLayout) mInflator.inflate(
 							R.layout.session_creation_course_item, null);
-					mCourseLayout = ll;
-					if (ll.getChildAt(1) instanceof Spinner) {
-						Spinner s = (Spinner) ll.getChildAt(1);
-						mCourseAdapter = new ArrayAdapter<String>(mParent,
+					if (ll.getChildAt(1) instanceof Spinner) {		
+						mCourseSpinner = (Spinner) ll.getChildAt(1);
+						mCourseAdapter = new ArrayAdapter<Course>(mParent,
 								android.R.layout.simple_spinner_item, mCourses);
 						mCourseAdapter
 								.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-						s.setAdapter(mCourseAdapter);
-						s.setOnItemSelectedListener(mParent);
+						mCourseSpinner.setAdapter(mCourseAdapter);
+						mCourseSpinner.setOnItemSelectedListener(mParent);
 					}
 					view = (View) ll;
 					break;
 
-				case DAY:
+				case DAY_OF_WEEK:
 					ll = (LinearLayout) mInflator.inflate(
 							R.layout.session_creation_day_item, null);
+					if (ll.getChildAt(1) instanceof Spinner) {
+						mWeekSpinner = (Spinner) ll.getChildAt(1);
+						String[] weeks = getResources().getStringArray(
+								R.array.course_dates);
+						mWeekAdapter = new ArrayAdapter<String>(mParent,
+								android.R.layout.simple_spinner_item, weeks);
+						mWeekAdapter
+								.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+						mWeekSpinner.setAdapter(mWeekAdapter);
+						mWeekSpinner.setOnItemSelectedListener(mParent);
+					}
 					view = (View) ll;
 					break;
 

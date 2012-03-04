@@ -32,13 +32,15 @@
             android:id="@+id/session_creation_add_button"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="@string/session_creation_add_button" />
+            android:text="@string/session_creation_add_button"
+            android:onClick="onClick" />
 
         <Button
             android:id="@+id/session_creation_cancel_button"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="@string/session_creation_cancel_button" />
+            android:text="@string/session_creation_cancel_button"
+            android:onClick="onClick" />
     </LinearLayout>
 
 </LinearLayout>

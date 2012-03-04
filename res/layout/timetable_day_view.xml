@@ -45,20 +45,12 @@
     </FrameLayout>
 
     <ListView
-        android:id="@+id/hourBar"
+        android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignRight="@+id/calFrameLayout" >
-    </ListView>
-
-    <ListView
-        android:id="@+id/eventBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/calFrameLayout"
-        android:layout_alignParentBottom="true" >
     </ListView>
 
 </RelativeLayout>

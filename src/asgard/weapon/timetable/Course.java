@@ -39,5 +39,9 @@ public class Course implements Serializable {
 	public void addSession(Session session) {
 		mSessions.add(session);
 	}
+	@Override
+	public String toString(){
+		return mCourseCode;
+	}
 	
 }

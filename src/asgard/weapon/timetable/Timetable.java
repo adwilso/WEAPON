@@ -29,6 +29,10 @@ public class Timetable implements Serializable {
 		mCourses = new ArrayList<Course>();
 		mCourses.add(new Course("Default"));
 	}
+	
+	public synchronized List<Course> getCourses(){
+		return mCourses;
+	}
 
 	public synchronized String getName() {
 		return mName;
