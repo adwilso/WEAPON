@@ -22,6 +22,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TimePicker;
+import android.widget.Toast;
 import asgard.weapon.ConditionCodes;
 import asgard.weapon.R;
 
@@ -45,21 +46,20 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 
 	// List of courses
 	private ArrayList<Course> mCourses;
-	
+
 	// Dealing with the spinners
 	private Spinner mCourseSpinner;
 	private ArrayAdapter<Course> mCourseAdapter;
-	
+
 	private Spinner mWeekSpinner;
 	private ArrayAdapter<String> mWeekAdapter;
-
 
 	// handler and controller reference
 	private Handler mHandler;
 	private TimetableController mController;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) { 
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.session_creation_form);
 
@@ -69,9 +69,8 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 		mController.addHandler(mHandler);
 
 		// Request courses from the controller
-		Message message = mController.getHandler().obtainMessage(
-				ConditionCodes.V_GET_COURSES);
-		message.sendToTarget();
+		mController.getHandler().obtainMessage(ConditionCodes.V_GET_COURSES)
+				.sendToTarget();
 
 	}
 
@@ -80,6 +79,12 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 		switch (msg.what) {
 		case ConditionCodes.C_COURSES_RETRIEVED:
 			inflateLayout(msg.obj);
+			return true;
+		case ConditionCodes.C_SESSION_ADDED:
+			finish();
+			return true;
+		case ConditionCodes.C_SESSION_NOT_ADDED:
+			Toast.makeText(this, "New Session not created", 1000).show();
 			return true;
 		}
 		return false;
@@ -172,22 +177,26 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 			String name = mCourseName.getText().toString();
 
 			mCourses.add(mCourses.size() - 1, new Course(name));
-			
+
 			// Refresh the list
 			mOptionsList.setAdapter(mAdapter);
-			
+
 			mCreateCourseDialog.dismiss();
-	
+
 			break;
-			
+
 		case R.id.session_course_dialog_cancel_button:
 			mCreateCourseDialog.dismiss();
 			break;
 		case R.id.session_creation_add_button:
-			
+			mCourses.remove(mCourses.size()-1);
+			mController.getHandler()
+					.obtainMessage(ConditionCodes.V_ADD_SESSION, mCourses)
+					.sendToTarget();
 			break;
 
 		case R.id.session_creation_cancel_button:
+			finish();
 			break;
 		}
 	}
@@ -221,14 +230,6 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 	public void onNothingSelected(AdapterView<?> arg0) {
 		return;
 	}
-
-	/**
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * */
 
 	// A private adapter to return appropriate item in List View
 	private class EventAdapter extends BaseAdapter implements ListAdapter {
@@ -296,7 +297,7 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 				case COURSE:
 					ll = (LinearLayout) mInflator.inflate(
 							R.layout.session_creation_course_item, null);
-					if (ll.getChildAt(1) instanceof Spinner) {		
+					if (ll.getChildAt(1) instanceof Spinner) {
 						mCourseSpinner = (Spinner) ll.getChildAt(1);
 						mCourseAdapter = new ArrayAdapter<Course>(mParent,
 								android.R.layout.simple_spinner_item, mCourses);

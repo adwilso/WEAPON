@@ -1,179 +1,109 @@
 package asgard.weapon.timetable;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
-import android.app.ListActivity;
-import android.content.Context;
+import asgard.weapon.R;
+import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-import asgard.weapon.ConditionCodes;
-import asgard.weapon.R;
 
-public class TimetableDayView extends ListActivity implements OnClickListener,
-		Handler.Callback {
+public class TimetableDayView extends Activity {
 
-	private Handler mHandler;
-	private TimetableController mController;
+	String[] mHours;
 
-	private Timetable mTimetable;
-	private int mDayOfWeek;
-	private SessionAdapter mSessionAdapter;
+	ArrayList<Session> mSessions;
 
-	private TextView mDayTitle;
-	private ImageView mLeftImage;
-	private ImageView mRightImage;
+	RelativeLayout mScreen;
+	RelativeLayout mSessionForeground;
 
+	LayoutInflater mLayoutInflator;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.timetable_day_view);
+		setContentView(R.layout.day_view);
 
-		// Make handler to pass to the controller
-		mHandler = new Handler(this);
+		// Load resources and inflate the layout
+		initialize();
+	}
 
-		// Get a reference to controller and register this view to its handlers
-		mController = TimetableController.getController(this);
-		mController.addHandler(mHandler);
+	private void initialize() {
 
-		// Retrieve the current day of the week
-		mDayOfWeek = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+		// Inflate all UI elements and resources
+		mSessionForeground = (RelativeLayout) findViewById(R.id.day_view_container);
+		mHours = getResources().getStringArray(R.array.course_times);
 
-		// Initialize UI elements
-		mDayTitle = (TextView) findViewById(R.id.timetable_day_view_day_text);
-		setDayOfWeek();
-		
-		mLeftImage = (ImageView) findViewById(R.id.timetable_day_view_left_button);
-		mRightImage = (ImageView) findViewById(R.id.timetable_day_view_right_button);
-		mLeftImage.setOnClickListener(this);
-		mRightImage.setOnClickListener(this);
+		drawBackground();
+		getSessions();
+		drawSessions();
+	}
+
+	// Make the background
+	public void drawBackground() {
+
+		LayoutInflater li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+		for (int i = 0; i < mHours.length; i += 2) {
+
+			// Inflate an item and add it to the background list
+			LinearLayout ll = (LinearLayout) li.inflate(R.layout.blank_session,
+					null);
+			ll.setId(i + 2);
+			TextView tv = (TextView) ll.findViewById(R.id.hour_text_box);
+			tv.setText(mHours[i]);
+
+			RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			try {
+				LinearLayout aboveView = (LinearLayout) findViewById(i);
+				int id = aboveView.getId();
+				lp.addRule(RelativeLayout.BELOW, id);
+				ll.setLayoutParams(lp);
+			} catch (Exception e) {
+				lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+				ll.setLayoutParams(lp);
+			}
+			mSessionForeground.addView(ll);
+		}
+
+	}
+
+	// Get (for now add) the sessions from the controller
+	private void getSessions() {
+		mSessions = new ArrayList<Session>();
+
+		mSessions.add(new Session(8, 30, 0.5f, 1, "My first class", "course1",
+				null));
+		mSessions.add(new Session(9, 00, 2.0f, 1, "My second class", "course2",
+				null));
+		mSessions.add(new Session(11, 00, 1.0f, 1, "My third class", "course3",
+				null));
+		mSessions.add(new Session(15, 30, 3.0f, 1, "My final class", "course4",
+				null));
+	}
 	
-		// Retrieve the current Timetable from the controller
-		Message message = mHandler.obtainMessage();
-		message.what = ConditionCodes.V_GET_TIMETABLE;
-		mController.getHandler().sendMessage(message);
-	}
+	// Loads the appropriate view for each session
+	public void drawSessions() {
+		for (Session s : mSessions) {
+			int position = s.getHour();
+			TextView tv = new TextView(this);
+			tv.setText("Test");
+			RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			try {
+				View v = mSessionForeground.getChildAt(position);
+				int id = v.getId();
+				lp.addRule(RelativeLayout.ALIGN_TOP, id);
+				mSessionForeground.addView(tv, lp);
+			} catch (Exception e) {
 
-	@Override
-	public boolean handleMessage(Message msg) {
-		switch (msg.what) {
-		case ConditionCodes.C_TIMETABLE_RETRIEVED:
-			mTimetable = (Timetable) msg.obj;
-			refresh();
-			return true;
-		}
-		return false;
-	}
-
-	private void setDayOfWeek() {
-		String day;
-		switch (mDayOfWeek) {
-		case 1:
-			day = "Sunday";
-			break;
-		case 2:
-			day = "Monday";
-			break;
-		case 3:
-			day = "Tuesday";
-			break;
-		case 4:
-			day = "Wednesday";
-			break;
-		case 5:
-			day = "Thursday";
-			break;
-		case 6:
-			day = "Friday";
-			break;
-		case 7:
-			day = "Saturday";
-			break;			
-		default:
-			day = "ERROR";
-			break;
-
-		}
-		mDayTitle.setText(day);
-	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.timetable_day_view_left_button:
-			if (--mDayOfWeek == 0)
-				mDayOfWeek = 7;
-			break;
-		case R.id.timetable_day_view_right_button:
-			if (++mDayOfWeek == 8)
-				mDayOfWeek = 1;
-			break;
-		}
-		refresh();
-	}
-
-	// Get all the sessions and set the date
-	private void refresh() {
-		ArrayList<Session> dates = new ArrayList<Session>();// (ArrayList<Session>)
-		setDayOfWeek();										// mTimetable.getSessionsAtDate(mDayOfWeek);
-
-		Session sess1 = new Session(8, 30, 2, 5, "Worst lab", "TEB 244");
-		Session sess2 = new Session(11, 30, 1, 5, "Best class", "SEB 1054");
-		dates.add(sess1);
-		dates.add(sess2);
-
-		mSessionAdapter = new SessionAdapter(this,
-				R.layout.timetable_day_view_item, dates);
-		this.setListAdapter(mSessionAdapter);
-	}
-
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-
-		mController.removeHandler(mHandler);
-	}
-
-	private class SessionAdapter extends ArrayAdapter<Session> implements
-			ListAdapter {
-		ArrayList<Session> mItems;
-
-		SessionAdapter(Context context, int textViewResourceId,
-				ArrayList<Session> items) {
-			super(context, textViewResourceId, items);
-			mItems = items;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			View v = convertView;
-			if (v == null) {
-				LayoutInflater vi = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				v = vi.inflate(R.layout.timetable_day_view_item, null);
 			}
-			Session ses = mItems.get(position);
-			if (ses != null) {
-				TextView tt = (TextView) v.findViewById(R.id.top_item);
-				TextView bt = (TextView) v.findViewById(R.id.bottom_item);
-				if (tt != null) {
-					tt.setText("Name: " + ses.getDescription());
-				}
 
-				if (bt != null) {
-					bt.setText("Status: " + ses.getTime());
-				}
-			}
-			return v;
 		}
 	}
 }

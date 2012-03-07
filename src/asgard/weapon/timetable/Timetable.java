@@ -34,6 +34,10 @@ public class Timetable implements Serializable {
 		return mCourses;
 	}
 
+	public synchronized void setCourses(List<Course> courses){
+		mCourses = courses;
+	}
+	
 	public synchronized String getName() {
 		return mName;
 	}

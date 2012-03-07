@@ -5,6 +5,22 @@
     <string name="app_name">WEAPON</string>
 
     <string-array name="course_times">
+        <item>12:00 AM</item>
+        <item>12:30 AM</item>
+        <item>1:00 AM</item>
+        <item>1:30 AM</item>
+        <item>2:00 AM</item>
+        <item>2:30 AM</item>
+        <item>3:00 AM</item>
+        <item>3:30 AM</item>
+        <item>4:00 AM</item>
+        <item>4:30 AM</item>
+        <item>5:00 AM</item>
+        <item>5:30 AM</item>
+        <item>6:00 AM</item>
+        <item>6:30 AM</item>
+        <item>7:00 AM</item>
+        <item>7:30 AM</item>
         <item>8:00 AM</item>
         <item>8:30 AM </item>
         <item>9:00 AM</item>
@@ -18,7 +34,7 @@
         <item>1:00 PM</item>
         <item>1:30 PM</item>
         <item>2:00 PM</item>
-        <item>2:30 AM</item>
+        <item>2:30 PM</item>
         <item>3:00 PM</item>
         <item>3:30 PM</item>
         <item>4:00 PM</item>
@@ -31,6 +47,12 @@
         <item>7:30 PM</item>
         <item>8:00 PM</item>
         <item>8:30 PM</item>
+        <item>9:00 PM</item>
+        <item>9:30 PM</item>
+        <item>10:00 PM</item>
+        <item>10:30 PM</item>
+        <item>11:00 PM</item>
+        <item>11:30 PM</item>
     </string-array>
     <string-array name="course_dates">
         <item>Sun</item>

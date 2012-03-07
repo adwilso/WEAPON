@@ -2,6 +2,7 @@ package asgard.weapon.timetable;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -83,8 +84,8 @@ public class TimetableController {
 
 		// Load the timetable, set head of list to current timetable
 		loadTimetable(context);
-		
-		// If nothing was returned by load, make a new empty timetable 
+
+		// If nothing was returned by load, make a new empty timetable
 		if (mTimetables.size() > 0)
 			mCurrentTimetable = mTimetables.get(0);
 		else
@@ -103,6 +104,7 @@ public class TimetableController {
 		mOutgoingHandlers.remove(handler);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void handleMessage(Message msg) {
 		// Deal with messages by calling appropriate functions
 		switch (msg.what) {
@@ -111,9 +113,9 @@ public class TimetableController {
 			saveTimetable(msg);
 			msg.what = ConditionCodes.C_TIMETABLE_SAVING;
 			break;
-			
+
 		case ConditionCodes.V_LOAD_TIMETABLE:
-			loadTimetable((Context)msg.obj);
+			loadTimetable((Context) msg.obj);
 			break;
 
 		case ConditionCodes.V_LAUNCH_TIMETABLE_CREATION_FORM:
@@ -127,39 +129,41 @@ public class TimetableController {
 
 		case ConditionCodes.V_CREATE_TIMETABLE:
 			mTimetables.add((Timetable) msg.obj);
-			mCurrentTimetable = (Timetable)msg.obj;
+			mCurrentTimetable = (Timetable) msg.obj;
 			msg.what = ConditionCodes.C_TIMETABLE_CREATED;
 			break;
-			
+
 		case ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM:
 			launchCreationForm(msg);
 			break;
-			
+
 		case ConditionCodes.V_GET_TIMETABLE:
 			msg.obj = mCurrentTimetable;
 			msg.what = ConditionCodes.C_TIMETABLE_RETRIEVED;
 			break;
-			
+
 		case ConditionCodes.V_GET_COURSES:
 			msg.obj = mCurrentTimetable.getCourses();
 			msg.what = ConditionCodes.C_COURSES_RETRIEVED;
 			break;
-			
-			
-		case ConditionCodes.V_ADD_SESSION:
-			mCurrentTimetable.addSession(0, (Session)msg.obj);
-			break;
-			
+
 		case ConditionCodes.V_SELECT_TIMETABLE:
-			//listTimetables();
+			// listTimetables();
 			break;
+
+		case ConditionCodes.V_ADD_SESSION:
+			try {
+				mCurrentTimetable.setCourses((List<Course>) msg.obj);
+				msg.what = ConditionCodes.C_SESSION_ADDED;
+			} catch (Exception e) {
+				msg.what = ConditionCodes.C_SESSION_NOT_ADDED;
+			}
 		}
 
 		// Post the outcome message to all attached handlers
 		notifyHandlers(msg.what, msg.arg1, msg.arg2, msg.obj);
 	}
 
-	
 	public void notifyHandlers(int what, int arg1, int arg2, Object obj) {
 		// Ensure the handler list isn't empty
 		if (!mOutgoingHandlers.isEmpty()) {
@@ -180,8 +184,8 @@ public class TimetableController {
 			public void run() {
 				// Load the timetable and send a message when done
 				mTimetables = Timetable.load(CONTEXT);
-				
-				//If it isn't null, pass to the view
+
+				// If it isn't null, pass to the view
 				if (mTimetables != null) {
 					for (int i = 0; i < mTimetables.size(); i++) {
 						Message message = mHandler.obtainMessage();
@@ -197,7 +201,7 @@ public class TimetableController {
 			}
 		}).start();
 	}
-	
+
 	private void listTimetables(Message msg) {
 
 		if (msg.obj instanceof TimetableMainView) {
@@ -223,7 +227,7 @@ public class TimetableController {
 			}
 		}).start();
 	}
-	
+
 	// Makes a TimetableCreationForm object (started in a new activity)
 	private void launchCreateTimetableActivity(Message msg) {
 
@@ -233,16 +237,11 @@ public class TimetableController {
 			((Activity) msg.obj).startActivity(intent);
 		}
 	}
-	
-	public void launchCreationForm(Message msg) {
-		
-		if (msg.obj instanceof TimetableCreationForm) {
-			Intent intent = new Intent((Activity) msg.obj,
-					CourseCreationForm.class);
-			((Activity) msg.obj).startActivity(intent);
-		}
-	}
 
+	public void launchCreationForm(Message msg) {
+
+		//TODO
+	}
 
 	public void submitCourseForm() {
 

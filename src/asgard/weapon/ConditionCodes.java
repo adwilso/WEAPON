@@ -50,5 +50,9 @@ public interface ConditionCodes {
 
 	public final int C_TIMETABLE_RETRIEVED = 115;
 
-	public final int C_COURSES_RETRIEVED = 116;;
+	public final int C_COURSES_RETRIEVED = 116;
+
+	public final int C_SESSION_ADDED = 130;
+
+	public final int C_SESSION_NOT_ADDED = 131;
 }

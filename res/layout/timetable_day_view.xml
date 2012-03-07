@@ -36,21 +36,14 @@
             android:src="@android:drawable/ic_media_ff" />
     </RelativeLayout>
 
-    <FrameLayout
-        android:id="@+id/calFrameLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" >
-    </FrameLayout>
-
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignRight="@+id/calFrameLayout" >
+        android:layout_below="@id/timetable_day_view_title_bar"
+        android:divider="@null" >
     </ListView>
 
 </RelativeLayout>
