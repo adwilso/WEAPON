@@ -18,6 +18,7 @@ public class MapControl {
 		//MapDisplay m = new MapDisplay();
 		//Intent i = new Intent(context.getContext(),MapDisplay.class);
 		//c.startActivity(i);
+		
 	}
 
 }
