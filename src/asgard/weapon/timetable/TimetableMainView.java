@@ -17,7 +17,7 @@ import asgard.weapon.R;
 public class TimetableMainView extends TabActivity implements Handler.Callback {
 
 	private final String LOG = "MAIN_VIEW";
-	
+
 	private Handler mHandler;
 
 	private TimetableController mController;
@@ -38,7 +38,6 @@ public class TimetableMainView extends TabActivity implements Handler.Callback {
 		mController.addHandler(mHandler);
 
 		initializeTabs();
-
 	}
 
 	/*
@@ -130,6 +129,7 @@ public class TimetableMainView extends TabActivity implements Handler.Callback {
 
 	private void initializeTabs() {
 
+		// Create the tabs
 		Resources res = getResources();
 		TabHost tabHost = getTabHost();
 		TabHost.TabSpec spec;
@@ -137,6 +137,7 @@ public class TimetableMainView extends TabActivity implements Handler.Callback {
 
 		// Create an Intent to launch an Activity for the tab
 		intent = new Intent().setClass(this, TimetableDayView.class);
+		
 		// Initialize a TabSpec for each tab and add it to the TabHost
 		spec = tabHost
 				.newTabSpec("day")
