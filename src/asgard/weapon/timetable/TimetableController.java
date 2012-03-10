@@ -13,7 +13,7 @@ import asgard.weapon.ConditionCodes;
 
 /**
  * 
- * @author Benjamin, Jarrett
+ * @author Benjamin
  * 
  *         Controller for all timetable interactions. Creates new threads to
  *         update Models and creates the bridge between the Views and Models.
