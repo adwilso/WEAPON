@@ -13,7 +13,7 @@ import asgard.weapon.ConditionCodes;
 
 /**
  * 
- * @author Benjamin
+ * @author Benjamin, Jarrett
  * 
  *         Controller for all timetable interactions. Creates new threads to
  *         update Models and creates the bridge between the Views and Models.
@@ -151,13 +151,14 @@ public class TimetableController {
 			// listTimetables();
 			break;
 
-		case ConditionCodes.V_ADD_SESSION:
+		case ConditionCodes.V_ADD_COURSES:
 			try {
 				mCurrentTimetable.setCourses((List<Course>) msg.obj);
 				msg.what = ConditionCodes.C_SESSION_ADDED;
 			} catch (Exception e) {
 				msg.what = ConditionCodes.C_SESSION_NOT_ADDED;
 			}
+			break;
 		}
 
 		// Post the outcome message to all attached handlers
@@ -240,7 +241,11 @@ public class TimetableController {
 
 	public void launchCreationForm(Message msg) {
 
-		//TODO
+		if (msg.obj instanceof TimetableDayView) {
+			Intent intent = new Intent((Activity) msg.obj,
+					SessionCreationForm.class);
+			((Activity) msg.obj).startActivity(intent);
+		}
 	}
 
 	public void submitCourseForm() {

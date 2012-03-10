@@ -26,6 +26,7 @@ public interface ConditionCodes {
 	public final int V_LAUNCH_TIMETABLE_CREATION_FORM = 20;
 	public final int V_LAUNCH_COURSE_CREATION_FORM = 21;
 	public final int V_ADD_SESSION = 22;
+	public final int V_ADD_COURSES = 23;
 	
 	public final int V_GET_TIMETABLE = 30;
 	public final int V_GET_COURSES = 31;

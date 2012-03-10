@@ -2,7 +2,6 @@ package asgard.weapon.timetable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -16,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
+import asgard.weapon.ConditionCodes;
 import asgard.weapon.R;
 
 public class TimetableDayView extends Activity implements OnClickListener,
@@ -35,6 +35,7 @@ public class TimetableDayView extends Activity implements OnClickListener,
 	private ImageView mRightButton;
 
 	private int mWeekday;
+	private Timetable mTimetable;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,8 @@ public class TimetableDayView extends Activity implements OnClickListener,
 		mHours = getResources().getStringArray(R.array.course_times);
 		mTitle = (TextView) findViewById(R.id.timetable_day_view_day_text);
 
-		mWeekday = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+		mWeekday = Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1;
+
 		mTitle.setText(getDayOfWeek());
 
 		mLeftButton = (ImageView) findViewById(R.id.timetable_day_view_left_button);
@@ -69,27 +71,27 @@ public class TimetableDayView extends Activity implements OnClickListener,
 		mRightButton.setOnClickListener(this);
 
 		drawBackground();
-		getSessions();
-		drawSessions();
+		mController.getHandler().obtainMessage(ConditionCodes.V_GET_TIMETABLE)
+				.sendToTarget();
 	}
 
 	// Get the day of the week
 	private String getDayOfWeek() {
 		switch (mWeekday) {
 		case 0:
-			return "Saturday";
-		case 1:
 			return "Sunday";
-		case 2:
+		case 1:
 			return "Monday";
-		case 3:
+		case 2:
 			return "Tuesday";
-		case 4:
+		case 3:
 			return "Wednesday";
-		case 5:
+		case 4:
 			return "Thursday";
-		case 6:
+		case 5:
 			return "Friday";
+		case 6:
+			return "Saturday";
 		}
 		return "Error";
 	}
@@ -109,6 +111,9 @@ public class TimetableDayView extends Activity implements OnClickListener,
 					.findViewById(R.id.day_view_top_section);
 			RelativeLayout bottomSection = (RelativeLayout) rl
 					.findViewById(R.id.day_view_bottom_section);
+
+			topSection.setOnClickListener(this);
+			bottomSection.setOnClickListener(this);
 
 			hourItem.setText(mHours[i]);
 			hourItem.setId(i + 2);
@@ -156,24 +161,12 @@ public class TimetableDayView extends Activity implements OnClickListener,
 			mScreen.addView(topSection);
 			mScreen.addView(bottomSection);
 		}
-
 	}
 
 	// Get (for now add) the sessions from the controller
 	private void getSessions() {
-		mSessions = new ArrayList<Session>();
 
-		mSessions.add(new Session(0, 0, 0.5f, 1, "My zeroth class", "course0",
-				null));
-
-		mSessions.add(new Session(8, 30, 0.5f, 1, "My first class", "course1",
-				null));
-		mSessions.add(new Session(9, 00, 2.0f, 1, "My second class", "course2",
-				null));
-		mSessions.add(new Session(11, 30, 1.0f, 1, "My third class", "course3",
-				null));
-		mSessions.add(new Session(23, 30, 3.0f, 1, "My final class", "course4",
-				null));
+		mSessions = (ArrayList<Session>) mTimetable.getSessionsAtDate(mWeekday);
 	}
 
 	// Loads the appropriate view for each session
@@ -262,6 +255,7 @@ public class TimetableDayView extends Activity implements OnClickListener,
 				mWeekday = 6;
 			}
 			clearSessions();
+			getSessions();
 			drawSessions();
 		}
 
@@ -270,16 +264,41 @@ public class TimetableDayView extends Activity implements OnClickListener,
 				mWeekday = 0;
 			}
 			clearSessions();
+			getSessions();
 			drawSessions();
+		}
+		if (v.getId() > 100 && v.getId() % 100 == 0) {
+			mController
+					.getHandler()
+					.obtainMessage(
+							ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM, this)
+					.sendToTarget();
 		}
 	}
 
 	@Override
 	public boolean handleMessage(Message msg) {
-		// TODO Auto-generated method stub
+		switch (msg.what) {
+		case (ConditionCodes.C_TIMETABLE_RETRIEVED):
+			mTimetable = (Timetable) msg.obj;
+			getSessions();
+			drawSessions();
+			return true;
+
+		case (ConditionCodes.C_SESSION_ADDED):
+			try {
+				clearSessions();
+				getSessions();
+				drawSessions();
+
+			} catch (Exception e) {
+
+			}
+			return true;
+		}
 		return false;
 	}
-	
+
 	// A private view that stores a reference to the session it represents
 	private class SessionView extends TextView {
 
