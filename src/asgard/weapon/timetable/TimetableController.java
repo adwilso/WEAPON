@@ -58,6 +58,9 @@ public class TimetableController {
 
 	private List<Timetable> mTimetables; // Reference to the current timetable
 	private Timetable mCurrentTimetable;
+	
+	private int mClickedTime;
+	private int mClickedWeekday;
 
 	public static synchronized TimetableController getController(Context context) {
 		if (mController == null) {
@@ -134,6 +137,9 @@ public class TimetableController {
 			break;
 
 		case ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM:
+			mClickedTime = msg.arg1;
+			mClickedWeekday = msg.arg2;
+			
 			launchCreationForm(msg);
 			break;
 
@@ -144,6 +150,8 @@ public class TimetableController {
 
 		case ConditionCodes.V_GET_COURSES:
 			msg.obj = mCurrentTimetable.getCourses();
+			msg.arg1 = mClickedTime;
+			msg.arg2 = mClickedWeekday;
 			msg.what = ConditionCodes.C_COURSES_RETRIEVED;
 			break;
 
@@ -245,6 +253,7 @@ public class TimetableController {
 			Intent intent = new Intent((Activity) msg.obj,
 					SessionCreationForm.class);
 			((Activity) msg.obj).startActivity(intent);
+			
 		}
 	}
 

@@ -118,7 +118,9 @@ public class TimetableDayView extends Activity implements OnClickListener,
 			hourItem.setText(mHours[i]);
 			hourItem.setId(i + 2);
 			topSection.setId(hourItem.getId() * 100);
+			topSection.setTag(i);
 			bottomSection.setId(hourItem.getId() * 10000);
+			bottomSection.setTag(i + 1);
 
 			View aboveView = findViewById(i);
 
@@ -225,10 +227,11 @@ public class TimetableDayView extends Activity implements OnClickListener,
 			}
 
 			// Ensure that layout being aligned to exists
-			if (position < 72) {
-				lp.addRule(RelativeLayout.ALIGN_BOTTOM,
-						mScreen.getChildAt(position).getId());
+			if (position >= 72) {
+				position = 71;
 			}
+			lp.addRule(RelativeLayout.ALIGN_BOTTOM, mScreen
+					.getChildAt(position).getId());
 
 			mScreen.addView(sessionView, lp);
 		}
@@ -267,12 +270,12 @@ public class TimetableDayView extends Activity implements OnClickListener,
 			getSessions();
 			drawSessions();
 		}
-		if (v.getId() > 100 && v.getId() % 100 == 0) {
-			mController
-					.getHandler()
-					.obtainMessage(
-							ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM, this)
-					.sendToTarget();
+		if (v.getId() % 100 == 0) {
+			Message msg = mController.getHandler().obtainMessage(
+					ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM, this);
+			msg.arg1 = (Integer) v.getTag();
+			msg.arg2 = mWeekday;
+			mController.getHandler().sendMessage(msg);
 		}
 	}
 
@@ -290,13 +293,19 @@ public class TimetableDayView extends Activity implements OnClickListener,
 				clearSessions();
 				getSessions();
 				drawSessions();
-
 			} catch (Exception e) {
 
 			}
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+
+		mController.removeHandler(mHandler);
 	}
 
 	// A private view that stores a reference to the session it represents

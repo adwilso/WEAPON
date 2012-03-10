@@ -83,9 +83,16 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 	private void inflateLayout(Message msg) {
 
 		mCourses = new ArrayList<String>();
+		int dayOfWeek = 0;
+		int startHour = 0;
+		int startMinute = 0;
+		
 		if (msg.obj != null) {
 			try{
 				mRetrievedCourses = (List<Course>) msg.obj;
+				startHour = msg.arg1 / 2;
+				startMinute = msg.arg1 % 2 * 30;
+				dayOfWeek = msg.arg2;
 			}
 			catch (Exception e){
 				
@@ -122,6 +129,7 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 
 		mWeekSpinner = (Spinner) this.findViewById(R.id.session_day_spinner);
 		mWeekSpinner.setAdapter(mWeekAdapter);
+		mWeekSpinner.setSelection(dayOfWeek);
 
 		// Create the time picker listener with overridden method
 		mTimeChangeListner = new TimePicker.OnTimeChangedListener() {
@@ -134,10 +142,11 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 		// instantiate time picker
 		mTimePicker = (TimePicker) this
 				.findViewById(R.id.session_time_time_picker);
+		
 		mTimePicker
 				.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
 		mTimePicker.setOnTimeChangedListener(mTimeChangeListner);
-		updateDisplay(mTimePicker, 0, 0);
+		updateDisplay(mTimePicker, startHour, startMinute);
 
 		// fill the duration with timeslots
 		mDurations = getResources().getStringArray(R.array.course_durations);
@@ -299,6 +308,10 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 		return false;
 	}
 
-	// A private adapter to return appropriate item in List View
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mController.removeHandler(mHandler);
+	}
 
 }
