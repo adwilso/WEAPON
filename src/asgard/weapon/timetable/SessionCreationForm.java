@@ -86,23 +86,21 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 		int dayOfWeek = 0;
 		int startHour = 0;
 		int startMinute = 0;
-		
+
 		if (msg.obj != null) {
-			try{
+			try {
 				mRetrievedCourses = (List<Course>) msg.obj;
 				startHour = msg.arg1 / 2;
 				startMinute = msg.arg1 % 2 * 30;
 				dayOfWeek = msg.arg2;
+			} catch (Exception e) {
+
 			}
-			catch (Exception e){
-				
-			}
-			
-			for (int i = 0; i < mRetrievedCourses.size(); i++){
+
+			for (int i = 0; i < mRetrievedCourses.size(); i++) {
 				mCourses.add(mRetrievedCourses.get(i).getCourseCode());
 			}
-		}
-		else{
+		} else {
 			mCourses.add("Default");
 		}
 
@@ -142,7 +140,7 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 		// instantiate time picker
 		mTimePicker = (TimePicker) this
 				.findViewById(R.id.session_time_time_picker);
-		
+
 		mTimePicker
 				.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
 		mTimePicker.setOnTimeChangedListener(mTimeChangeListner);
@@ -224,7 +222,7 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 		case R.id.session_course_dialog_cancel_button:
 			mCreateCourseDialog.dismiss();
 			break;
-			
+
 		case R.id.session_creation_add_button:
 
 			int position = 0;
@@ -233,8 +231,8 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 						.toString());
 				position = mCourseSpinner.getSelectedItemPosition();
 				mCreatedSession.setDay(mWeekSpinner.getSelectedItemPosition());
-				mCreatedSession
-						.setDescription(mDescription.getText().toString());
+				mCreatedSession.setDescription(mDescription.getText()
+						.toString());
 				mCreatedSession.setLocation(mLocation.getText().toString());
 				mCreatedSession.setTime(mTimePicker.getCurrentHour(),
 						mTimePicker.getCurrentMinute(), Float
@@ -243,14 +241,14 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 			} catch (Exception e) {
 
 			}
-			
+
 			mRetrievedCourses.get(position).addSession(mCreatedSession);
-			mController.getHandler()
-					.obtainMessage(ConditionCodes.V_ADD_COURSES, mRetrievedCourses)
-					.sendToTarget();
+			mController
+					.getHandler()
+					.obtainMessage(ConditionCodes.V_ADD_COURSES,
+							mRetrievedCourses).sendToTarget();
 
 			break;
-
 
 		case R.id.session_creation_cancel_button:
 			finish();
@@ -296,11 +294,14 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 		case ConditionCodes.C_COURSES_RETRIEVED:
 			inflateLayout(msg);
 			return true;
-		
+
 		case ConditionCodes.C_SESSION_ADDED:
+			mController.getHandler()
+					.obtainMessage(ConditionCodes.V_SAVE_TIMETABLE, this)
+					.sendToTarget();
 			finish();
 			return true;
-			
+
 		case ConditionCodes.C_SESSION_NOT_ADDED:
 			Toast.makeText(this, "New Session not created", 1000).show();
 			return true;

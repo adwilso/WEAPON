@@ -61,6 +61,8 @@ public class TimetableController {
 	
 	private int mClickedTime;
 	private int mClickedWeekday;
+	
+	private Session mSession;
 
 	public static synchronized TimetableController getController(Context context) {
 		if (mController == null) {
@@ -154,6 +156,20 @@ public class TimetableController {
 			msg.arg2 = mClickedWeekday;
 			msg.what = ConditionCodes.C_COURSES_RETRIEVED;
 			break;
+			
+		case ConditionCodes.V_GET_SESSION:
+			msg.obj = mSession;
+			msg.what = ConditionCodes.C_SESSION_RECIEVED;
+			break;
+			
+		case ConditionCodes.V_SET_SESSION:
+			mSession = (Session) msg.obj;
+			msg.what = ConditionCodes.C_SESSION_SET;
+			break;
+		
+		case ConditionCodes.V_LAUNCH_SESSION_FORM:
+			launchSessionForm(msg);
+			break;
 
 		case ConditionCodes.V_SELECT_TIMETABLE:
 			// listTimetables();
@@ -193,18 +209,9 @@ public class TimetableController {
 			public void run() {
 				// Load the timetable and send a message when done
 				mTimetables = Timetable.load(CONTEXT);
-
-				// If it isn't null, pass to the view
-				if (mTimetables != null) {
-					for (int i = 0; i < mTimetables.size(); i++) {
-						Message message = mHandler.obtainMessage();
-						message.what = ConditionCodes.C_TIMETABLE_LOADED;
-						message.obj = mTimetables.get(i).getName();
-						mHandler.sendMessage(message);
-					}
-				}
+				
 				// If it is null, make a new one
-				else {
+				if(mTimetables == null) {
 					mTimetables = new ArrayList<Timetable>();
 				}
 			}
@@ -233,6 +240,7 @@ public class TimetableController {
 				Timetable.save(CONTEXT, mTimetables);
 				Message message = mHandler.obtainMessage();
 				message.what = ConditionCodes.C_TIMETABLE_SAVED;
+				message.sendToTarget();
 			}
 		}).start();
 	}
@@ -249,7 +257,7 @@ public class TimetableController {
 
 	public void launchCreationForm(Message msg) {
 
-		if (msg.obj instanceof TimetableDayView) {
+		if (msg.obj instanceof Activity) {
 			Intent intent = new Intent((Activity) msg.obj,
 					SessionCreationForm.class);
 			((Activity) msg.obj).startActivity(intent);
@@ -257,31 +265,15 @@ public class TimetableController {
 		}
 	}
 
-	public void submitCourseForm() {
-
-	}
-
-	public void compareTimetablePressed() {
-
+	private void launchSessionForm(Message msg) {
+		if (msg.obj instanceof Activity) {
+			Intent intent = new Intent((Activity) msg.obj,
+					SessionForm.class);
+			((Activity) msg.obj).startActivity(intent);	
+		}
 	}
 
 	public void compareTimetable() {
-
-	}
-
-	public void editCourse() {
-
-	}
-
-	public void displayGetTimetableView() {
-
-	}
-
-	public void createManageView() {
-
-	}
-
-	public void closeManageView() {
 
 	}
 
@@ -301,15 +293,7 @@ public class TimetableController {
 
 	}
 
-	public void changeDisplayedTimetable(String name) {
-
-	}
-
 	public void closeTimetableSelectView() {
-
-	}
-
-	public void closeTimetableMainView() {
 
 	}
 

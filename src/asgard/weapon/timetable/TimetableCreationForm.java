@@ -47,7 +47,7 @@ public class TimetableCreationForm extends Activity implements OnClickListener,
 				this);
 
 		switch (v.getId()) {
-		case R.id.timetable_creation_form_submit_button:
+		case R.id.timetable_creation_form_create_button:
 			message.what = ConditionCodes.V_CREATE_TIMETABLE;
 
 			Timetable tb = new Timetable(mName.getText().toString());
@@ -55,25 +55,38 @@ public class TimetableCreationForm extends Activity implements OnClickListener,
 			handler.dispatchMessage(message);
 
 			break;
-			
+
 		case R.id.timetable_creation_form_new_course_button:
-			message.what = ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM;	
+			message.what = ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM;
 			handler.dispatchMessage(message);
 			break;
 		}
-
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		
+
 		mController.removeHandler(mHandler);
 	}
 
 	@Override
 	public boolean handleMessage(Message msg) {
-		// TODO Auto-generated method stub
+		switch (msg.what) {
+		case ConditionCodes.C_TIMETABLE_CREATED:
+			mController.getHandler()
+					.obtainMessage(ConditionCodes.V_SAVE_TIMETABLE, this)
+					.sendToTarget();
+			return true;
+		case ConditionCodes.C_TIMETABLE_SAVED:
+			mController
+					.getHandler()
+					.obtainMessage(
+							ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM, this)
+					.sendToTarget();
+			finish();
+			return true;
+		}
 		return false;
 	}
 }

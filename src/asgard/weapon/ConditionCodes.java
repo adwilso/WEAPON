@@ -30,6 +30,10 @@ public interface ConditionCodes {
 	
 	public final int V_GET_TIMETABLE = 30;
 	public final int V_GET_COURSES = 31;
+	public final int V_GET_SESSION = 32;
+	public final int V_SET_SESSION = 33;
+	
+	public final int V_LAUNCH_SESSION_FORM = 40;
 	
 	public final int C_TIMETABLE_SAVING = 100;
 	public final int C_TIMETABLE_SAVED = 101;
@@ -52,8 +56,11 @@ public interface ConditionCodes {
 	public final int C_TIMETABLE_RETRIEVED = 115;
 
 	public final int C_COURSES_RETRIEVED = 116;
-
+	
 	public final int C_SESSION_ADDED = 130;
-
 	public final int C_SESSION_NOT_ADDED = 131;
+	
+	public final int C_SESSION_SET = 132;
+	
+	public final int C_SESSION_RECIEVED = 140;
 }

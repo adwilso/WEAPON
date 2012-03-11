@@ -44,12 +44,8 @@ public class TimetableSelectionForm extends Activity implements OnClickListener,
 				this);
 
 		switch (v.getId()) {
-		case R.id.timetable_creation_form_submit_button:
+		case R.id.timetable_creation_form_create_button:
 			message.what = ConditionCodes.V_CREATE_TIMETABLE;
-
-			//Timetable tb = new Timetable(mName.getText().toString());
-			//message.obj = tb;
-			//handler.dispatchMessage(message);
 
 			break;
 			

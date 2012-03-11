@@ -9,7 +9,7 @@
         android:id="@+id/day_view_hour_text_box"
         android:layout_width="50dp"
         android:layout_height="58dp"
-        android:gravity="right|center_vertical"
+        android:gravity="right"
         android:paddingRight="1dp"
         android:text="Ben" />
 
