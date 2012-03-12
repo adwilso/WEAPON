@@ -56,16 +56,6 @@ public class SessionForm extends Activity implements Handler.Callback,
 
 	}
 
-	@Override
-	public boolean handleMessage(Message msg) {
-		switch (msg.what) {
-		case ConditionCodes.C_SESSION_RECIEVED:
-			mSession = (Session) msg.obj;
-			setText();
-		}
-		return false;
-	}
-
 	private void setText() {
 
 		mCourse.setText(mSession.getCourse());
@@ -125,7 +115,33 @@ public class SessionForm extends Activity implements Handler.Callback,
 			finish();
 			break;
 		case R.id.session_view_edit_button:
+			Message message = mController.getHandler().obtainMessage(ConditionCodes.V_EDIT_SESSION);
+			message.obj = mSession;
+			message.sendToTarget();
 			break;
 		}
+	}
+	
+
+	@Override
+	public boolean handleMessage(Message msg) {
+		switch (msg.what) {
+		case ConditionCodes.C_SESSION_RECIEVED:
+			mSession = (Session) msg.obj;
+			setText();
+			return true;
+			
+		case ConditionCodes.C_SESSION_UPDATED:
+		
+			Message message = mController.getHandler().obtainMessage();
+			message.what = ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM;
+			message.obj = this;
+			message.sendToTarget();
+			
+			finish();
+		
+			return true;
+		}
+		return false;
 	}
 }

@@ -71,6 +71,11 @@ public class TimetableDayView extends Activity implements OnClickListener,
 		mRightButton.setOnClickListener(this);
 
 		drawBackground();
+
+		mController.getHandler()
+				.obtainMessage(ConditionCodes.V_LOAD_TIMETABLE, this)
+				.sendToTarget();
+
 		mController.getHandler().obtainMessage(ConditionCodes.V_GET_TIMETABLE)
 				.sendToTarget();
 	}
@@ -198,7 +203,7 @@ public class TimetableDayView extends Activity implements OnClickListener,
 			} else {
 				string = s.getCourse() + "\n" + s.getDescription();
 			}
-			
+
 			sessionView.setText(string);
 
 			RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
@@ -248,16 +253,15 @@ public class TimetableDayView extends Activity implements OnClickListener,
 
 	// Removes the sessions drawn on the foreground
 	public void clearSessions() {
-		for (int i = 72; i < mScreen.getChildCount(); i++) {
-			if (mScreen.getChildAt(i) instanceof SessionView) {
-				mScreen.removeViewAt(i);
-			}
+		int childrenCount = mScreen.getChildCount();
+		for (int i = childrenCount - 1; i > 71; i--) {
+			mScreen.removeViewAt(i);
 		}
 	}
 
 	@Override
 	public void onClick(View v) {
-		
+
 		if (v.getId() == R.id.timetable_day_view_left_button) {
 			if (--mWeekday < 0) {
 				mWeekday = 6;
@@ -285,13 +289,22 @@ public class TimetableDayView extends Activity implements OnClickListener,
 		}
 		// If a blank view was pressed, launch a creation form with the
 		// time and day of the week in the parameter
+
 		if (v.getId() % 100 == 0) {
 			Message msg = mController.getHandler().obtainMessage(
-					ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM, this);
+					ConditionCodes.V_SET_TIME_DATE, this);
 			msg.arg1 = (Integer) v.getTag();
 			msg.arg2 = mWeekday;
 			mController.getHandler().sendMessage(msg);
 		}
+
+		// if (v.getId() % 100 == 0) {
+		// Message msg = mController.getHandler().obtainMessage(
+		// ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM, this);
+		// msg.arg1 = (Integer) v.getTag();
+		// msg.arg2 = mWeekday;
+		// mController.getHandler().sendMessage(msg);
+		// }
 	}
 
 	@Override
@@ -305,23 +318,22 @@ public class TimetableDayView extends Activity implements OnClickListener,
 			return true;
 
 		case ConditionCodes.C_SESSION_ADDED:
-			try {
-				clearSessions();
-				getSessions();
-				drawSessions();
-			} catch (Exception e) {
-
-			}
+			mController.getHandler()
+					.obtainMessage(ConditionCodes.V_GET_TIMETABLE)
+					.sendToTarget();
 			return true;
-			
-		case ConditionCodes.C_SESSION_DELETED:
-			try {
-				clearSessions();
-				getSessions();
-				drawSessions();
-			} catch (Exception e) {
 
-			}
+		case ConditionCodes.C_TIME_DATE_SET:
+			Message message = mController.getHandler().obtainMessage(
+					ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM, this);
+
+			message.sendToTarget();
+			return true;
+
+		case ConditionCodes.C_SESSION_DELETED:
+			mController.getHandler()
+					.obtainMessage(ConditionCodes.V_GET_TIMETABLE)
+					.sendToTarget();
 			return true;
 
 			// Once the session has been set, launch the session form

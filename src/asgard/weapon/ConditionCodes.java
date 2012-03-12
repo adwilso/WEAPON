@@ -37,8 +37,10 @@ public interface ConditionCodes {
 	public final int V_DELETE_SELECTED = 36;
 	public final int V_DELETE_LAST = 37;
 	public final int V_DELETE_SESSION = 38;
+	public final int V_EDIT_SESSION = 39;
 	
 	public final int V_LAUNCH_SESSION_FORM = 40;
+	public final int V_SET_TIME_DATE = 41;
 	
 	public final int C_TIMETABLE_SAVING = 100;
 	public final int C_TIMETABLE_SAVED = 101;
@@ -69,4 +71,6 @@ public interface ConditionCodes {
 	
 	public final int C_SESSION_RECIEVED = 140;
 	public final int C_SESSION_DELETED = 141;
+	public final int C_TIME_DATE_SET = 142;
+	public final int C_SESSION_UPDATED = 143;
 }

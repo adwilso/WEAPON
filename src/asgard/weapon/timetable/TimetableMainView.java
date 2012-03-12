@@ -92,27 +92,10 @@ public class TimetableMainView extends TabActivity implements Handler.Callback {
 				this);
 
 		switch (item.getItemId()) {
-		case R.id.timetable_menu_load:
-			message.what = ConditionCodes.V_LOAD_TIMETABLE;
-			handler.sendMessage(message);
-			return true;
-
+		
 		case R.id.timetable_menu_new:
 			message.what = ConditionCodes.V_LAUNCH_TIMETABLE_CREATION_FORM;
 			handler.sendMessage(message);
-			return true;
-
-		case R.id.timetable_menu_save:
-			message.what = ConditionCodes.V_SAVE_TIMETABLE;
-			handler.sendMessage(message);
-			return true;
-
-		case R.id.timetable_menu_delete:
-			message.what = ConditionCodes.V_DELETE_TIMETABLE;
-			handler.sendMessage(message);
-			return true;
-
-		case R.id.timetable_menu_edit:
 			return true;
 
 		case R.id.timetable_menu_select:

@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -57,6 +58,12 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 	private Spinner mDurationSpinner;
 	private ArrayAdapter<String> mDurationAdapter;
 
+	private boolean setAll;
+
+	int mDayOfWeek;
+	int mStartHour;
+	int mStartMinute;
+
 	// handler and controller reference
 	private Handler mHandler;
 	private TimetableController mController;
@@ -82,28 +89,6 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 	@SuppressWarnings("unchecked")
 	private void inflateLayout(Message msg) {
 
-		mCourses = new ArrayList<String>();
-		int dayOfWeek = 0;
-		int startHour = 0;
-		int startMinute = 0;
-
-		if (msg.obj != null) {
-			try {
-				mRetrievedCourses = (List<Course>) msg.obj;
-				startHour = msg.arg1 / 2;
-				startMinute = msg.arg1 % 2 * 30;
-				dayOfWeek = msg.arg2;
-			} catch (Exception e) {
-
-			}
-
-			for (int i = 0; i < mRetrievedCourses.size(); i++) {
-				mCourses.add(mRetrievedCourses.get(i).getCourseCode());
-			}
-		} else {
-			mCourses.add("Default");
-		}
-
 		// fill the array with the courses
 		mCourses.add(NEW_COURSE);
 
@@ -127,7 +112,7 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 
 		mWeekSpinner = (Spinner) this.findViewById(R.id.session_day_spinner);
 		mWeekSpinner.setAdapter(mWeekAdapter);
-		mWeekSpinner.setSelection(dayOfWeek);
+		mWeekSpinner.setSelection(mDayOfWeek);
 
 		// Create the time picker listener with overridden method
 		mTimeChangeListner = new TimePicker.OnTimeChangedListener() {
@@ -144,7 +129,7 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 		mTimePicker
 				.setDescendantFocusability(TimePicker.FOCUS_BLOCK_DESCENDANTS);
 		mTimePicker.setOnTimeChangedListener(mTimeChangeListner);
-		updateDisplay(mTimePicker, startHour, startMinute);
+		updateDisplay(mTimePicker, mStartHour, mStartMinute);
 
 		// fill the duration with timeslots
 		mDurations = getResources().getStringArray(R.array.course_durations);
@@ -161,6 +146,13 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 				.findViewById(R.id.session_description_description);
 		mLocation = (EditText) this
 				.findViewById(R.id.session_location_location);
+
+		if (setAll) {
+
+			mDurationSpinner.setSelection((int)mCreatedSession.getDuration()*2-1);
+			mDescription.setText(mCreatedSession.getDescription());
+			mLocation.setText(mCreatedSession.getLocation());
+		}
 
 	}
 
@@ -242,6 +234,9 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 
 			}
 
+			if (setAll){
+				mRetrievedCourses.get(position).removeSession(mCreatedSession);
+			}
 			mRetrievedCourses.get(position).addSession(mCreatedSession);
 			mController
 					.getHandler()
@@ -250,7 +245,8 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 			break;
 
 		case R.id.session_creation_cancel_button:
-			mController.getHandler().obtainMessage(ConditionCodes.V_DELETE_LAST).sendToTarget();
+			mController.getHandler()
+					.obtainMessage(ConditionCodes.V_DELETE_LAST).sendToTarget();
 			finish();
 			break;
 		}
@@ -292,8 +288,29 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 	public boolean handleMessage(Message msg) {
 		switch (msg.what) {
 		case ConditionCodes.C_COURSES_RETRIEVED:
-			mController.getHandler().obtainMessage(ConditionCodes.V_GET_SESSION).sendToTarget();
-			inflateLayout(msg);
+			mController.getHandler()
+					.obtainMessage(ConditionCodes.V_GET_SESSION).sendToTarget();
+			mStartHour = msg.arg1 / 2;
+			mStartMinute = msg.arg1 % 2 * 30;
+			mDayOfWeek = msg.arg2;
+
+			mCourses = new ArrayList<String>();
+
+			if (msg.obj != null) {
+				try {
+					mRetrievedCourses = (List<Course>) msg.obj;
+				} catch (Exception e) {
+
+				}
+
+				for (int i = 0; i < mRetrievedCourses.size(); i++) {
+					mCourses.add(mRetrievedCourses.get(i).getCourseCode());
+				}
+			} else {
+				mRetrievedCourses = new ArrayList<Course>();
+				mCourses.add("Default");
+			}
+
 			return true;
 
 		case ConditionCodes.C_SESSION_ADDED:
@@ -301,6 +318,25 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 					.obtainMessage(ConditionCodes.V_SAVE_TIMETABLE, this)
 					.sendToTarget();
 			finish();
+			return true;
+
+		case ConditionCodes.C_SESSION_RECIEVED:
+
+			if (msg.obj == null) {
+				mCreatedSession = new Session();
+				setAll = false;
+
+			} else {
+				setAll = true;
+				Button addEdit = (Button) findViewById(R.id.session_creation_add_button);
+				addEdit.setText("Update");
+				try {
+					mCreatedSession = (Session) msg.obj;
+				} catch (Exception e) {
+
+				}
+			}
+			inflateLayout(msg);
 			return true;
 
 		case ConditionCodes.C_SESSION_NOT_ADDED:

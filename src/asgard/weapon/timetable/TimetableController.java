@@ -63,7 +63,6 @@ public class TimetableController {
 	private int mClickedWeekday;
 
 	private Session mSession;
-	private boolean mJustCreated;
 
 	public static synchronized TimetableController getController(Context context) {
 		if (mController == null) {
@@ -128,26 +127,27 @@ public class TimetableController {
 			launchCreateTimetableActivity(msg);
 			break;
 
-		// case ConditionCodes.V_DELETE_TIMETABLE:
-		// deleteTimetable(msg);
-		// msg.what = ConditionCodes.C_TIMETABLE_DELETED;
-		// break;
-
 		case ConditionCodes.V_CREATE_TIMETABLE:
 			mTimetables.add((Timetable) msg.obj);
 			mCurrentTimetable = (Timetable) msg.obj;
 			msg.what = ConditionCodes.C_TIMETABLE_CREATED;
-			mJustCreated = true;
+			break;
+			
+		case ConditionCodes.V_SET_TIME_DATE:
+			mClickedTime = msg.arg1;
+			mClickedWeekday = msg.arg2;
+			mSession = null;
+			
+			msg.what = ConditionCodes.C_TIME_DATE_SET;
 			break;
 
 		case ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM:
-			mClickedTime = msg.arg1;
-			mClickedWeekday = msg.arg2;
 
 			launchCreationForm(msg);
 			break;
 
 		case ConditionCodes.V_GET_TIMETABLE:
+			
 			msg.obj = mCurrentTimetable;
 			msg.what = ConditionCodes.C_TIMETABLE_RETRIEVED;
 			break;
@@ -162,6 +162,8 @@ public class TimetableController {
 		case ConditionCodes.V_GET_SESSION:
 			msg.obj = mSession;
 			msg.what = ConditionCodes.C_SESSION_RECIEVED;
+			msg.arg1 = mClickedTime;
+			msg.arg2 = mClickedWeekday;
 			break;
 
 		case ConditionCodes.V_SET_SESSION:
@@ -174,6 +176,7 @@ public class TimetableController {
 			for (int i = 0; i < listOfCourses.size(); i++) { 
 				if(listOfCourses.get(i).removeSession((Session)msg.obj)){
 					msg.what = ConditionCodes.C_SESSION_DELETED;
+					msg.obj = mCurrentTimetable;
 					i = listOfCourses.size();
 				}
 			}
@@ -202,6 +205,14 @@ public class TimetableController {
 
 			msg.what = ConditionCodes.C_TIMETABLE_RETRIEVED;
 			msg.obj = mCurrentTimetable;
+			break;
+			
+		case ConditionCodes.V_EDIT_SESSION:
+			mSession = (Session)msg.obj;
+			mClickedWeekday = mSession.getDate();
+			mClickedTime = mSession.getHour()*2 + (mSession.getMinute() == 0 ? 0 : 1);
+			
+			msg.what = ConditionCodes.C_SESSION_UPDATED;
 			break;
 
 		case ConditionCodes.V_DELETE_LAST:
@@ -257,6 +268,9 @@ public class TimetableController {
 				if (mTimetables == null) {
 					mTimetables = new ArrayList<Timetable>();
 				}
+				Message message = mHandler.obtainMessage();
+				message.what = ConditionCodes.C_TIMETABLE_LOADED;
+				message.sendToTarget();
 			}
 		}).start();
 	}

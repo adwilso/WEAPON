@@ -81,12 +81,8 @@ public final class R {
         public static final int timetable_day_view_left_button=0x7f070033;
         public static final int timetable_day_view_right_button=0x7f070035;
         public static final int timetable_day_view_title_bar=0x7f070032;
-        public static final int timetable_menu_delete=0x7f070044;
-        public static final int timetable_menu_edit=0x7f070043;
-        public static final int timetable_menu_load=0x7f070046;
         public static final int timetable_menu_new=0x7f070041;
-        public static final int timetable_menu_save=0x7f070042;
-        public static final int timetable_menu_select=0x7f070045;
+        public static final int timetable_menu_select=0x7f070042;
         public static final int timetable_week_view=0x7f07003f;
         public static final int timetables=0x7f07003d;
         public static final int week_view_container=0x7f070040;

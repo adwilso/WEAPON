@@ -1,47 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
     <TextView
         android:id="@+id/timetable_creation_form_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="23dp"
-        android:layout_marginTop="39dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
         android:text="Timetable Name"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
         android:id="@+id/timetable_creation_form_edit_text"
-        android:layout_width="150dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/timetable_creation_form_text_view"
         android:layout_below="@+id/timetable_creation_form_text_view"
-        android:layout_marginTop="16dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         android:inputType="text" >
     </EditText>
 
-    <Button
-        android:id="@+id/timetable_creation_form_create_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/timetable_creation_form_edit_text"
-        android:layout_marginLeft="31dp"
-        android:layout_toRightOf="@+id/timetable_creation_form_edit_text"
-        android:onClick="onClick"
-        android:text="Create" />
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/timetable_creation_form_cancel_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/timetable_creation_form_edit_text"
-        android:layout_marginTop="56dp"
-        android:layout_toLeftOf="@+id/timetable_creation_form_create_button"
-        android:onClick="onClick"
-        android:text="Cancel" />
+        <Button
+            android:id="@+id/timetable_creation_form_create_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/timetable_creation_form_cancel_button"
+            android:layout_alignBottom="@+id/timetable_creation_form_cancel_button"
+            android:layout_alignLeft="@+id/timetable_creation_form_edit_text"
+            android:layout_marginTop="15dp"
+            android:onClick="onClick"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Create" />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/timetable_creation_form_cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/timetable_creation_form_edit_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="15dp"
+            android:onClick="onClick"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Cancel" />
+    </LinearLayout>
+
+</LinearLayout>
