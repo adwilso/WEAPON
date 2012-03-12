@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -21,32 +22,65 @@ public class Timetable implements Serializable {
 	private static final String FILENAME = "timetable.data";
 
 	protected String mName;
-	protected List<Session> mSessions;
+	protected List<Course> mCourses;
 
 	public Timetable(String name) {
 		mName = name;
+		mCourses = new ArrayList<Course>();
+	}
+	
+	public synchronized List<Course> getCourses(){
+		return mCourses;
 	}
 
-	public String getName() {
+	public synchronized void setCourses(List<Course> courses){
+		mCourses = courses;
+	}
+	
+	public synchronized String getName() {
 		return mName;
 	}
 
-	public void setName(String name) {
+	public synchronized void setName(String name) {
 		mName = name;
 	}
 
-	public void addSession(Session session) {
-		mSessions.add(session);
+	public synchronized void addSession(int course, Session session) {
+		mCourses.get(course).addSession(session);
 	}
 
-	public Session getSession(int index) {
-		return mSessions.get(index);
+	// Return all the sessions at a given date
+	public synchronized List<Session> getSessionsAtDate(int date)
+	{
+		List<Session> sessionsAtDate = new ArrayList<Session>();
+		for(Course course : mCourses){
+			for (Session session : course.getSessions()) {
+				if (session.getDate() == date){
+					sessionsAtDate.add(session);
+				}
+			}
+		}
+		return sessionsAtDate;
+	}
+	
+	// Return all sessions in a given course
+	public synchronized List<Session> getSessionsInCourse(Course c)
+	{
+		for (Course course : mCourses) {
+			if (course == c)
+				return course.getSessions();
+		}
+		return null;
+	}
+	
+	public synchronized Course getCourse(int index) {
+		return mCourses.get(index);
 	}
 
 	/*
 	 * Attempts to load all the timetables from memory
 	 */
-	public static Timetable load(Context context) {
+	public static synchronized List<Timetable> load(Context context) {
 		try {
 			FileInputStream fIn = context.openFileInput(FILENAME);
 			// Read object with ObjectInputStream
@@ -54,8 +88,9 @@ public class Timetable implements Serializable {
 			// Read object in from disk
 			Object time = objIn.readObject();
 
-			if (time instanceof Timetable) {
-				Timetable timetable = (Timetable) time;
+			if (time instanceof List<?>) {
+				@SuppressWarnings("unchecked")
+				List<Timetable> timetable = (List<Timetable>) time;
 				return timetable;
 			}
 
@@ -66,31 +101,26 @@ public class Timetable implements Serializable {
 	}
 
 	/*
-	 * Attempts to return the timetable with the specified name from memory
-	 */
-	public static Timetable load(Context context, String timetableName) {
-		return null;
-	}
-
-	/*
 	 * Attempts to save the timetable to a file. Note that nothing else can be
 	 * done to the timetable when this is happening!
 	 */
-	public void save(Context context) {
-		synchronized (this) {
+	public static synchronized void save(Context context, List<Timetable> list) {
 
-			Log.d("Timetable", "Done saving timetable");
-			try {
-				FileOutputStream fOut = context.openFileOutput(FILENAME,
-						Context.MODE_PRIVATE);
-				// Write object with ObjectInputStream
-				ObjectOutputStream objOut = new ObjectOutputStream(fOut);
-				// Write object out to disk
-				objOut.writeObject(this);
+		Log.d("Timetable", "Done saving timetable");
+		try {
+			FileOutputStream fOut = context.openFileOutput(FILENAME,
+					Context.MODE_PRIVATE);
+			// Write object with ObjectInputStream
+			ObjectOutputStream objOut = new ObjectOutputStream(fOut);
+			// Write object out to disk
+			objOut.writeObject(list);
 
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	}
+
+	public static synchronized void delete(Context context) {
+		context.deleteFile(FILENAME);
 	}
 }
