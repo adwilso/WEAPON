@@ -89,6 +89,7 @@ private static final int INVALID_POINTER_ID = -1;
         nodeList = null;
         lineColour = new Paint();
         lineColour.setColor(Color.rgb(80, 39, 132));
+        lineColour.setStrokeWidth(10);
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
         mImage = getResources().getDrawable(R.drawable.map);
         if(!this.isInEditMode())

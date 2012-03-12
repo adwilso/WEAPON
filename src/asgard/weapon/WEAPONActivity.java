@@ -35,7 +35,7 @@ public class WEAPONActivity extends Activity implements View.OnClickListener{
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		MapControl m = new MapControl();
+		//MapControl m = new MapControl();
 		Intent i = new Intent(this,MapDisplay.class);
 		startActivity(i);
 	}

@@ -23,12 +23,13 @@ import asgard.weapon.map.*;
 public class MapDisplay extends Activity implements OnClickListener {
 	private static ImageView mapDisplay;
 	private Button searchButton;
+	private Button nextMapButton;
 	private MapImageView mapScreen;
 	private MapControl control;
 	private ZoomControls zoomButton;
 	public MapDisplay() {
 		super();
-		control = new MapControl();
+		control = new MapControl(this);
 		
 	}
 	public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,15 @@ public class MapDisplay extends Activity implements OnClickListener {
         
         searchButton =(Button) this.findViewById(R.id.button1);
         searchButton.setOnClickListener(this);
+        
+        nextMapButton = (Button) this.findViewById(R.id.btnNextMap);
+        nextMapButton.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				control.nextMap();				
+			}
+        	
+        });
         
         zoomButton = (ZoomControls)this.findViewById(R.id.zoomControls1);
         zoomButton.setOnZoomInClickListener(new OnClickListener() {
@@ -61,12 +71,17 @@ public class MapDisplay extends Activity implements OnClickListener {
    }
 	@Override
 	public void onClick(View v) {
-		Graph g = new Graph();
-		
-		mapScreen.drawNodes((Node[])g.getNodes().toArray(new Node[1]));
 		// TODO Auto-generated method stub
+		control.mapGetNodes();
 		
-		
+	}
+	public void drawNodes(Node[] n)
+	{
+		mapScreen.drawNodes(n);
+	}
+	public void updateMap(int resource)
+	{
+		mapScreen.setImage(resource);
 	}
 
 }

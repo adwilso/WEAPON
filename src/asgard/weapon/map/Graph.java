@@ -21,8 +21,8 @@ public class Graph {
 	public Graph() {
 		//Load place holder maps
 		maps = new ArrayList <FloorPlan>();
-		maps.add(new FloorPlan("TEB2",R.drawable.map));
-		maps.add(new FloorPlan("TEB1",R.drawable.map));
+		maps.add(new FloorPlan("SEB0",R.drawable.seb0));
+		maps.add(new FloorPlan("SEB1",R.drawable.seb1));
 		//Make node array
 		this.fillNodes();
 		//Make edge array
@@ -143,12 +143,12 @@ public class Graph {
 	}
 	private void fillNodes() {
 		nodes = new NodeList <Node>();
-		nodes.add(new Node(this.getImageWithName("TEB2"),100,100,"TEB244"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),90,100,"TEB230"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),90,140,"TEB220"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),100,140,"TEB210"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),150,140,"TEB200"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),110,100,"TEB250"));		
+		nodes.add(new Node(this.getImageWithName("SEB0"),100,100,"TEB244"));
+		nodes.add(new Node(this.getImageWithName("SEB0"),90,100,"TEB230"));
+		nodes.add(new Node(this.getImageWithName("SEB0"),90,140,"TEB220"));
+		nodes.add(new Node(this.getImageWithName("SEB1"),100,140,"TEB210"));
+		nodes.add(new Node(this.getImageWithName("SEB1"),150,140,"TEB200"));
+		nodes.add(new Node(this.getImageWithName("SEB1"),110,100,"TEB250"));		
 	}
 	private void addEdge(String first, String second, int weight) {
 		Node one = nodes.getNodeWithName(first);

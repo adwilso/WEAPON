@@ -17,11 +17,17 @@
 			android:layout_height="50dp" android:layout_alignParentRight="true"
 			android:layout_alignParentTop="true" android:layout_marginRight="19dp"
 			android:layout_marginTop="19dp" android:background="@drawable/serach"
-			android:text=" "  android:onClick="onClick"/>
+			android:text=" " android:onClick="onClick" />
 
 		<ZoomControls android:id="@+id/zoomControls1"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"
 			android:layout_alignParentBottom="true" android:layout_alignRight="@+id/button1" />
+			
+		<Button android:layout_height="wrap_content" android:text="Next Map"
+			android:id="@+id/btnNextMap" android:layout_width="wrap_content"
+			android:layout_alignParentBottom="true"
+			android:layout_alignParentLeft="true" android:layout_marginLeft="31dp"
+			android:layout_marginBottom="16dp"></Button>
 
 
 
