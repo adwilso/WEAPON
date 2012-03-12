@@ -1,67 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/status_text_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/hello" />
-
-    <Button
-        android:id="@+id/save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/status_text_view"
-        android:layout_marginLeft="35dp"
-        android:layout_marginTop="57dp"
-        android:onClick="onClick"
-        android:text="Save" />
-
-    <Button
-        android:id="@+id/load_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/save_button"
-        android:layout_alignBottom="@+id/save_button"
-        android:layout_marginLeft="66dp"
-        android:layout_toRightOf="@+id/save_button"
-        android:onClick="onClick"
-        android:text="Load" />
-
-    <TextView
-        android:id="@+id/timetable_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/load_button"
-        android:layout_alignParentLeft="true"
-        android:layout_marginBottom="18dp"
-        android:text="" />
-
-    <Button
-        android:id="@+id/new_timetable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/save_button"
-        android:layout_below="@+id/save_button"
-        android:layout_marginTop="60dp"
-        android:onClick="onClick"
-        android:text="Create" />
-
-    <EditText
-        android:id="@+id/main_text_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/load_button"
-        android:layout_alignTop="@+id/new_timetable"
-        android:layout_marginLeft="19dp"
-        android:inputType="text"
-        android:text="Example text" >
-
-        <requestFocus />
-    </EditText>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
 
 </RelativeLayout>
