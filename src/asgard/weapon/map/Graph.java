@@ -54,7 +54,7 @@ public class Graph {
 		return this.getPathBetween(this.findNodeWithName(start), this.findNodeWithName(goal));
 	}
 	
-	public Node reconstructPath(Node currentNode, ArrayList <Node> list) {
+	private Node reconstructPath(Node currentNode, ArrayList <Node> list) {
 		if (currentNode.getCameFrom() != null) {
 			list.add(this.reconstructPath(currentNode.getCameFrom(), list));
 			return currentNode;

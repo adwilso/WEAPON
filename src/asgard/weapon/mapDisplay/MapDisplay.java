@@ -17,17 +17,22 @@ import asgard.weapon.map.*;
  */
 public class MapDisplay extends Activity {
 	private static ImageView mapDisplay;
+	private MapImageView mapScreen;
 	private Graph g;
 	public MapDisplay() {
 		super();
 	}
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mainmap);
-        mapDisplay = (ImageView)this.findViewById(R.id.mapDisplay);
-        mapDisplay.setImageResource(R.drawable.map);
+        mapScreen = new MapImageView(this);
+        setContentView(mapScreen);
+        //setContentView(R.layout.mainmap);
+        //mapDisplay = (ImageView)this.findViewById(R.id.mapDisplay);
+        //mapDisplay.setImageResource(R.drawable.map);
         g = new Graph();
-	}
+        mapScreen.setImage(R.drawable.seb0);
+        mapScreen.scale(0.5);
+   }
 	private void drawNode() {
 		ArrayList <Node> nodes = g.getNodes();
 		Iterator <Node> i = nodes.iterator();

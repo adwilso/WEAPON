@@ -24,6 +24,7 @@ public class Edge {
 		return weight;
 	}
 	public Node getOtherNode(Node current) {
+		if (current == null)  return null;
 		if (current == nodes[0] || current.equals(nodes[0]))
 			return nodes[1];
 		if (current == nodes[1] || current.equals(nodes[1]))
@@ -63,6 +64,7 @@ public class Edge {
 			nodes[1].getName();
 	}
 	public boolean isAdjacent(Node n) {
+		if (n == null) return false;
 		if (n.equals(nodes[0]) || n.equals(nodes[1])){
 			return true;
 		}
