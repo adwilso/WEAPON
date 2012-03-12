@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
@@ -97,3 +98,11 @@
     <string name="session_course_dialog_cancel_button">Cancel</string>
 
 </resources>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, WEAPONActivity!</string>
+    <string name="app_name">WEAPON</string>
+    <string name="map">Map</string>
+</resources>
+>>>>>>> MapDev
