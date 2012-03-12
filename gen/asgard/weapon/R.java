@@ -18,15 +18,19 @@ public final class R {
         public static final int seb1=0x7f020004;
         public static final int seb2=0x7f020005;
         public static final int seb3=0x7f020006;
-        public static final int teb1=0x7f020007;
-        public static final int teb2=0x7f020008;
-        public static final int teb3=0x7f020009;
-        public static final int teb4=0x7f02000a;
+        public static final int serach=0x7f020007;
+        public static final int teb1=0x7f020008;
+        public static final int teb2=0x7f020009;
+        public static final int teb3=0x7f02000a;
+        public static final int teb4=0x7f02000b;
     }
     public static final class id {
         public static final int button1=0x7f050001;
         public static final int imageView1=0x7f050000;
         public static final int mapDisplay=0x7f050002;
+        public static final int mapImageView1=0x7f050005;
+        public static final int relativeLayout1=0x7f050003;
+        public static final int zoomControls1=0x7f050004;
     }
     public static final class layout {
         public static final int main=0x7f030000;

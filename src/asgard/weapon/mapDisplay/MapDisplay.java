@@ -6,6 +6,7 @@ import java.util.Iterator;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Layout;
 import android.widget.ImageView;
 import asgard.weapon.R;
 import asgard.weapon.map.*;
@@ -25,7 +26,7 @@ public class MapDisplay extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mapScreen = new MapImageView(this);
-        setContentView(mapScreen);
+        setContentView(R.layout.maplayout);
         //setContentView(R.layout.mainmap);
         //mapDisplay = (ImageView)this.findViewById(R.id.mapDisplay);
         //mapDisplay.setImageResource(R.drawable.map);

@@ -7,6 +7,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
+//import android.graphics.drawable.shapes.OvalShape;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
@@ -33,31 +34,80 @@ private static final int INVALID_POINTER_ID = -1;
     public MapImageView(Context context) {
         this(context, null, 0);
         mImage = getResources().getDrawable(R.drawable.map);
+        if(!this.isInEditMode())
+        {
         ShapeDrawable mDrawable = new ShapeDrawable(new OvalShape());
         mDrawable.getPaint().setColor(0xff74AC23);
         mDrawable.setBounds(0, 0, 100, 500);
         nodes = mDrawable;
         mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
-        
+        }
+        if(!this.isInEditMode()){
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
+        
         screenWidth = display.getWidth();  // deprecated
         screenHeight = display.getHeight();  // deprecated
+        }
+        else
+        {
+        	screenHeight = screenWidth = 0;
+        }
     }
 
     public MapImageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
+        mImage = getResources().getDrawable(R.drawable.map);
+        if(!this.isInEditMode())
+        {
+        ShapeDrawable mDrawable = new ShapeDrawable(new OvalShape());
+        mDrawable.getPaint().setColor(0xff74AC23);
+        mDrawable.setBounds(0, 0, 100, 500);
+        nodes = mDrawable;
+        mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
+        }
+        if(!this.isInEditMode()){
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        
+        screenWidth = display.getWidth();  // deprecated
+        screenHeight = display.getHeight();  // deprecated
+        }
+        else
+        {
+        	screenHeight = screenWidth = 0;
+        }
     }
 
     public MapImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
+        mImage = getResources().getDrawable(R.drawable.map);
+        if(!this.isInEditMode())
+        {
+        ShapeDrawable mDrawable = new ShapeDrawable(new OvalShape());
+        mDrawable.getPaint().setColor(0xff74AC23);
+        mDrawable.setBounds(0, 0, 100, 500);
+        nodes = mDrawable;
+        mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
+        }
+        if(!this.isInEditMode()){
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        
+        screenWidth = display.getWidth();  // deprecated
+        screenHeight = display.getHeight();  // deprecated
+        }
+        else
+        {
+        	screenHeight = screenWidth = 0;
+        }
     }
     public void setImage(int imageResource)
     {
-    	mImage = getResources().getDrawable(R.drawable.teb1);
-    	 mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
-    	this.invalidate();
+    	//mImage = getResources().getDrawable(R.drawable.seb1);
+    	// mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
+    	//this.invalidate();
     }
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
@@ -143,8 +193,8 @@ private static final int INVALID_POINTER_ID = -1;
        // if (screenWidth > imageWidth + mPosX - screenWidth) 
         //	mPosX = -imageWidth + (2 * screenWidth);
         
-        if (-mPosY + screenHeight > imageHieght)
-        	mPosY = screenHeight - imageHieght;
+      //  if (-mPosY + screenHeight > imageHieght)
+       // 	mPosY = screenHeight - imageHieght;
        // if (screenHeight > imageHieght + mPosY - screenHeight) 
         //	mPosY = -imageHieght + (2 * screenHeight);
         	//mPosY = mImage.getIntrinsicHeight() - screenHeight + mPosY;
@@ -152,7 +202,7 @@ private static final int INVALID_POINTER_ID = -1;
         canvas.translate(mPosX, mPosY);
         canvas.scale(mScaleFactor, mScaleFactor);
         mImage.draw(canvas);
-        nodes.draw(canvas);
+       // nodes.draw(canvas);
         canvas.restore();
     }
     public void scale(double factor) {
