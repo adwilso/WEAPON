@@ -3,6 +3,8 @@ package asgard.weapon.mapDisplay;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
@@ -16,11 +18,14 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.WindowManager;
 import asgard.weapon.R;
+import asgard.weapon.map.*;
 
 public class MapImageView extends View {
 
 private static final int INVALID_POINTER_ID = -1;
 
+	private Paint lineColour;
+	private Node[] nodeList;
     private Drawable mImage;
     private Drawable nodes;
     private float mPosX, mPosY;
@@ -81,6 +86,9 @@ private static final int INVALID_POINTER_ID = -1;
 
     public MapImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        nodeList = null;
+        lineColour = new Paint();
+        lineColour.setColor(Color.rgb(80, 39, 132));
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
         mImage = getResources().getDrawable(R.drawable.map);
         if(!this.isInEditMode())
@@ -202,6 +210,14 @@ private static final int INVALID_POINTER_ID = -1;
         canvas.translate(mPosX, mPosY);
         canvas.scale(mScaleFactor, mScaleFactor);
         mImage.draw(canvas);
+        if (nodeList != null)
+        {
+        	for (int i = 0; i < nodeList.length -1; i++)
+        	{
+        		canvas.drawLine(nodeList[i].getxPos(), nodeList[i].getyPos(), 
+        				nodeList[i+1].getxPos(), nodeList[i+1].getyPos(), lineColour);
+        	}
+        }
        // nodes.draw(canvas);
         canvas.restore();
     }
@@ -214,6 +230,11 @@ private static final int INVALID_POINTER_ID = -1;
 
         invalidate();
         return;
+    }
+    public void drawNodes(Node[] nodes)
+    {
+    	nodeList = nodes;    
+    	this.invalidate();
     }
 
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {

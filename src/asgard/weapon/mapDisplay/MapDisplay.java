@@ -61,6 +61,9 @@ public class MapDisplay extends Activity implements OnClickListener {
    }
 	@Override
 	public void onClick(View v) {
+		Graph g = new Graph();
+		
+		mapScreen.drawNodes((Node[])g.getNodes().toArray(new Node[1]));
 		// TODO Auto-generated method stub
 		
 		
