@@ -119,6 +119,10 @@ public class SessionForm extends Activity implements Handler.Callback,
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.session_view_delete_button:
+			Message msg = mController.getHandler().obtainMessage(ConditionCodes.V_DELETE_SESSION);
+			msg.obj = mSession;
+			msg.sendToTarget();
+			finish();
 			break;
 		case R.id.session_view_edit_button:
 			break;

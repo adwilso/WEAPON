@@ -292,6 +292,7 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 	public boolean handleMessage(Message msg) {
 		switch (msg.what) {
 		case ConditionCodes.C_COURSES_RETRIEVED:
+			mController.getHandler().obtainMessage(ConditionCodes.V_GET_SESSION).sendToTarget();
 			inflateLayout(msg);
 			return true;
 

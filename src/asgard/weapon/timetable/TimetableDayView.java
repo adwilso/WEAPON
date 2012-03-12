@@ -257,7 +257,7 @@ public class TimetableDayView extends Activity implements OnClickListener,
 
 	@Override
 	public void onClick(View v) {
-
+		
 		if (v.getId() == R.id.timetable_day_view_left_button) {
 			if (--mWeekday < 0) {
 				mWeekday = 6;
@@ -305,6 +305,16 @@ public class TimetableDayView extends Activity implements OnClickListener,
 			return true;
 
 		case ConditionCodes.C_SESSION_ADDED:
+			try {
+				clearSessions();
+				getSessions();
+				drawSessions();
+			} catch (Exception e) {
+
+			}
+			return true;
+			
+		case ConditionCodes.C_SESSION_DELETED:
 			try {
 				clearSessions();
 				getSessions();

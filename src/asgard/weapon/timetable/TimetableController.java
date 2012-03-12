@@ -58,10 +58,10 @@ public class TimetableController {
 
 	private List<Timetable> mTimetables; // Reference to the current timetable
 	private Timetable mCurrentTimetable;
-	
+
 	private int mClickedTime;
 	private int mClickedWeekday;
-	
+
 	private Session mSession;
 	private boolean mJustCreated;
 
@@ -128,10 +128,10 @@ public class TimetableController {
 			launchCreateTimetableActivity(msg);
 			break;
 
-//		case ConditionCodes.V_DELETE_TIMETABLE:
-//			deleteTimetable(msg);
-//			msg.what = ConditionCodes.C_TIMETABLE_DELETED;
-//			break;
+		// case ConditionCodes.V_DELETE_TIMETABLE:
+		// deleteTimetable(msg);
+		// msg.what = ConditionCodes.C_TIMETABLE_DELETED;
+		// break;
 
 		case ConditionCodes.V_CREATE_TIMETABLE:
 			mTimetables.add((Timetable) msg.obj);
@@ -143,7 +143,7 @@ public class TimetableController {
 		case ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM:
 			mClickedTime = msg.arg1;
 			mClickedWeekday = msg.arg2;
-			
+
 			launchCreationForm(msg);
 			break;
 
@@ -158,17 +158,27 @@ public class TimetableController {
 			msg.arg2 = mClickedWeekday;
 			msg.what = ConditionCodes.C_COURSES_RETRIEVED;
 			break;
-			
+
 		case ConditionCodes.V_GET_SESSION:
 			msg.obj = mSession;
 			msg.what = ConditionCodes.C_SESSION_RECIEVED;
 			break;
-			
+
 		case ConditionCodes.V_SET_SESSION:
 			mSession = (Session) msg.obj;
 			msg.what = ConditionCodes.C_SESSION_SET;
 			break;
-		
+
+		case ConditionCodes.V_DELETE_SESSION:
+			List<Course> listOfCourses = mCurrentTimetable.getCourses();
+			for (int i = 0; i < listOfCourses.size(); i++) { 
+				if(listOfCourses.get(i).removeSession((Session)msg.obj)){
+					msg.what = ConditionCodes.C_SESSION_DELETED;
+					i = listOfCourses.size();
+				}
+			}
+			break;
+
 		case ConditionCodes.V_LAUNCH_SESSION_FORM:
 			launchSessionForm(msg);
 			break;
@@ -176,35 +186,33 @@ public class TimetableController {
 		case ConditionCodes.V_SELECT_TIMETABLE:
 			listTimetables(msg);
 			break;
-			
+
 		case ConditionCodes.V_TIMETABLE_SELECTED:
 			mCurrentTimetable = mTimetables.get(msg.arg1);
 			msg.obj = mCurrentTimetable;
 			msg.what = ConditionCodes.C_TIMETABLE_RETRIEVED;
 			break;
 		case ConditionCodes.V_DELETE_SELECTED:
-			if (mCurrentTimetable == mTimetables.get(msg.arg1)){
+			if (mCurrentTimetable == mTimetables.get(msg.arg1)) {
 				mTimetables.remove(msg.arg1);
 				mCurrentTimetable = mTimetables.get(0);
-			}
-			else{
+			} else {
 				mTimetables.remove(msg.arg1);
 			}
-			
+
 			msg.what = ConditionCodes.C_TIMETABLE_RETRIEVED;
 			msg.obj = mCurrentTimetable;
 			break;
-			
+
 		case ConditionCodes.V_DELETE_LAST:
-			mTimetables.remove(mTimetables.size()-1);
-			try{
+			mTimetables.remove(mTimetables.size() - 1);
+			try {
 				mCurrentTimetable = mTimetables.get(0);
-			}
-			catch(Exception e){
-				
+			} catch (Exception e) {
+
 			}
 			break;
-			
+
 		case ConditionCodes.V_GET_ALL_TIMETABLE:
 			msg.obj = mTimetables;
 			msg.what = ConditionCodes.C_SEND_ALL_TIMETABLE;
@@ -244,9 +252,9 @@ public class TimetableController {
 			public void run() {
 				// Load the timetable and send a message when done
 				mTimetables = Timetable.load(CONTEXT);
-				
+
 				// If it is null, make a new one
-				if(mTimetables == null) {
+				if (mTimetables == null) {
 					mTimetables = new ArrayList<Timetable>();
 				}
 			}
@@ -263,8 +271,8 @@ public class TimetableController {
 	}
 
 	private void deleteTimetable(Message msg) {
-		//Timetable.delete((Context) msg.obj);
-		//msg.what = ConditionCodes.C_TIMETABLE_DELETED;
+		// Timetable.delete((Context) msg.obj);
+		// msg.what = ConditionCodes.C_TIMETABLE_DELETED;
 		listTimetables(msg);
 	}
 
@@ -297,15 +305,14 @@ public class TimetableController {
 			Intent intent = new Intent((Activity) msg.obj,
 					SessionCreationForm.class);
 			((Activity) msg.obj).startActivity(intent);
-			
+
 		}
 	}
 
 	private void launchSessionForm(Message msg) {
 		if (msg.obj instanceof Activity) {
-			Intent intent = new Intent((Activity) msg.obj,
-					SessionForm.class);
-			((Activity) msg.obj).startActivity(intent);	
+			Intent intent = new Intent((Activity) msg.obj, SessionForm.class);
+			((Activity) msg.obj).startActivity(intent);
 		}
 	}
 
