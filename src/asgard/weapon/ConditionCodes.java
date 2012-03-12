@@ -35,6 +35,7 @@ public interface ConditionCodes {
 	public final int V_GET_ALL_TIMETABLE = 34;
 	public final int V_TIMETABLE_SELECTED = 35;
 	public final int V_DELETE_SELECTED = 36;
+	public final int V_DELETE_LAST = 37;
 	
 	public final int V_LAUNCH_SESSION_FORM = 40;
 	

@@ -146,14 +146,6 @@ public class TimetableMainView extends TabActivity implements Handler.Callback {
 				.setContent(intent);
 		tabHost.addTab(spec);
 
-		intent = new Intent().setClass(this, TimetableWeekView.class);
-		spec = tabHost
-				.newTabSpec("week")
-				.setIndicator("Week",
-						res.getDrawable(android.R.drawable.ic_menu_week))
-				.setContent(intent);
-		tabHost.addTab(spec);
-
 	}
 
 	@Override

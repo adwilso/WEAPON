@@ -133,6 +133,29 @@
             android:layout_height="1dp"
             android:background="#353535" />
         
+        <LinearLayout 
+            android:id="@+id/session_view_buttons"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+      		android:orientation="horizontal"
+      		android:padding="10dp">
+            
+            <Button 
+                android:id="@+id/session_view_edit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edit"
+                android:onClick="onClick"
+        		/>
+            
+            <Button android:id="@+id/session_view_delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:onClick="onClick"
+                />
+        </LinearLayout>
+        
     </LinearLayout>
 
 </ScrollView>

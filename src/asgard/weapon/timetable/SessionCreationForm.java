@@ -247,10 +247,10 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 					.getHandler()
 					.obtainMessage(ConditionCodes.V_ADD_COURSES,
 							mRetrievedCourses).sendToTarget();
-
 			break;
 
 		case R.id.session_creation_cancel_button:
+			mController.getHandler().obtainMessage(ConditionCodes.V_DELETE_LAST).sendToTarget();
 			finish();
 			break;
 		}

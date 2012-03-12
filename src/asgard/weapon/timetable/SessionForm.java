@@ -4,17 +4,20 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 import asgard.weapon.ConditionCodes;
 import asgard.weapon.R;
 
-public class SessionForm extends Activity implements Handler.Callback {
+public class SessionForm extends Activity implements Handler.Callback,
+		OnClickListener {
 
 	private Handler mHandler;
 	private TimetableController mController;
 
 	private Session mSession;
-	
+
 	private TextView mCourse;
 	private TextView mDay;
 	private TextView mTime;
@@ -40,36 +43,37 @@ public class SessionForm extends Activity implements Handler.Callback {
 
 	// Get references to XML and retrieve the clicked session
 	private void initialize() {
-		
+
 		mController.getHandler().obtainMessage(ConditionCodes.V_GET_SESSION)
 				.sendToTarget();
-		
+
 		mCourse = (TextView) findViewById(R.id.session_course_text);
 		mDay = (TextView) findViewById(R.id.session_day_text);
 		mTime = (TextView) findViewById(R.id.session_time_text);
 		mDuration = (TextView) findViewById(R.id.session_duration_text);
 		mLocation = (TextView) findViewById(R.id.session_location_text);
 		mDescription = (TextView) findViewById(R.id.session_description_text);
+
 	}
 
 	@Override
 	public boolean handleMessage(Message msg) {
-		switch(msg.what) {
+		switch (msg.what) {
 		case ConditionCodes.C_SESSION_RECIEVED:
-			mSession = (Session)msg.obj;
+			mSession = (Session) msg.obj;
 			setText();
 		}
 		return false;
 	}
 
 	private void setText() {
-		
+
 		mCourse.setText(mSession.getCourse());
 		mDay.setText(getDay());
 		mTime.setText(getTime());
 		mDuration.setText(Float.toString(mSession.getDuration()));
 		mLocation.setText(mSession.getLocation());
-		mDescription.setText(mSession.getDescription());	
+		mDescription.setText(mSession.getDescription());
 	}
 
 	private String getTime() {
@@ -85,7 +89,7 @@ public class SessionForm extends Activity implements Handler.Callback {
 
 	private String getDay() {
 		int date = mSession.getDate();
-		switch (date){
+		switch (date) {
 		case 0:
 			return "Sunday";
 		case 1:
@@ -111,4 +115,13 @@ public class SessionForm extends Activity implements Handler.Callback {
 		mController.removeHandler(mHandler);
 	}
 
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.session_view_delete_button:
+			break;
+		case R.id.session_view_edit_button:
+			break;
+		}
+	}
 }

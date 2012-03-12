@@ -62,9 +62,8 @@ public class TimetableController {
 	private int mClickedTime;
 	private int mClickedWeekday;
 	
-	private int deleteSelected;
-	
 	private Session mSession;
+	private boolean mJustCreated;
 
 	public static synchronized TimetableController getController(Context context) {
 		if (mController == null) {
@@ -129,16 +128,16 @@ public class TimetableController {
 			launchCreateTimetableActivity(msg);
 			break;
 
-		case ConditionCodes.V_DELETE_TIMETABLE:
-			deleteSelected = 1;
-			deleteTimetable(msg);
-			msg.what = ConditionCodes.C_TIMETABLE_DELETED;
-			break;
+//		case ConditionCodes.V_DELETE_TIMETABLE:
+//			deleteTimetable(msg);
+//			msg.what = ConditionCodes.C_TIMETABLE_DELETED;
+//			break;
 
 		case ConditionCodes.V_CREATE_TIMETABLE:
 			mTimetables.add((Timetable) msg.obj);
 			mCurrentTimetable = (Timetable) msg.obj;
 			msg.what = ConditionCodes.C_TIMETABLE_CREATED;
+			mJustCreated = true;
 			break;
 
 		case ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM:
@@ -175,7 +174,6 @@ public class TimetableController {
 			break;
 
 		case ConditionCodes.V_SELECT_TIMETABLE:
-			deleteSelected = 0;
 			listTimetables(msg);
 			break;
 			
@@ -196,9 +194,19 @@ public class TimetableController {
 			msg.what = ConditionCodes.C_TIMETABLE_RETRIEVED;
 			msg.obj = mCurrentTimetable;
 			break;
+			
+		case ConditionCodes.V_DELETE_LAST:
+			mTimetables.remove(mTimetables.size()-1);
+			try{
+				mCurrentTimetable = mTimetables.get(0);
+			}
+			catch(Exception e){
+				
+			}
+			break;
+			
 		case ConditionCodes.V_GET_ALL_TIMETABLE:
 			msg.obj = mTimetables;
-			msg.arg1 = deleteSelected;
 			msg.what = ConditionCodes.C_SEND_ALL_TIMETABLE;
 			break;
 

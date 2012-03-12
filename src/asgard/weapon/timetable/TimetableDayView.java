@@ -188,9 +188,18 @@ public class TimetableDayView extends Activity implements OnClickListener,
 			// Make a new text view to hold the session information
 			SessionView sessionView = new SessionView(this, s);
 			sessionView.setOnClickListener(this);
-			sessionView.setText(" Test");
+
 			sessionView.setPadding(5, 1, 0, 0);
 			sessionView.setBackgroundColor(Color.rgb(80, 39, 132));
+
+			String string;
+			if (duration == 1) {
+				string = s.getCourse();
+			} else {
+				string = s.getCourse() + "\n" + s.getDescription();
+			}
+			
+			sessionView.setText(string);
 
 			RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
 					LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT);
@@ -248,10 +257,6 @@ public class TimetableDayView extends Activity implements OnClickListener,
 
 	@Override
 	public void onClick(View v) {
-		if (v instanceof SessionView) {
-			SessionView sv = (SessionView) v;
-			sv.setText(sv.getSession().getDescription());
-		}
 
 		if (v.getId() == R.id.timetable_day_view_left_button) {
 			if (--mWeekday < 0) {

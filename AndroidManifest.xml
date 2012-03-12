@@ -28,9 +28,7 @@
         <activity android:name=".timetable.TimetableDayView">
             
         </activity> 
-        <activity android:name=".timetable.TimetableWeekView">
-            
-        </activity>
+       
         <activity android:name=".timetable.SessionCreationForm" >
             
         </activity>
