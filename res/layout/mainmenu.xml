@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/SimpleUILayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<Gallery
+    android:id="@+id/gallery"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ui_back0"
+    android:gravity="top"
+    android:paddingTop="30dp" />
+
+<ImageView
+    android:id="@+id/eng_id"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:src="@drawable/eng_id" />
+ 
+</LinearLayout>
