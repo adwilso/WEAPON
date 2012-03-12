@@ -13,12 +13,8 @@ import asgard.weapon.map.*;
  */
 public class MapControl {
 	private Graph g;
-	public MapControl (Activity c, View context) {
-		g = new Graph();
-		//MapDisplay m = new MapDisplay();
-		//Intent i = new Intent(context.getContext(),MapDisplay.class);
-		//c.startActivity(i);
-		
+	public MapControl () {
+		g = new Graph();		
 	}
 
 }

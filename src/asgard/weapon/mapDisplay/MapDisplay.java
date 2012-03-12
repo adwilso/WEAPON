@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ZoomControls;
 import asgard.weapon.R;
 import asgard.weapon.map.*;
 /**
@@ -23,9 +24,12 @@ public class MapDisplay extends Activity implements OnClickListener {
 	private static ImageView mapDisplay;
 	private Button searchButton;
 	private MapImageView mapScreen;
-	private Graph g;
+	private MapControl control;
+	private ZoomControls zoomButton;
 	public MapDisplay() {
 		super();
+		control = new MapControl();
+		
 	}
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,28 +44,25 @@ public class MapDisplay extends Activity implements OnClickListener {
         searchButton =(Button) this.findViewById(R.id.button1);
         searchButton.setOnClickListener(this);
         
+        zoomButton = (ZoomControls)this.findViewById(R.id.zoomControls1);
+        zoomButton.setOnZoomInClickListener(new OnClickListener() {
+        	public void onClick(View v)
+        	{
+        		mapScreen.scale(1.5);
+        	}
+        });
+        zoomButton.setOnZoomOutClickListener(new OnClickListener() {
+        	public void onClick(View v)
+        	{
+        		mapScreen.scale(0.5);
+        	}
+        });
+        
    }
-	private void drawNode() {
-		ArrayList <Node> nodes = g.getNodes();
-		Iterator <Node> i = nodes.iterator();
-		while (i.hasNext()) {
-			Node n = i.next();
-			ImageView v = new ImageView(this);
-			//v.setLeft(n.getxPos());
-			v.setImageResource(R.drawable.node);
-			
-		}
-	}
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		switch(v.getId())
-		{
-		case R.id.button1:
-			
-			break;
-			
-		}
+		
 		
 	}
 
