@@ -213,6 +213,9 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 
 		case R.id.session_course_dialog_cancel_button:
 			mCreateCourseDialog.dismiss();
+			if (mCourses.size() == 1) {
+				finish();
+			}
 			break;
 
 		case R.id.session_creation_add_button:
@@ -308,7 +311,6 @@ public class SessionCreationForm extends Activity implements OnClickListener,
 				}
 			} else {
 				mRetrievedCourses = new ArrayList<Course>();
-				mCourses.add("Default");
 			}
 
 			return true;

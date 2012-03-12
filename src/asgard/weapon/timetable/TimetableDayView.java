@@ -201,7 +201,7 @@ public class TimetableDayView extends Activity implements OnClickListener,
 			if (duration == 1) {
 				string = s.getCourse();
 			} else {
-				string = s.getCourse() + "\n" + s.getDescription();
+				string = s.getCourse() + "\n" + s.getLocation();
 			}
 
 			sessionView.setText(string);
@@ -298,13 +298,6 @@ public class TimetableDayView extends Activity implements OnClickListener,
 			mController.getHandler().sendMessage(msg);
 		}
 
-		// if (v.getId() % 100 == 0) {
-		// Message msg = mController.getHandler().obtainMessage(
-		// ConditionCodes.V_LAUNCH_COURSE_CREATION_FORM, this);
-		// msg.arg1 = (Integer) v.getTag();
-		// msg.arg2 = mWeekday;
-		// mController.getHandler().sendMessage(msg);
-		// }
 	}
 
 	@Override

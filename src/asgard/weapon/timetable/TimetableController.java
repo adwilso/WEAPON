@@ -132,12 +132,12 @@ public class TimetableController {
 			mCurrentTimetable = (Timetable) msg.obj;
 			msg.what = ConditionCodes.C_TIMETABLE_CREATED;
 			break;
-			
+
 		case ConditionCodes.V_SET_TIME_DATE:
 			mClickedTime = msg.arg1;
 			mClickedWeekday = msg.arg2;
 			mSession = null;
-			
+
 			msg.what = ConditionCodes.C_TIME_DATE_SET;
 			break;
 
@@ -147,7 +147,7 @@ public class TimetableController {
 			break;
 
 		case ConditionCodes.V_GET_TIMETABLE:
-			
+
 			msg.obj = mCurrentTimetable;
 			msg.what = ConditionCodes.C_TIMETABLE_RETRIEVED;
 			break;
@@ -173,8 +173,8 @@ public class TimetableController {
 
 		case ConditionCodes.V_DELETE_SESSION:
 			List<Course> listOfCourses = mCurrentTimetable.getCourses();
-			for (int i = 0; i < listOfCourses.size(); i++) { 
-				if(listOfCourses.get(i).removeSession((Session)msg.obj)){
+			for (int i = 0; i < listOfCourses.size(); i++) {
+				if (listOfCourses.get(i).removeSession((Session) msg.obj)) {
 					msg.what = ConditionCodes.C_SESSION_DELETED;
 					msg.obj = mCurrentTimetable;
 					i = listOfCourses.size();
@@ -198,20 +198,36 @@ public class TimetableController {
 		case ConditionCodes.V_DELETE_SELECTED:
 			if (mCurrentTimetable == mTimetables.get(msg.arg1)) {
 				mTimetables.remove(msg.arg1);
-				mCurrentTimetable = mTimetables.get(0);
+
+				try {
+					mCurrentTimetable = mTimetables.get(0);
+				} catch (Exception e) {
+
+				}
+
 			} else {
 				mTimetables.remove(msg.arg1);
 			}
 
+			deleteTimetable(msg);
+
+			 if (mTimetables.size() == 0){
+			 mTimetables.add(new Timetable ("My Timetable"));
+			 mCurrentTimetable = mTimetables.get(0);
+			 }
+
+			saveTimetable(msg);
+
 			msg.what = ConditionCodes.C_TIMETABLE_RETRIEVED;
 			msg.obj = mCurrentTimetable;
 			break;
-			
+
 		case ConditionCodes.V_EDIT_SESSION:
-			mSession = (Session)msg.obj;
+			mSession = (Session) msg.obj;
 			mClickedWeekday = mSession.getDate();
-			mClickedTime = mSession.getHour()*2 + (mSession.getMinute() == 0 ? 0 : 1);
-			
+			mClickedTime = mSession.getHour() * 2
+					+ (mSession.getMinute() == 0 ? 0 : 1);
+
 			msg.what = ConditionCodes.C_SESSION_UPDATED;
 			break;
 
@@ -263,10 +279,13 @@ public class TimetableController {
 			public void run() {
 				// Load the timetable and send a message when done
 				mTimetables = Timetable.load(CONTEXT);
+				List<Timetable> tempTimetables = mTimetables;
 
 				// If it is null, make a new one
-				if (mTimetables == null) {
+				if (mTimetables == null || mTimetables.size() == 0) {
 					mTimetables = new ArrayList<Timetable>();
+					mTimetables.add(new Timetable("My Timetable"));
+					mCurrentTimetable = mTimetables.get(0);
 				}
 				Message message = mHandler.obtainMessage();
 				message.what = ConditionCodes.C_TIMETABLE_LOADED;
@@ -284,12 +303,6 @@ public class TimetableController {
 		}
 	}
 
-	private void deleteTimetable(Message msg) {
-		// Timetable.delete((Context) msg.obj);
-		// msg.what = ConditionCodes.C_TIMETABLE_DELETED;
-		listTimetables(msg);
-	}
-
 	private void saveTimetable(Message msg) {
 		final Context CONTEXT = (Context) msg.obj;
 		new Thread(new Runnable() {
@@ -298,6 +311,19 @@ public class TimetableController {
 				Timetable.save(CONTEXT, mTimetables);
 				Message message = mHandler.obtainMessage();
 				message.what = ConditionCodes.C_TIMETABLE_SAVED;
+				message.sendToTarget();
+			}
+		}).start();
+	}
+
+	private void deleteTimetable(Message msg) {
+		final Context CONTEXT = (Context) msg.obj;
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				Timetable.delete(CONTEXT);
+				Message message = mHandler.obtainMessage();
+				message.what = ConditionCodes.C_TIMETABLE_DELETED;
 				message.sendToTarget();
 			}
 		}).start();

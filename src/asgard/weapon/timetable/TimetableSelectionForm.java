@@ -62,6 +62,7 @@ public class TimetableSelectionForm extends Activity implements OnClickListener,
 		
 		if (position < 100){
 			msg.what = ConditionCodes.V_DELETE_SELECTED;
+			msg.obj = this;
 		}
 		else{
 			msg.what = ConditionCodes.V_TIMETABLE_SELECTED;
