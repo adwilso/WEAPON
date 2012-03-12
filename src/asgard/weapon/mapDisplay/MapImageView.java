@@ -227,7 +227,7 @@ private static final int INVALID_POINTER_ID = -1;
         }
        // nodes.draw(canvas);
         if (pointX != 0 && pointY != 0){
-        	canvas.drawCircle(pointX, pointY, 10, lineColour);
+        	canvas.drawCircle(pointX, pointY, 35, lineColour);
         }
         
         canvas.restore();

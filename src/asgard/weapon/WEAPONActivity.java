@@ -26,7 +26,7 @@ public class WEAPONActivity extends Activity implements View.OnClickListener{
         i.setImageResource(f.getImage());
 
    
-        Graph  g = new Graph();
+        //Graph  g = new Graph();
 
        
        
