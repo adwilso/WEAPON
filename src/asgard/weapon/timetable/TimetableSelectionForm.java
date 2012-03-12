@@ -60,12 +60,13 @@ public class TimetableSelectionForm extends Activity implements OnClickListener,
 		
 		Message msg = mController.getHandler().obtainMessage();
 		
-		if (delete){
+		if (position < 100){
 			msg.what = ConditionCodes.V_DELETE_SELECTED;
 		}
 		else{
 			msg.what = ConditionCodes.V_TIMETABLE_SELECTED;
 		}
+		position = position % 100;
 		msg.arg1 = position;
 		msg.sendToTarget();
 		finish();
@@ -85,10 +86,10 @@ public class TimetableSelectionForm extends Activity implements OnClickListener,
 			Button temp = (Button) rl.findViewById(R.id.button);
 			TextView name = (TextView) rl.findViewById(R.id.text);
 			temp.setOnClickListener(this);
-			//temp.setText(mTimetables.get(i).getName());
+			name.setOnClickListener(this);
 			name.setText(mTimetables.get(i).getName());
 			temp.setId(i+1);
-			name.setId(i+100);
+			name.setId(i+101);
 			
 			//CHANGE THE ONCLICK EVENT POSITION
 			
@@ -96,7 +97,7 @@ public class TimetableSelectionForm extends Activity implements OnClickListener,
 			LayoutParams textLP = (LayoutParams) name.getLayoutParams();
 			
 			if (i != 0) {
-				TextView aboveText = (TextView) findViewById(i+99);
+				TextView aboveText = (TextView) findViewById(i+100);
 				Button aboveButton = (Button) findViewById(i);
 				
 				textLP.addRule(RelativeLayout.BELOW, aboveText.getId());
