@@ -25,14 +25,16 @@ public class MapDisplay extends Activity {
 	}
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mapScreen = new MapImageView(this);
+        //mapScreen = new MapImageView(this);
         setContentView(R.layout.maplayout);
         //setContentView(R.layout.mainmap);
         //mapDisplay = (ImageView)this.findViewById(R.id.mapDisplay);
+        mapScreen = (MapImageView)this.findViewById(R.id.mapImageView1);
+        mapScreen.setImage(R.drawable.seb0);
         //mapDisplay.setImageResource(R.drawable.map);
         g = new Graph();
-        mapScreen.setImage(R.drawable.seb0);
-        mapScreen.scale(0.5);
+        //mapScreen.setImage(R.drawable.seb0);
+        //mapScreen.scale(0.5);
    }
 	private void drawNode() {
 		ArrayList <Node> nodes = g.getNodes();

@@ -57,7 +57,7 @@ private static final int INVALID_POINTER_ID = -1;
 
     public MapImageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
-        mImage = getResources().getDrawable(R.drawable.map);
+       /* mImage = getResources().getDrawable(R.drawable.map);
         if(!this.isInEditMode())
         {
         ShapeDrawable mDrawable = new ShapeDrawable(new OvalShape());
@@ -76,7 +76,7 @@ private static final int INVALID_POINTER_ID = -1;
         else
         {
         	screenHeight = screenWidth = 0;
-        }
+        }*/
     }
 
     public MapImageView(Context context, AttributeSet attrs, int defStyle) {
@@ -105,9 +105,9 @@ private static final int INVALID_POINTER_ID = -1;
     }
     public void setImage(int imageResource)
     {
-    	//mImage = getResources().getDrawable(R.drawable.seb1);
-    	// mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
-    	//this.invalidate();
+    	mImage = getResources().getDrawable(imageResource);
+    	mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
+    	this.invalidate();
     }
     @Override
     public boolean onTouchEvent(MotionEvent ev) {

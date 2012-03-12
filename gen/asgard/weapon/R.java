@@ -28,9 +28,9 @@ public final class R {
         public static final int button1=0x7f050001;
         public static final int imageView1=0x7f050000;
         public static final int mapDisplay=0x7f050002;
-        public static final int mapImageView1=0x7f050005;
+        public static final int mapImageView1=0x7f050004;
         public static final int relativeLayout1=0x7f050003;
-        public static final int zoomControls1=0x7f050004;
+        public static final int zoomControls1=0x7f050005;
     }
     public static final class layout {
         public static final int main=0x7f030000;
