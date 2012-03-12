@@ -9,7 +9,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
-//import android.graphics.drawable.shapes.OvalShape;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
@@ -19,6 +18,7 @@ import android.view.View;
 import android.view.WindowManager;
 import asgard.weapon.R;
 import asgard.weapon.map.*;
+
 
 public class MapImageView extends View {
 
@@ -35,10 +35,12 @@ private static final int INVALID_POINTER_ID = -1;
     private float mScaleFactor = 1.f;
     int screenWidth;
     int screenHeight;
+    
+    
 
     public MapImageView(Context context) {
         this(context, null, 0);
-        mImage = getResources().getDrawable(R.drawable.map);
+     /*   mImage = getResources().getDrawable(R.drawable.map);
         if(!this.isInEditMode())
         {
         ShapeDrawable mDrawable = new ShapeDrawable(new OvalShape());
@@ -57,7 +59,7 @@ private static final int INVALID_POINTER_ID = -1;
         else
         {
         	screenHeight = screenWidth = 0;
-        }
+        }*/
     }
 
     public MapImageView(Context context, AttributeSet attrs) {
