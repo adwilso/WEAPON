@@ -37,6 +37,9 @@
         <activity android:name=".timetable.SessionForm">
             
         </activity>
+        <activity android:name=".timetable.TimetableSelectionForm">
+            
+        </activity>
     </application>
 
 </manifest>

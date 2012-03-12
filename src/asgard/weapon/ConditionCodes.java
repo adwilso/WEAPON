@@ -32,13 +32,16 @@ public interface ConditionCodes {
 	public final int V_GET_COURSES = 31;
 	public final int V_GET_SESSION = 32;
 	public final int V_SET_SESSION = 33;
+	public final int V_GET_ALL_TIMETABLE = 34;
+	public final int V_TIMETABLE_SELECTED = 35;
+	public final int V_DELETE_SELECTED = 36;
 	
 	public final int V_LAUNCH_SESSION_FORM = 40;
 	
 	public final int C_TIMETABLE_SAVING = 100;
 	public final int C_TIMETABLE_SAVED = 101;
 	public final int C_TIMETABLE_NOT_SAVED = 102;
-
+	public final int C_SEND_ALL_TIMETABLE = 103;
 	public final int C_TIMETABLE_LOADED = 104;
 	public final int C_TIMETABLE_NOT_LOADED = 105;
 	

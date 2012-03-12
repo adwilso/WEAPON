@@ -62,6 +62,8 @@ public class TimetableController {
 	private int mClickedTime;
 	private int mClickedWeekday;
 	
+	private int deleteSelected;
+	
 	private Session mSession;
 
 	public static synchronized TimetableController getController(Context context) {
@@ -128,6 +130,7 @@ public class TimetableController {
 			break;
 
 		case ConditionCodes.V_DELETE_TIMETABLE:
+			deleteSelected = 1;
 			deleteTimetable(msg);
 			msg.what = ConditionCodes.C_TIMETABLE_DELETED;
 			break;
@@ -172,7 +175,31 @@ public class TimetableController {
 			break;
 
 		case ConditionCodes.V_SELECT_TIMETABLE:
-			// listTimetables();
+			deleteSelected = 0;
+			listTimetables(msg);
+			break;
+			
+		case ConditionCodes.V_TIMETABLE_SELECTED:
+			mCurrentTimetable = mTimetables.get(msg.arg1);
+			msg.obj = mCurrentTimetable;
+			msg.what = ConditionCodes.C_TIMETABLE_RETRIEVED;
+			break;
+		case ConditionCodes.V_DELETE_SELECTED:
+			if (mCurrentTimetable == mTimetables.get(msg.arg1)){
+				mTimetables.remove(msg.arg1);
+				mCurrentTimetable = mTimetables.get(0);
+			}
+			else{
+				mTimetables.remove(msg.arg1);
+			}
+			
+			msg.what = ConditionCodes.C_TIMETABLE_RETRIEVED;
+			msg.obj = mCurrentTimetable;
+			break;
+		case ConditionCodes.V_GET_ALL_TIMETABLE:
+			msg.obj = mTimetables;
+			msg.arg1 = deleteSelected;
+			msg.what = ConditionCodes.C_SEND_ALL_TIMETABLE;
 			break;
 
 		case ConditionCodes.V_ADD_COURSES:
@@ -222,14 +249,15 @@ public class TimetableController {
 
 		if (msg.obj instanceof TimetableMainView) {
 			Intent intent = new Intent((Activity) msg.obj,
-					TimetableCreationForm.class);
+					TimetableSelectionForm.class);
 			((Activity) msg.obj).startActivity(intent);
 		}
 	}
 
 	private void deleteTimetable(Message msg) {
-		Timetable.delete((Context) msg.obj);
-		msg.what = ConditionCodes.C_TIMETABLE_DELETED;
+		//Timetable.delete((Context) msg.obj);
+		//msg.what = ConditionCodes.C_TIMETABLE_DELETED;
+		listTimetables(msg);
 	}
 
 	private void saveTimetable(Message msg) {
@@ -286,10 +314,6 @@ public class TimetableController {
 	}
 
 	public void uploadStatus() {
-
-	}
-
-	public void listTimetable() {
 
 	}
 
