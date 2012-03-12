@@ -39,6 +39,7 @@ public class MapDisplay extends Activity implements OnClickListener {
 	private MapImageView mapScreen;
 	private MapControl control;
 	private ZoomControls zoomButton;
+	private boolean lastWasPath;
 
 	Button b1;
 	AlertDialog opt, showRoom, fromRoom, toRoom;
@@ -95,9 +96,20 @@ public class MapDisplay extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		control.mapGetNodes();
+		//control.mapGetNodes();
 		opt.show();
-
+	}
+	public void steveExitPoints()
+	{
+		if (lastWasPath)
+		{
+			control.findPath(fRoom, tRoom);
+			
+		}
+		else
+		{
+			control.findPoint(room);
+		}
 	}
 
 	public void drawNodes(Node[] n) {
@@ -106,6 +118,11 @@ public class MapDisplay extends Activity implements OnClickListener {
 
 	public void updateMap(int resource) {
 		mapScreen.setImage(resource);
+	}
+	public void drawNode(int image, int x, int y)
+	{
+		mapScreen.drawPoint(x, y);
+		this.updateMap(image);
 	}
 
 	public void steve() {
@@ -174,6 +191,7 @@ public class MapDisplay extends Activity implements OnClickListener {
 					Toast.makeText(getApplicationContext(), tRoom,
 							Toast.LENGTH_SHORT).show();
 					input1.setText(selectMsg);
+					steveExitPoints();
 					break;
 				}
 				case (1): {
@@ -181,6 +199,7 @@ public class MapDisplay extends Activity implements OnClickListener {
 					Toast.makeText(getApplicationContext(), tRoom,
 							Toast.LENGTH_SHORT).show();
 					input1.setText(selectMsg);
+					steveExitPoints();
 					break;
 				}
 				default: {
@@ -200,6 +219,7 @@ public class MapDisplay extends Activity implements OnClickListener {
 						Toast.makeText(getApplicationContext(), tRoom,
 								Toast.LENGTH_SHORT).show();
 						input1.setText(selectMsg);
+						steveExitPoints();
 					}
 				});
 
@@ -224,6 +244,7 @@ public class MapDisplay extends Activity implements OnClickListener {
 					Toast.makeText(getApplicationContext(), room,
 							Toast.LENGTH_SHORT).show();
 					input2.setText(selectMsg);
+					steveExitPoints();
 					break;
 				}
 				case (1): {
@@ -231,6 +252,7 @@ public class MapDisplay extends Activity implements OnClickListener {
 					Toast.makeText(getApplicationContext(), room,
 							Toast.LENGTH_SHORT).show();
 					input2.setText(selectMsg);
+					steveExitPoints();
 					break;
 				}
 				default: {
@@ -263,6 +285,7 @@ public class MapDisplay extends Activity implements OnClickListener {
 							Toast.makeText(getApplicationContext(), options[0],
 									Toast.LENGTH_SHORT).show();
 							showRoom.show();
+							lastWasPath = false;
 							input2.selectAll();
 							break;
 						case (1):
@@ -270,6 +293,7 @@ public class MapDisplay extends Activity implements OnClickListener {
 									Toast.LENGTH_SHORT).show();
 							fromRoom.show();
 							input0.selectAll();
+							lastWasPath = true;
 							break;
 						default:
 							// Do Nothing

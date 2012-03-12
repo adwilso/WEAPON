@@ -42,5 +42,16 @@ public class MapControl {
 		view.drawNodes(onMap);
 		view.updateMap(nodes[start].getImage().getImage());
 	}
+	public void findPath(String start, String end)
+	{
+		nodes = g.getPathBetween(start, end).toArray(new Node[1]);
+		index = 0;
+		this.nextMap();
+	}
+	public void findPoint(String node)
+	{
+		Node n = g.findNodeWithName(node);
+		view.drawNode(n.getImage().getImage(), n.getxPos(), n.getyPos());		
+	}
 
 }

@@ -24,6 +24,8 @@ public class MapImageView extends View {
 
 private static final int INVALID_POINTER_ID = -1;
 
+	private int pointX;
+	private int pointY;
 	private Paint lineColour;
 	private Node[] nodeList;
     private Drawable mImage;
@@ -90,6 +92,8 @@ private static final int INVALID_POINTER_ID = -1;
         super(context, attrs, defStyle);
         nodeList = null;
         lineColour = new Paint();
+        pointX = 0;
+        pointY = 0;
         lineColour.setColor(Color.rgb(80, 39, 132));
         lineColour.setStrokeWidth(10);
         mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
@@ -222,6 +226,10 @@ private static final int INVALID_POINTER_ID = -1;
         	}
         }
        // nodes.draw(canvas);
+        if (pointX != 0 && pointY != 0){
+        	canvas.drawCircle(pointX, pointY, 10, lineColour);
+        }
+        
         canvas.restore();
     }
     public void scale(double factor) {
@@ -239,7 +247,19 @@ private static final int INVALID_POINTER_ID = -1;
     	nodeList = nodes;    
     	this.invalidate();
     }
-
+    
+    public void drawPoint(int x, int y)
+    {
+    	pointX = x;
+    	pointY = y;
+    	this.invalidate();
+    }
+    public void clearPoint()
+    {
+    	pointX = 0;
+    	pointY = 0;
+    	this.invalidate();
+    }
     private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
