@@ -17,7 +17,7 @@
 			android:layout_height="50dp" android:layout_alignParentRight="true"
 			android:layout_alignParentTop="true" android:layout_marginRight="19dp"
 			android:layout_marginTop="19dp" android:background="@drawable/serach"
-			android:text=" " />
+			android:text=" "  android:onClick="onClick"/>
 
 		<ZoomControls android:id="@+id/zoomControls1"
 			android:layout_width="wrap_content" android:layout_height="wrap_content"

@@ -7,6 +7,9 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Layout;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import asgard.weapon.R;
 import asgard.weapon.map.*;
@@ -16,8 +19,9 @@ import asgard.weapon.map.*;
  * 
  * 
  */
-public class MapDisplay extends Activity {
+public class MapDisplay extends Activity implements OnClickListener {
 	private static ImageView mapDisplay;
+	private Button searchButton;
 	private MapImageView mapScreen;
 	private Graph g;
 	public MapDisplay() {
@@ -31,10 +35,11 @@ public class MapDisplay extends Activity {
         //mapDisplay = (ImageView)this.findViewById(R.id.mapDisplay);
         mapScreen = (MapImageView)this.findViewById(R.id.mapImageView1);
         mapScreen.setImage(R.drawable.seb0);
-        //mapDisplay.setImageResource(R.drawable.map);
-        g = new Graph();
-        //mapScreen.setImage(R.drawable.seb0);
-        //mapScreen.scale(0.5);
+        mapScreen.scale(0.5);
+        
+        searchButton =(Button) this.findViewById(R.id.button1);
+        searchButton.setOnClickListener(this);
+        
    }
 	private void drawNode() {
 		ArrayList <Node> nodes = g.getNodes();
@@ -46,6 +51,18 @@ public class MapDisplay extends Activity {
 			v.setImageResource(R.drawable.node);
 			
 		}
+	}
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch(v.getId())
+		{
+		case R.id.button1:
+			
+			break;
+			
+		}
+		
 	}
 
 }
