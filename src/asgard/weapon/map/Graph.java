@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 import asgard.weapon.R;
 /**
  * 
- * @author Adam
+ * @author Adam and Ron
  * 
  * 
  */
@@ -19,7 +19,7 @@ public class Graph {
 	private ArrayList <Edge> edges;
 
 	public Graph() {
-		//Load place holder maps
+		/*Load place holder maps*/
 		maps = new ArrayList <FloorPlan>();
 		maps.add(new FloorPlan("SEB0",R.drawable.seb0));
 		maps.add(new FloorPlan("SEB1",R.drawable.seb1));
@@ -29,16 +29,17 @@ public class Graph {
 		maps.add(new FloorPlan("TEB2",R.drawable.teb2));
 		maps.add(new FloorPlan("TEB3",R.drawable.teb3));
 		maps.add(new FloorPlan("TEB4",R.drawable.teb4));
-		//Make node array
+		/*Make node array*/
 		this.fillNodes();
-		//Make edge array
+		/*Make edge array*/
 		this.fillEdges();
 		
-		//this.getPathBetween(nodes.get(1), nodes.get(2));
+		/*this.getPathBetween(nodes.get(1), nodes.get(2));*/
 		
 	}
-	////////////////////
-	//TODO These are for debugging only, drop them in the final version. 
+	/*
+	 * TODO These are for debugging only, drop them in the final version. 
+	 */
 	public ArrayList <Node> getNodes() {
 		return nodes;
 	}
@@ -57,7 +58,8 @@ public class Graph {
 		return null;
 	}
 	public ArrayList <Node> getPathBetween(String start, String goal) {
-		return this.getPathBetween(this.findNodeWithName(start), this.findNodeWithName(goal));
+		return this.getPathBetween(this.findNodeWithName(start), 
+				this.findNodeWithName(goal));
 	}
 	
 	private Node reconstructPath(Node currentNode, ArrayList <Node> list) {
@@ -86,7 +88,7 @@ public class Graph {
 				ArrayList<Node> result = new ArrayList<Node>();
 				result.add(this.reconstructPath(x, result));
 				return result;
-				//Yipiee Kiy Aye Motherf*ckers -John McClane
+				/*Yipiee Kiy Aye Motherf*ckers -John McClane*/
 			}
 			closedSet.put(x.getName(), x);
 			ArrayList<Node> neighbours = x.getNeighbours();
@@ -127,8 +129,9 @@ public class Graph {
 	}
 	
 	private int h(Node x, Node goal) {
-		int temp = (int) Math.sqrt(((x.getxPos() - goal.getxPos())* (x.getxPos() - goal.getxPos()))
-				+ ((x.getyPos() - goal.getyPos()) * (x.getyPos() - goal.getyPos())));
+		int temp = (int) Math.sqrt(((x.getxPos() - goal.getxPos())
+				* (x.getxPos() - goal.getxPos())) + ((x.getyPos() 
+						- goal.getyPos()) * (x.getyPos() - goal.getyPos())));
 		if (x.getName().charAt(0) == goal.getName().charAt(0)) {
 			return temp;
 		}
@@ -147,6 +150,9 @@ public class Graph {
 		}
 		return null;
 	}
+	
+	
+	/*Nodes by Ron*/
 	private void fillNodes() {
 		nodes = new NodeList <Node>();
 		nodes.add(new Node(this.getImageWithName("TEB1"),1910,940,"TEBEF"));
@@ -1227,545 +1233,7 @@ public class Graph {
 		nodes.add(new Node(this.getImageWithName("SEB3"),780,2430,"SEB3323"));
 		nodes.add(new Node(this.getImageWithName("SEB3"),780,2790,"SEBGS33"));
 		nodes.add(new Node(this.getImageWithName("SEB3"),780,2820,"SEB3320"));
-		/*nodes.add(new Node(this.getImageWithName("TEB1"),1910,940,"TEBEF"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),1910,810,"TEBC11"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),1910,450,"TEB40"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),1600,450,"TEBEL1"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),1600,810,"TEBC12"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),1600,630,"TEBC13"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),1910,890,"TEBC14"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),1600,890,"TEBST11"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),3000,630,"TEB50"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),2330,630,"TEB28"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),1060,630,"TEB6"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),800,630,"TEB26"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),790,630,"TEB14"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),700,630,"TEB24"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),585,630,"TEB18"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),500,630,"TEB20"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),440,630,"TEB22"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),300,630,"TEBST12"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),220,630,"TEBEW"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),3290,725,"TEBEE"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),3240,725,"TEBST13"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),3240,550,"TEBST13U"));
-		nodes.add(new Node(this.getImageWithName("TEB1"),3290,550,"TEBST13D"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),90,420,"TEBST22"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),270,420,"TEB217"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),280,420,"TEB218"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),430,420,"TEB220"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),540,420,"TEB221"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),540,480,"TEB216"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),540,490,"TEB215"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),730,420,"TEB213"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),940,420,"TEB206"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),1250,420,"TEB228"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),1440,420,"TEBC21"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),1440,600,"TEBST21"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),1440,240,"TEBEL2"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),1590,240,"TEB230"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),1810,240,"TEB233"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),1840,240,"TEB280"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),1900,240,"TEB234"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2000,240,"TEB235"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2040,240,"TEB237"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2200,240,"TEB239"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2240,240,"TEB241"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2250,240,"TEB240"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2390,240,"TEB244"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2400,240,"TEB243"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2450,240,"TEB245"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2600,240,"TEB247"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2650,240,"TEB249"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2770,240,"TEB252"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2810,240,"TEB251"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2850,240,"TEB253"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),3000,240,"TEB255"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),3000,530,"TEBC22"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),3120,530,"TEBST23"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),3000,600,"TEB257"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2850,600,"TEB259"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2810,600,"TEB261"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2650,600,"TEB263"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2600,600,"TEB265"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2400,600,"TEB279B"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),2220,600,"TEB279"));
-		nodes.add(new Node(this.getImageWithName("TEB2"),1810,600,"TEB279A"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),90,440,"TEBST32"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),270,440,"TEB315"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),280,440,"TEB318"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),480,440,"TEB320"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),530,440,"TEB313"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),730,440,"TEB324"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1030,440,"TEB326"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1040,440,"TEB308"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1140,440,"TEB327"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1250,440,"TEB328"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1320,440,"TEB306"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1330,440,"TEB329"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1450,440,"TEBC31"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1450,615,"TEBST31"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1450,250,"TEBEL3"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1650,250,"TEB330"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1780,250,"TEB332"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1820,250,"TEB333"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1970,250,"TEB336"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2000,250,"TEB335"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2040,250,"TEB337"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2150,250,"TEB338"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2200,250,"TEB339"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2250,250,"TEB341"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2270,250,"TEB344"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2400,250,"TEB343"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2450,250,"TEB345"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2610,250,"TEB347"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2650,250,"TEB349"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2740,250,"TEB346"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2810,250,"TEB351"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2850,250,"TEB353"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2880,250,"TEB352"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),3000,250,"TEB355"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),3000,540,"TEBC32"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),3120,540,"TEBST33"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),3000,615,"TEB357"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2855,615,"TEB359"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2810,615,"TEB361"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2650,615,"TEB363"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2610,615,"TEB365"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2445,615,"TEB367"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2405,615,"TEB369"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2245,615,"TEB371"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2200,615,"TEB373"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),2040,615,"TEB375"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1995,615,"TEB377"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1895,615,"TEB378"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1810,615,"TEB379"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1780,615,"TEB380"));
-		nodes.add(new Node(this.getImageWithName("TEB3"),1650,615,"TEB382"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),90,390,"TEBST42"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),280,390,"TEB417"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),280,390,"TEB415"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),530,390,"TEB413"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),690,390,"TEB420"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),690,390,"TEB411"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),1090,390,"TEB424"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),1090,390,"TEB408"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),1290,390,"TEB428"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),1290,390,"TEB406"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),1450,390,"TEBC41"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),1450,210,"TEBEL4"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),1650,210,"TEB430"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),1780,210,"TEB432"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),1820,210,"TEB433"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),1910,210,"TEB434"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2000,210,"TEB435"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2040,210,"TEB437"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2070,210,"TEB436"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2160,210,"TEB438"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2200,210,"TEB439"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2250,210,"TEB441"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2270,210,"TEB440"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2370,210,"TEB442"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2400,210,"TEB443"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2450,210,"TEB445"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2480,210,"TEB444"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2610,210,"TEB447"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2650,210,"TEB449"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2780,210,"TEB451"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2780,210,"TEB454"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),3010,210,"TEB453"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),3010,500,"TEBC42"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),3120,500,"TEBST43"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),3010,570,"TEB457"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2850,570,"TEB459"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2810,570,"TEB461"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2650,570,"TEB463"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2610,570,"TEB465"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2480,570,"TEB468"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2450,570,"TEB467"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2400,570,"TEB469"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2380,570,"TEB470"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2280,570,"TEB472"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2180,570,"TEB474"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),2080,570,"TEB476"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),1820,570,"TEB477"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),1780,570,"TEB480"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),1650,570,"TEB482"));
-		nodes.add(new Node(this.getImageWithName("TEB4"),1450,570,"TEBST41"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2760,2840,"SEBS11"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2760,2240,"SEBS12"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),3000,2840,"SEBEW1"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2610,2840,"SEBEW2"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2610,2240,"SEBEW3"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2920,2840,"SEBC11"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2920,2700,"SEB1200"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2920,2400,"SEBC12"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),3000,2400,"SEB1204"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2920,2240,"SEBC13"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2990,2240,"SEBC14"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2990,2050,"SEBS13"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),3070,2090,"SEBEW4"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2960,1940,"SEB1082"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2960,1630,"SEB1081"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2960,1530,"SEB1080"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2960,1360,"SEB1084"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2960,1330,"SEB1079"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2960,1240,"SEBE11"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2960,1230,"SEB1078"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2960,1160,"SEB1085"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2960,1060,"SEBC15"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2660,1060,"SEBC16"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2660,1130,"SEBE12"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2740,1130,"SEB1086"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2740,1220,"SEBS14"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2960,950,"SEB1060"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2960,900,"SEB1061"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2960,880,"SEB1076"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2960,740,"SEB1062"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2960,650,"SEB1063"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2960,440,"SEB1071"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2830,440,"SEB1064"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2780,440,"SEB1065"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2760,440,"SEB1068"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2680,440,"SEB1066"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2450,440,"SEB1067"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2390,440,"SEBS15"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),3100,440,"SEB1072"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),3310,440,"SEB1074"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2120,870,"SEBEN1"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),2070,1060,"SEB1001"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1890,1060,"SEBS17"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1890,990,"SEB1059"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1300,990,"SEB1056"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1230,1060,"SEBC17"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1560,1460,"SEBC18"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1500,2140,"SEBC19"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1400,2230,"SEBGS11"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1450,2080,"SEBE15"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1170,1010,"SEBE13"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1080,1000,"SEBS18"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),990,990,"SEBC101"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),990,300,"SEBC102"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),890,300,"SEB1053"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),320,300,"SEB1035"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),220,300,"SEB1041"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),200,300,"SEB1047"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),120,300,"SEBS19"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1230,1160,"SEB1004"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1230,1280,"SEB1005"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1230,1500,"SEB1007"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1230,1560,"SEB1010"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1230,1620,"SEB1011"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1230,1890,"SEB1012"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1230,1940,"SEBGS12"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1230,2140,"SEBC103"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),830,1940,"SEB1018"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),770,1940,"SEB1015"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),770,1630,"SEB1023"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),770,1410,"SEB1025"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),770,1380,"SEB1024"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),770,1180,"SEB1029"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),770,1060,"SEB1028"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1230,2210,"SEB1301"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1230,2330,"SEB1302"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1230,2400,"SEB1303"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1230,2540,"SEB1306"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1230,2600,"SEB1307"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1230,2720,"SEBC104"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1300,2700,"SEB1308"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1290,2750,"SEB1309"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),940,2720,"SEB1316"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),940,2720,"SEB1317"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),870,2720,"SEBGS13"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),770,2720,"SEB1321"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),770,2800,"SEB1320"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),770,2590,"SEB1322"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),770,2470,"SEB1325"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),770,2330,"SEB1329"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),770,2330,"SEB1327"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),820,2330,"SEB1331"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),870,2330,"SEB1332"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),970,2330,"SEB1334"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),970,2330,"SEB1333"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1020,2330,"SEB1335"));
-		nodes.add(new Node(this.getImageWithName("SEB1"),1170,2330,"SEB1337"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),3190,2100,"SEBS03"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),3190,2720,"SEBC01"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),3600,2720,"SEBC02"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),2800,1230,"SEBS04"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),2800,1130,"SEBE02"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),2800,1060,"SEBC03"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),2660,1060,"SEB1"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),2210,1060,"SEB41"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),2140,1060,"SEB2"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),2050,1060,"SEB3"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),2000,1060,"SEBTH"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1700,1060,"SEBS07"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1300,1020,"SEBE03"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1230,1010,"SEBS08"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1360,1060,"SEBC05"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1120,1030,"SEBC06"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),800,1070,"SEBC07"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1120,760,"SEB22"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1120,300,"SEBC08"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1010,300,"SEB35"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),900,300,"SEB24"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),670,300,"SEB26"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),530,300,"SEB27"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),440,300,"SEB29"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),440,460,"SEB28"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),250,300,"SEBS09"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),800,1150,"SEB17"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),800,1250,"SEB21"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),800,1360,"SEB18"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),800,1360,"SEB20"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),800,1470,"SEB19"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1360,1130,"SEB16"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1360,1280,"SEB6"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1360,1510,"SEB8"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1360,1620,"SEB10"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1360,1860,"SEB11"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1360,1930,"SEBGS02"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1230,1930,"SEB15"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),760,1930,"SEB14"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1360,2060,"SEBE05"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1410,2300,"SEBGS01"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1410,2720,"SEB51"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1360,2720,"SEB52"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1360,2720,"SEB57"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1300,2720,"SEB53"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),1000,2720,"SEBGS03"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),890,2720,"SEB63"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),890,2720,"SEB54"));
-		nodes.add(new Node(this.getImageWithName("SEB0"),890,2720,"SEB55"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3120,2820,"SEBS21"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3200,2820,"SEBC21"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3200,2700,"SEB2200"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3200,2630,"SEB2202"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3200,2260,"SEBC22"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3120,2260,"SEBS22"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3210,1980,"SEBS23"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3210,1940,"SEB2101"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3270,1940,"SEB2100"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3270,1840,"SEB2102"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3270,1570,"SEB2103"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3270,1340,"SEB2099"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3270,1250,"SEBE21"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3270,1240,"SEB2097"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3270,1150,"SEB2106"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3270,1070,"SEBC23"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3270,980,"SEB2081"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3270,910,"SEB2082"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3270,840,"SEB2083"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3270,740,"SEB2084"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3270,680,"SEB2085"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3270,590,"SEB2086"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3520,740,"SEBEM"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3520,510,"SEBC24"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3620,510,"SEBS25"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3620,450,"SEB2094"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3350,450,"SEB2096"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3270,450,"SEB2093"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3190,450,"SEB2092"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2990,450,"SEB2087"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2930,450,"SEB2088"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2840,450,"SEB2089"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2800,450,"SEB2091"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2760,450,"SEB2090"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2690,450,"SEBS26"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3050,1240,"SEBS24"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2950,1140,"SEBE22"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),3050,1070,"SEBC25"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2800,1070,"SEB2001"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2750,1070,"SEB2002"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2590,1070,"SEB2003"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2390,1070,"SEB2080"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2330,1070,"SEB2008"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2310,1070,"SEB2079"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2240,1070,"SEB2078"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2070,1070,"SEB2077"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),2000,1070,"SEB2076"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1950,1070,"SEB2009"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1920,1070,"SEB2075"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1750,1070,"SEB2074"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1670,1070,"SEB2073"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1600,1070,"SEB2072"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1540,1070,"SEBC26"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1460,1070,"SEBE23"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1380,1070,"SEBS28"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1300,1070,"SEBC27"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1300,770,"SEBC28"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1100,770,"SEB2046"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),960,770,"SEB2048"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),860,770,"SEB2038"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),730,770,"SEB2050"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),730,870,"SEB2051"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),700,870,"SEB2053"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),510,770,"SEBC29"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),510,870,"SEB2055"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),470,870,"SEB2057"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),420,770,"SEBC210"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),420,300,"SEBS29"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),630,300,"SEB2052"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),630,210,"SEB2059"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),630,210,"SEB2063"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),730,300,"SEB2064"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),850,300,"SEB2065"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1080,300,"SEB2069"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1300,300,"SEBC211"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1060,1070,"SEBC212"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1060,1160,"SEB2037"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1060,1220,"SEB2035"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1060,1280,"SEB2036"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1060,1410,"SEB2033"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1060,1630,"SEB2032"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1060,1860,"SEB2026"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1060,1950,"SEBC213"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1120,1950,"SEB2025"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1480,1950,"SEB2023"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1540,1950,"SEBGS22"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1540,1860,"SEB2020"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1540,1660,"SEB2021"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1540,1630,"SEB2018"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1540,1550,"SEB2017"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1540,1510,"SEB2016"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1540,1400,"SEB2015"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1540,1350,"SEB2013"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1540,1290,"SEB2014"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1540,2230,"SEB2301"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1540,2330,"SEB2302"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1540,2430,"SEB2303"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1540,2730,"SEB2309"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1440,2730,"SEB2316"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1440,2730,"SEB2315"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1180,2730,"SEBGS23"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1070,2730,"SEBC214"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1070,2620,"SEB2326"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1070,2600,"SEB2322"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1070,2330,"SEB2327"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1070,2330,"SEB2329"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1120,2330,"SEB2331"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1180,2330,"SEB2332"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1280,2330,"SEB2334"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1280,2330,"SEB2333"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1320,2330,"SEB2335"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),1470,2330,"SEB2337"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),990,2730,"SEB2320"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),700,2730,"SEBC215"));
-		nodes.add(new Node(this.getImageWithName("SEB2"),330,2740,"SEBTEB"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,1980,"SEBS33"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2910,1970,"SEB3113"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2910,1970,"SEB3112"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2910,2040,"SEB3111"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,1970,"SEB3109"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,1740,"SEB3114"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,1580,"SEB3115"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,1530,"SEB3108"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,1490,"SEB3116"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,1400,"SEB3117"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,1310,"SEB3118"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,1250,"SEBE31"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,1250,"SEB3107"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,1140,"SEB3120"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,1060,"SEBC31"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,980,"SEB3088"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,880,"SEB3089"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,780,"SEB3090"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,710,"SEB3105"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,670,"SEB3091"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,570,"SEB3092"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2980,450,"SEB3100"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),3220,450,"SEB3101"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),3300,450,"SEBS35"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),3320,450,"SEB3102"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2900,450,"SEB3099"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2640,450,"SEB3094"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2600,450,"SEB3098"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2560,450,"SEB3095"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2500,450,"SEB3097"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2470,450,"SEB3096"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2370,450,"SEBS36"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2750,1060,"SEBC32"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2660,1130,"SEBE32"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2750,1260,"SEBS34"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2500,1060,"SEB3001"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2460,1060,"SEB3002"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2280,1060,"SEB3003"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2100,1060,"SEB3087"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2060,1060,"SEB3005"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2020,1060,"SEB3086"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),2010,1060,"SEB3006"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1950,1060,"SEB3085"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1820,1060,"SEB3010"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1780,1060,"SEB3084"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1710,1060,"SEB3083"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1700,1060,"SEB3012"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1630,1060,"SEB3082"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1530,1060,"SEB3013"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1470,1060,"SEB3081"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1390,1060,"SEB3080"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1310,1060,"SEB3079"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1240,1060,"SEBC33"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1170,1060,"SEBE33"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1110,1060,"SEBS38"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1000,1060,"SEBC34"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1000,770,"SEBC35"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),920,770,"SEBC36"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),690,770,"SEB3052"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),690,770,"SEB3051"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),570,770,"SEB3054"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),450,770,"SEB3055"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),440,770,"SEB3056"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),330,770,"SEB3058"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),330,770,"SEB3057"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),230,770,"SEB3060"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),230,770,"SEB3059"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),130,770,"SEB3061"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),130,300,"SEBS39"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),230,300,"SEB3063"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),330,300,"SEB3064"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),560,300,"SEB3068"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),560,300,"SEB3067"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),800,300,"SEB3072"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),850,300,"SEB3069"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),920,300,"SEB3074"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),850,1060,"SEB3049"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),780,1060,"SEB3047"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),780,1180,"SEB3045"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),780,1260,"SEB3042"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),780,1290,"SEB3043"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),780,1400,"SEBC37"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),680,1400,"SEB3041"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),680,1450,"SEB3039"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),780,1550,"SEB3036"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),780,1650,"SEBC38"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),680,1650,"SEB3037"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),720,1850,"SEB3033"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),780,1850,"SEB3030"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),920,1850,"SEB3029"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),970,1850,"SEB3028"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1100,1850,"SEB3027"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1240,1850,"SEBC39"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1330,1750,"SEB3022"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1360,1750,"SEB3024"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1240,1750,"SEB3025"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1240,1520,"SEB3015"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1240,1280,"SEB3016"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1240,1940,"SEBGS32"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1240,2060,"SEBE35"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1240,2330,"SEB3302"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1240,2430,"SEB3303"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1240,2730,"SEB3310"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),1180,2330,"SEB3335"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),980,2330,"SEB3333"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),980,2330,"SEB3317"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),890,2330,"SEB3318"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),840,2330,"SEB3331"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),780,2330,"SEB3329"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),780,2330,"SEB3327"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),780,2430,"SEB3323"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),780,2790,"SEBGS33"));
-		nodes.add(new Node(this.getImageWithName("SEB3"),780,2820,"SEB3320"));*/
+
 		
 	}
 	private void addEdge(String first, String second, int weight) {
@@ -1776,6 +1244,8 @@ public class Graph {
 		one.addEdge(temp);
 		two.addEdge(temp);
 	}
+	
+	/*Edges by Ron*/
 	private void fillEdges() {
 		edges = new ArrayList<Edge>();
 		this.addEdge("TEBC11","TEBEF",130);

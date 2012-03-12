@@ -1,9 +1,6 @@
 package asgard.weapon.mapDisplay;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.view.View;
+
 import asgard.weapon.map.*;
 /**
  * 
@@ -16,21 +13,32 @@ public class MapControl {
 	private Node[] nodes;
 	private MapDisplay view;
 	private int index;
+	private boolean buttonAllowed;
 	public MapControl (MapDisplay m) {
+		buttonAllowed = false;
 		g = new Graph();	
 		view = m;
-		index = 0;
+		index = -1;
+		view.setNextMapState(false);
 	}
 	public void mapGetNodes(){
 		
 		nodes = g.getNodes().toArray(new Node[1]);
 		this.nextMap();
+		
 	}
 	public void nextMap() {
-		if (index >= nodes.length || index < 0) return;
+		if (nodes == null) return;
+		if (index >= nodes.length || index < 0 || !buttonAllowed) {
+			buttonAllowed = false;
+			return;
+		}
+		
+		buttonAllowed = true;
 		int start = index;
 		String temp = nodes[index].getImage().getName();
-		while(index < nodes.length && nodes[index].getImage().getName().equals(temp))
+		while(index < nodes.length && nodes[index].getImage().getName()
+				.equals(temp))
 		{
 			index++;
 		}
@@ -44,14 +52,25 @@ public class MapControl {
 	}
 	public void findPath(String start, String end)
 	{
-		nodes = g.getPathBetween(start, end).toArray(new Node[1]);
+		buttonAllowed = true;
+		try
+		{
+			nodes = g.getPathBetween(start, end).toArray(new Node[1]);
+		}
+		catch (Exception ex)
+		{
+			return;
+		}
 		index = 0;
 		this.nextMap();
 	}
 	public void findPoint(String node)
 	{
+		buttonAllowed = false;
 		Node n = g.findNodeWithName(node);
+		if (n == null) return;
 		view.drawNode(n.getImage().getImage(), n.getxPos(), n.getyPos());		
 	}
+
 
 }

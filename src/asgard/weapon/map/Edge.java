@@ -60,8 +60,8 @@ public class Edge {
 
 	@Override
 	public String toString() {
-		return "Edge [weight=" + weight + ", nodes=" + nodes[0].getName() + " and " +
-			nodes[1].getName();
+		return "Edge [weight=" + weight + ", nodes=" + nodes[0].getName() 
+			+ " and " +	nodes[1].getName();
 	}
 	public boolean isAdjacent(Node n) {
 		if (n == null) return false;

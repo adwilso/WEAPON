@@ -158,7 +158,8 @@ public class Node implements Comparable <Node>{
 	}
 	@Override
 	public String toString() {
-		return "Node [xPos=" + xPos + ", yPos=" + yPos + ", name=" + name + "]";
+		return "Node [xPos=" + xPos + ", yPos=" + yPos + ", name=" + name 
+		+ "]";
 	}
 	/**
 	 * @return the fScore

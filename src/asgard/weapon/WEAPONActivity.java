@@ -8,7 +8,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import asgard.weapon.map.*;
-import asgard.weapon.mapDisplay.MapControl;
 import asgard.weapon.mapDisplay.MapDisplay;
 public class WEAPONActivity extends Activity implements View.OnClickListener{
     /** Called when the activity is first created. */

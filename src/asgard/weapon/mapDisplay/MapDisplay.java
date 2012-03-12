@@ -1,39 +1,27 @@
 package asgard.weapon.mapDisplay;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ZoomControls;
 import asgard.weapon.R;
 import asgard.weapon.map.*;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.text.InputType;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 /**
  * 
- * @author Adam
+ * @author Adam and Steve
  * 
  * 
  */
 public class MapDisplay extends Activity implements OnClickListener {
-	private static ImageView mapDisplay;
 	private Button searchButton;
 	private Button nextMapButton;
 	private MapImageView mapScreen;
@@ -95,9 +83,14 @@ public class MapDisplay extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		//control.mapGetNodes();
 		opt.show();
+	}
+	public void setNextMapState(boolean state)
+	{
+		if (this.nextMapButton == null) return;
+		this.nextMapButton.setEnabled(state);
+		return;
 	}
 	public void steveExitPoints()
 	{
@@ -118,11 +111,13 @@ public class MapDisplay extends Activity implements OnClickListener {
 
 	public void updateMap(int resource) {
 		mapScreen.setImage(resource);
+		mapScreen.clearPoint();
 	}
 	public void drawNode(int image, int x, int y)
 	{
-		mapScreen.drawPoint(x, y);
 		this.updateMap(image);
+		mapScreen.drawPoint(x, y);
+		
 	}
 
 	public void steve() {

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.OvalShape;
@@ -19,7 +18,12 @@ import android.view.WindowManager;
 import asgard.weapon.R;
 import asgard.weapon.map.*;
 
-
+/**
+ * 
+ * @author Adam and Ron
+ * 
+ * 
+ */
 public class MapImageView extends View {
 
 private static final int INVALID_POINTER_ID = -1;
@@ -29,7 +33,6 @@ private static final int INVALID_POINTER_ID = -1;
 	private Paint lineColour;
 	private Node[] nodeList;
     private Drawable mImage;
-    private Drawable nodes;
     private float mPosX, mPosY;
     private float mLastTouchX, mLastTouchY;
     private int mActivePointerId = INVALID_POINTER_ID;
@@ -42,50 +45,12 @@ private static final int INVALID_POINTER_ID = -1;
 
     public MapImageView(Context context) {
         this(context, null, 0);
-     /*   mImage = getResources().getDrawable(R.drawable.map);
-        if(!this.isInEditMode())
-        {
-        ShapeDrawable mDrawable = new ShapeDrawable(new OvalShape());
-        mDrawable.getPaint().setColor(0xff74AC23);
-        mDrawable.setBounds(0, 0, 100, 500);
-        nodes = mDrawable;
-        mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
-        }
-        if(!this.isInEditMode()){
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        
-        screenWidth = display.getWidth();  // deprecated
-        screenHeight = display.getHeight();  // deprecated
-        }
-        else
-        {
-        	screenHeight = screenWidth = 0;
-        }*/
+     
     }
 
     public MapImageView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
-       /* mImage = getResources().getDrawable(R.drawable.map);
-        if(!this.isInEditMode())
-        {
-        ShapeDrawable mDrawable = new ShapeDrawable(new OvalShape());
-        mDrawable.getPaint().setColor(0xff74AC23);
-        mDrawable.setBounds(0, 0, 100, 500);
-        nodes = mDrawable;
-        mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
-        }
-        if(!this.isInEditMode()){
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        
-        screenWidth = display.getWidth();  // deprecated
-        screenHeight = display.getHeight();  // deprecated
-        }
-        else
-        {
-        	screenHeight = screenWidth = 0;
-        }*/
+       
     }
 
     public MapImageView(Context context, AttributeSet attrs, int defStyle) {
@@ -103,11 +68,12 @@ private static final int INVALID_POINTER_ID = -1;
         ShapeDrawable mDrawable = new ShapeDrawable(new OvalShape());
         mDrawable.getPaint().setColor(0xff74AC23);
         mDrawable.setBounds(0, 0, 100, 500);
-        nodes = mDrawable;
-        mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
+        mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage
+        		.getIntrinsicHeight());
         }
         if(!this.isInEditMode()){
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager wm = (WindowManager) context.getSystemService(Context
+        		.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         
         screenWidth = display.getWidth();  // deprecated
@@ -121,7 +87,8 @@ private static final int INVALID_POINTER_ID = -1;
     public void setImage(int imageResource)
     {
     	mImage = getResources().getDrawable(imageResource);
-    	mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage.getIntrinsicHeight());
+    	mImage.setBounds(0, 0, mImage.getIntrinsicWidth(), mImage
+    			.getIntrinsicHeight());
     	this.invalidate();
     }
     @Override
@@ -173,7 +140,8 @@ private static final int INVALID_POINTER_ID = -1;
         }
 
         case MotionEvent.ACTION_POINTER_UP: {
-            final int pointerIndex = (ev.getAction() & MotionEvent.ACTION_POINTER_INDEX_MASK) 
+            final int pointerIndex = (ev.getAction() & MotionEvent
+            		.ACTION_POINTER_INDEX_MASK) 
                     >> MotionEvent.ACTION_POINTER_INDEX_SHIFT;
             final int pointerId = ev.getPointerId(pointerIndex);
             if (pointerId == mActivePointerId) {
@@ -200,19 +168,6 @@ private static final int INVALID_POINTER_ID = -1;
         if (mPosY > 0) mPosY = 0;
         if (mPosX > 0) mPosX = 0;
         
-        int imageHieght = mImage.getMinimumHeight();
-        int imageWidth = mImage.getMinimumWidth();
-        
-      //  if (screenWidth < mImage.getIntrinsicWidth() + mPosX) 
-       // 	mPosX =  mImage.getIntrinsicWidth()- screenWidth;
-       // if (screenWidth > imageWidth + mPosX - screenWidth) 
-        //	mPosX = -imageWidth + (2 * screenWidth);
-        
-      //  if (-mPosY + screenHeight > imageHieght)
-       // 	mPosY = screenHeight - imageHieght;
-       // if (screenHeight > imageHieght + mPosY - screenHeight) 
-        //	mPosY = -imageHieght + (2 * screenHeight);
-        	//mPosY = mImage.getIntrinsicHeight() - screenHeight + mPosY;
         
         canvas.translate(mPosX, mPosY);
         canvas.scale(mScaleFactor, mScaleFactor);
@@ -222,7 +177,10 @@ private static final int INVALID_POINTER_ID = -1;
         	for (int i = 0; i < nodeList.length -1; i++)
         	{
         		canvas.drawLine(nodeList[i].getxPos(), nodeList[i].getyPos(), 
-        				nodeList[i+1].getxPos(), nodeList[i+1].getyPos(), lineColour);
+        				nodeList[i+1].getxPos(), nodeList[i+1].getyPos(), 
+        				lineColour);
+        		canvas.drawCircle(nodeList[i].getxPos(), nodeList[i].getyPos(), 
+        				10, lineColour);
         	}
         }
        // nodes.draw(canvas);
@@ -260,7 +218,8 @@ private static final int INVALID_POINTER_ID = -1;
     	pointY = 0;
     	this.invalidate();
     }
-    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+    private class ScaleListener extends ScaleGestureDetector
+    	.SimpleOnScaleGestureListener {
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
             mScaleFactor *= detector.getScaleFactor();
