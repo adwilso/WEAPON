@@ -10,5 +10,5 @@
     android:text="@string/hello"
     />
 <ImageView android:src="@drawable/map" android:id="@+id/imageView1" android:layout_height="wrap_content" android:layout_width="wrap_content"></ImageView>
-<Button android:id="@+id/button1" android:layout_height="wrap_content" android:layout_weight="0.67" android:layout_width="match_parent" android:text="@string/map"></Button>
+<Button android:id="@+id/button1" android:layout_height="wrap_content" android:layout_weight="0.67" android:layout_width="match_parent" android:text="@string/hello"></Button>
 </LinearLayout>

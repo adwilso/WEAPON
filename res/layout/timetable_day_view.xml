@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:numColumns="auto_fit" >
+
+    <RelativeLayout
+        android:id="@+id/timetable_day_view_title_bar"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentTop="true" >
+
+        <ImageView
+            android:id="@+id/timetable_day_view_left_button"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="previous arrow"
+            android:src="@android:drawable/ic_media_rew" />
+
+        <TextView
+            android:id="@+id/timetable_day_view_day_text"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/background_dark"
+            android:textColor="@android:color/primary_text_dark_nodisable" />
+
+        <ImageView
+            android:id="@+id/timetable_day_view_right_button"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:contentDescription="next day"
+            android:src="@android:drawable/ic_media_ff" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/day_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/timetable_day_view_title_bar" >
+
+        <RelativeLayout
+            android:id="@+id/day_view_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>
